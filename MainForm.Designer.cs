@@ -202,6 +202,7 @@ namespace MB3D_Animation_Copilot
             btn_DBAdmin_Backup = new Syncfusion.WinForms.Controls.SfButton();
             page_About = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel13 = new System.Windows.Forms.Panel();
+            autoLabel31 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel30 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel29 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel28 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -217,7 +218,6 @@ namespace MB3D_Animation_Copilot
             openFileDialog_M3PIFileLoc = new System.Windows.Forms.OpenFileDialog();
             openFileDialog_M3AFileLoc = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            autoLabel31 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             pnl_Bottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)num_AutoSaveTrigger).BeginInit();
             grp_FooterMessageArea.SuspendLayout();
@@ -2604,6 +2604,19 @@ namespace MB3D_Animation_Copilot
             panel13.Size = new System.Drawing.Size(1284, 540);
             panel13.TabIndex = 0;
             // 
+            // autoLabel31
+            // 
+            autoLabel31.AutoSize = false;
+            autoLabel31.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel31.ForeColor = System.Drawing.Color.White;
+            autoLabel31.Location = new System.Drawing.Point(14, 254);
+            autoLabel31.Name = "autoLabel31";
+            autoLabel31.Size = new System.Drawing.Size(621, 52);
+            autoLabel31.TabIndex = 21;
+            autoLabel31.Text = "The various features of the Mandelbulb3D Animation Copilot facilitate creating Mandelbulb3D animations that are complex in movement as well as longer.";
+            autoLabel31.ThemeName = "HighContrastTheme";
+            autoLabel31.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            // 
             // autoLabel30
             // 
             autoLabel30.AutoSize = false;
@@ -2710,19 +2723,6 @@ namespace MB3D_Animation_Copilot
             // 
             openFileDialog_M3AFileLoc.FileName = "Mandelbulb3D Animation File";
             openFileDialog_M3AFileLoc.Filter = "Mandelbulb3D Files|*.m3a|All Files|*.*";
-            // 
-            // autoLabel31
-            // 
-            autoLabel31.AutoSize = false;
-            autoLabel31.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            autoLabel31.ForeColor = System.Drawing.Color.White;
-            autoLabel31.Location = new System.Drawing.Point(14, 254);
-            autoLabel31.Name = "autoLabel31";
-            autoLabel31.Size = new System.Drawing.Size(621, 52);
-            autoLabel31.TabIndex = 21;
-            autoLabel31.Text = "The various features of the Mandelbulb3D Animation Copilot facilitate creating Mandelbulb3D animations that are complex in movement as well as longer.";
-            autoLabel31.ThemeName = "HighContrastTheme";
-            autoLabel31.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             // 
             // MainForm
             // 
