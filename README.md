@@ -1,6 +1,6 @@
 The **Mandelbulb3D Animation Copilot** facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the [Mandelbulb3D](https://mb3d.overwhale.com/) Navigator movement keys and recording those keyframe movements to a local database.
 
-<a href="[https://www.markdownguide.org](https://mb3d.overwhale.com/)" target="_blank">Mandelbulb3D</a>
+<a href="[Mandelbulb3D](https://mb3d.overwhale.com/)" target="_blank"></a>
 
 
 This Copilot also automates keyframe creation with pre-designed move sequences and keyframe replication features.
