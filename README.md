@@ -11,10 +11,20 @@ As can be seen, the **Mandelbulb3D Animation Copilot** facilitates making long a
 This Windows Winforms .NET application is developed, and the open source project managed, by Patrick C. Cook who has been creating with the [Mandelbulb3D](https://mb3d.overwhale.com/) fractal generator since 2017. With his decades-long background as a professional software developer, Pat set out to address his intention to create longer and more complex animations with the Mandelbulb3D fractal generator. One such animation using the Copilot is [Tomb of the Ancients]( https://youtu.be/f_5J9lWgyiU) that involves 104 keyframes and over 24,000 frames. Keyframing the animation sequence for 'Tomb of the Ancients' took about 50 minutes.
 
 To use this Copilot application for animation projects you will need the following:
-1. Windows 10 OS and above (Mac is not supported).
-2. The executable deployment of this application, or runnng from Visual Studio 2022.
-3. The latest [Mandelbulb3D](https://mb3d.overwhale.com/) application installed.
-4. An xBox controller (wired or Bluetooth) or your standard PC keyboard.
+1. Windows 10 OS and above (Mac is not supported),
+2. The executable deployment of this application,
+3. The latest [Mandelbulb3D](https://mb3d.overwhale.com/) application installed,
+4. An xBox controller (wired or Bluetooth) or your standard PC keyboard,
 5. The [JoyToKey](https://joytokey.net/en/) application installed.
+
+To run this Copilot application locally with Visual Studio:
+1. Download this Copilot repository to your PC as a Visual Studio solution,
+2. Open the solution with Visual Studio 2022 Community Edition at minimum,
+3. You will need .NET 8 installed on your PC and Winforms installed in Visual Studio,
+4. You should be proficient in c# and ideally sqlite as well,
+5. You will need the Mandelbulb3D and JoyToKey apps installed,
+3. Run the application in Build or Debug as you prefer,
+4. Make whatever changes you want to your local code,
+5. Decide if you would like to contribute to the Copilot project.
 
 Please be advised that the Copilot is in early development and the author provides no warranty that it will perform as intended. Until the Copilot has matured in its development, please do not utilize it in a commercial Mandelbulb3D project. If you would like to contribute to this project please let the author know your interest.
