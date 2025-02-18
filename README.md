@@ -6,7 +6,9 @@ The Copilot also automates keyframe movements with pre-designed move sequences a
 
 Because all keyframe movements are stored in a local database, the Copilot also facilitates reverting to earlier keyframes as well as modifying keyframe actions in the event that a Mandelbulb3D animation keyframe sequence needs to be corrected. This saves the animation creator from having to start the animation creation over.
 
-This Windows Winforms .NET application is developed, and the project managed, by Patrick C. Cook who has been creating with the [Mandelbulb3D](https://mb3d.overwhale.com/) fractal generator since 2017.
+As can be seen, the **Mandelbulb3D Animation Copilot** facilitates making long animations or animations that involve complex movements such as turns, sweeps, reversals and so forth. By storing keyframe movements in a local database the animation creator can prepare an animation faster, with smoother movement flow and less (or no) movement mistakes that would require difficult keyframe repairs or a complete re-start of the animation sequence. The Copilot makes creating animations much easier than the Mandelbulb3D application alone, allowing the creative potential of the Mandelbulb3D application to extend to longer and more complex animations.
+
+This Windows Winforms .NET application is developed, and the open source project managed, by Patrick C. Cook who has been creating with the [Mandelbulb3D](https://mb3d.overwhale.com/) fractal generator since 2017. With his decades-long background as a professional software developer, Pat set out to address his intention to create longer and more complex animations with the Mandelbulb3D fractal generator. One such animation using the Copilot is here.
 
 To use this Copilot application for animation projects you will need the following:
 1. Windows 10 OS and above (Mac is not supported).
