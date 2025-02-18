@@ -1,4 +1,4 @@
-The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.
+The **Mandelbulb3D Animation Copilot** facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.
 
 This Copilot also automates keyframe creation with pre-designed move sequences and keyframe replication features.
 
