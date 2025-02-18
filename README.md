@@ -1,21 +1,18 @@
-The **Mandelbulb3D Animation Copilot** facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the [Mandelbulb3D](https://mb3d.overwhale.com/) Navigator movement keys and recording those keyframe movements to a local database.
-
-<a href="[Mandelbulb3D](https://mb3d.overwhale.com/)" target="_blank"></a>
-
-<a href="https://mb3d.overwhale.com" target="_blank">Mandelbulb3D</a>
-
-
-
-This Copilot also automates keyframe creation with pre-designed move sequences and keyframe replication features.
-
-This Copilot facilitates reverting to earlier keyframes as well as modifying keyframe actions in the event that a Mandelbulb3D animation keyframe sequence needs to be corrected.
-
-The various features of the Mandelbulb3D Animation Copilot facilitate creating Mandelbulb3D animations that are complex in movement as well as longer.
+The **Mandelbulb3D Animation Copilot** facilitates creating [Mandelbulb3D](https://mb3d.overwhale.com/) animations by mapping a game controller or keyboard keys to the  Mandelbulb3D application's Navigator step and angle keys and recording those keyframe movements to a local database. This provides the animation creator with a record of all of the keyframe movements of an animation project, which in turn facilitates complex or long animation sequences. The premise of the Copilot is to help the animation creator keep track of the movements of previous keyframes to facilitate coordinating  long or complex animation sequences, which the Mandelbulb3D application itself does not provide.
 
 ![alt text](https://github.com/PatCook1/MB3D-Animation-Copilot/blob/public/Documentation/Images%20for%20Wiki/MB%20Copilot%20Main%20Screen%201024x768.jpg)
 
-The Copilot was developed to address the difficulty of creating long or complex animation sequences with the Mandelbulb3D fractal generator.
+The Copilot also automates keyframe movements with pre-designed move sequences and keyframe replication features. This provides the animation creator sets of move sequences that are stored in a local database that can be run simply by selecting from a list. This feature assures consistent move sequences, often of which are repetitive.
 
-The challenge of keyframing with the [Mandelbulb3D](https://mb3d.overwhale.com/) application is not having the movement of each keyframe recorded to be able to keep track of the movements of previous keyframes. This makes it difficult to perform realistic or complex animation movements through the Mandelbulb3D scene. The Copilot places all of the movements of each keyframe into a local database to facilitate subsequent keyframing.
+Because all keyframe movements are stored in a local database, the Copilot also facilitates reverting to earlier keyframes as well as modifying keyframe actions in the event that a Mandelbulb3D animation keyframe sequence needs to be corrected. This saves the animation creator from having to start the animation creation over.
 
-This Windows Winforms .NET application is developed, and the project managed, by Patrick C. Cook who has been working with the [Mandelbulb3D](https://mb3d.overwhale.com/) application since 2017.
+This Windows Winforms .NET application is developed, and the project managed, by Patrick C. Cook who has been creating with the [Mandelbulb3D](https://mb3d.overwhale.com/) fractal generator since 2017.
+
+To use this Copilot application for animation projects you will need the following:
+1. Windows 10 OS and above (Mac is not supported).
+2. The executable deployment of this application, or runnng from Visual Studio 2022.
+3. The latest [Mandelbulb3D](https://mb3d.overwhale.com/) application installed.
+4. An xBox controller (wired or Bluetooth) or your standard PC keyboard.
+5. The [JoyToKey](https://joytokey.net/en/) application installed.
+
+Please be advised that the Copilot is in early development and the author provides no warranty that it will perform as intended. Until the Copilot has matured in its development, please do not utilize it in a commercial Mandelbulb3D project. If you would like to contribute to this project please let the author know your interest.
