@@ -6,7 +6,7 @@ This Copilot facilitates reverting to earlier keyframes as well as modifying key
 
 The various features of the Mandelbulb3D Animation Copilot facilitate creating Mandelbulb3D animations that are complex in movement as well as longer.
 
-![alt text](Documentation/Images for Wiki/MB Copilot Main Screen 800x600.JPG)
+![alt text](https://github.com/PatCook1/MB3D-Animation-Copilot/blob/public/Documentation/Images%20for%20Wiki/MB%20Copilot%20Main%20Screen%20800x600.JPG)\
 
 The Copilot was developed to address the difficulty of creating long or complex animation sequences with the Mandelbulb3D fractal generator.
 
