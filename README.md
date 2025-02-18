@@ -1,4 +1,7 @@
-The **Mandelbulb3D Animation Copilot** facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.
+The **Mandelbulb3D Animation Copilot** facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the [Mandelbulb3D](https://mb3d.overwhale.com/) Navigator movement keys and recording those keyframe movements to a local database.
+
+<a href="[https://www.markdownguide.org](https://mb3d.overwhale.com/)" target="_blank">Mandelbulb3D</a>
+
 
 This Copilot also automates keyframe creation with pre-designed move sequences and keyframe replication features.
 
@@ -10,6 +13,6 @@ The various features of the Mandelbulb3D Animation Copilot facilitate creating M
 
 The Copilot was developed to address the difficulty of creating long or complex animation sequences with the Mandelbulb3D fractal generator.
 
-The challenge of keyframing with the Mandelbulb3D application is not having the movement of each keyframe recorded to be able to keep track of the movements of previous keyframes. This makes it difficult to perform realistic or complex animation movements through the Mandelbulb3D scene. The Copilot places all of the movements of each keyframe into a local database to facilitate subsequent keyframing.
+The challenge of keyframing with the [Mandelbulb3D](https://mb3d.overwhale.com/) application is not having the movement of each keyframe recorded to be able to keep track of the movements of previous keyframes. This makes it difficult to perform realistic or complex animation movements through the Mandelbulb3D scene. The Copilot places all of the movements of each keyframe into a local database to facilitate subsequent keyframing.
 
-This Windows Winforms .NET application is developed, and the project managed, by Patrick C. Cook who has been working with the Mandelbulb3D application since 2017.
+This Windows Winforms .NET application is developed, and the project managed, by Patrick C. Cook who has been working with the [Mandelbulb3D](https://mb3d.overwhale.com/) application since 2017.
