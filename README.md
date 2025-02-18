@@ -2,6 +2,9 @@ The **Mandelbulb3D Animation Copilot** facilitates creating Mandelbulb3D animati
 
 <a href="[Mandelbulb3D](https://mb3d.overwhale.com/)" target="_blank"></a>
 
+<a href="https://mb3d.overwhale.com" target="_blank">Mandelbulb3D</a>
+
+
 
 This Copilot also automates keyframe creation with pre-designed move sequences and keyframe replication features.
 
