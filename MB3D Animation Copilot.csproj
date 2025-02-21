@@ -59,7 +59,7 @@
     <Content Include="Images\For App 167929795-xbox controller.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="SQLite.Interop.dll">
+    <Content Include="Libraries\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
@@ -104,12 +104,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="MB3DAnimationCopilot.db">
-      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    <None Update="LICENSE.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="README.md">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

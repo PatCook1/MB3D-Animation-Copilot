@@ -5,14 +5,22 @@ VisualStudioVersion = 17.9.34728.123
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MB3D Animation Copilot", "MB3D Animation Copilot.csproj", "{43753646-B0D1-4F74-AE1D-E07934307899}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "MB3D Animation Copilot Setup", "..\MB3D Animation Copilot Setup\MB3D Animation Copilot Setup.vdproj", "{2462982B-BAC2-4A5E-A60D-5A134E977C27}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		All|Any CPU = All|Any CPU
+		All|x64 = All|x64
 		Debug|Any CPU = Debug|Any CPU
 		Debug|x64 = Debug|x64
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{43753646-B0D1-4F74-AE1D-E07934307899}.All|Any CPU.ActiveCfg = Release|Any CPU
+		{43753646-B0D1-4F74-AE1D-E07934307899}.All|Any CPU.Build.0 = Release|Any CPU
+		{43753646-B0D1-4F74-AE1D-E07934307899}.All|x64.ActiveCfg = Debug|x64
+		{43753646-B0D1-4F74-AE1D-E07934307899}.All|x64.Build.0 = Debug|x64
 		{43753646-B0D1-4F74-AE1D-E07934307899}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{43753646-B0D1-4F74-AE1D-E07934307899}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{43753646-B0D1-4F74-AE1D-E07934307899}.Debug|x64.ActiveCfg = Debug|x64
@@ -21,6 +29,14 @@ Global
 		{43753646-B0D1-4F74-AE1D-E07934307899}.Release|Any CPU.Build.0 = Release|Any CPU
 		{43753646-B0D1-4F74-AE1D-E07934307899}.Release|x64.ActiveCfg = Release|Any CPU
 		{43753646-B0D1-4F74-AE1D-E07934307899}.Release|x64.Build.0 = Release|Any CPU
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.All|Any CPU.ActiveCfg = Release
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.All|Any CPU.Build.0 = Release
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.All|x64.ActiveCfg = Release
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.All|x64.Build.0 = Release
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.Debug|Any CPU.ActiveCfg = Debug
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.Debug|x64.ActiveCfg = Debug
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.Release|Any CPU.ActiveCfg = Release
+		{2462982B-BAC2-4A5E-A60D-5A134E977C27}.Release|x64.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

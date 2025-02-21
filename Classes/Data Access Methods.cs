@@ -1,10 +1,12 @@
 ﻿using Dapper;
 using MB3D_Animation_Copilot.Models;
+using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Configuration.Provider;
 using System.Data;
 using System.Data.SQLite;
 using System.Diagnostics;
@@ -21,7 +23,17 @@ namespace MB3D_Animation_Copilot.Classes
     {
         private static string LoadConnectionString(string id = "Default")
         {
-            return ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+            try
+            {
+                string strAppConfig = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+                string connString = strAppConfig.Replace("[AppDataPath]", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+                return connString;
+            }
+            catch (Exception ex)
+            {
+                MessageBoxAdv.Show(ex.Message, "Error @ LoadConnectionString", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return null;
+            }
         }
 
         #region Project Data Access Methods ==========================================================================
