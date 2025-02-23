@@ -296,11 +296,15 @@ namespace MB3D_Animation_Copilot
 
             BuildManageSeqDatagrid(); //Build the Move Sequence datagrid on the Move Designer tab
 
-
             string mainModuleName = Process.GetCurrentProcess().MainModule.ModuleName;
             IntPtr hook = SetWindowsHookEx(WH_KEYBOARD_LL, hcDelegate, GetModuleHandle(mainModuleName), 0);
 
             m_UnsavedChanges = false; //Turn off the UnsavedChanges flag once the UI settles down
+
+            //Links to external resources
+            ll_GithubRespository.Links.Add(0, 21, ConfigurationManager.AppSettings["GithubProjectURL"]);
+            ll_PCGithubURL.Links.Add(0, 18, ConfigurationManager.AppSettings["PatCook1GithubURL"]);
+            ll_JoyToKey.Links.Add(0, 19, ConfigurationManager.AppSettings["JoyToKeyURL"]);
 
             drp_ProjectList.Focus(); //Set focus on the project dropdown
             drp_ProjectList.Select();
@@ -4191,6 +4195,59 @@ namespace MB3D_Animation_Copilot
                 MessageBoxAdv.Show(ex.Message, "Error @ btn_DBAdmin_Restore_Click", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
+        #endregion
+
+        #region External Link Methods =============================================================================== 
+
+        private void ll_GithubRespository_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                // Change the color of the link text by setting LinkVisited to true.
+                ll_GithubRespository.LinkVisited = true;
+
+                //Call the Process.Start method to open the default browser with a URL:
+                Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString()) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_GithubRespository_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ll_PCGithubURL_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                // Change the color of the link text by setting LinkVisited to true.
+                ll_PCGithubURL.LinkVisited = true;
+
+                //Call the Process.Start method to open the default browser with a URL:
+                Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString()) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_PCGithubURL_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void ll_JoyToKey_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                // Change the color of the link text by setting LinkVisited to true.
+                ll_JoyToKey.LinkVisited = true;
+
+                //Call the Process.Start method to open the default browser with a URL:
+                Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString()) { UseShellExecute = true });
+            }
+            catch (Exception ex)
+            {
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_JoyToKey_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
 
         #endregion
 

@@ -56,6 +56,8 @@ namespace MB3D_Animation_Copilot
             btn_SetRestorePoint = new Syncfusion.WinForms.Controls.SfButton();
             lbl_LastKeyEvent = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             pnl_Top = new System.Windows.Forms.Panel();
+            ll_GithubRespository = new System.Windows.Forms.LinkLabel();
+            ll_PCGithubURL = new System.Windows.Forms.LinkLabel();
             btn_FindM3AFile = new Syncfusion.WinForms.Controls.SfButton();
             btn_FindM3PIFile = new Syncfusion.WinForms.Controls.SfButton();
             tbx_M3A_FileLocation = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
@@ -98,6 +100,7 @@ namespace MB3D_Animation_Copilot
             label31 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             pnl_MovesList = new System.Windows.Forms.Panel();
+            ll_JoyToKey = new System.Windows.Forms.LinkLabel();
             btn_ShowKeyLegendWindow = new Syncfusion.WinForms.Controls.SfButton();
             panel3 = new System.Windows.Forms.Panel();
             lbl_MovesList = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -591,6 +594,8 @@ namespace MB3D_Animation_Copilot
             // pnl_Top
             // 
             pnl_Top.BackColor = System.Drawing.Color.Black;
+            pnl_Top.Controls.Add(ll_GithubRespository);
+            pnl_Top.Controls.Add(ll_PCGithubURL);
             pnl_Top.Controls.Add(btn_FindM3AFile);
             pnl_Top.Controls.Add(btn_FindM3PIFile);
             pnl_Top.Controls.Add(tbx_M3A_FileLocation);
@@ -633,6 +638,36 @@ namespace MB3D_Animation_Copilot
             pnl_Top.Name = "pnl_Top";
             pnl_Top.Size = new System.Drawing.Size(1290, 184);
             pnl_Top.TabIndex = 31;
+            // 
+            // ll_GithubRespository
+            // 
+            ll_GithubRespository.ActiveLinkColor = System.Drawing.Color.White;
+            ll_GithubRespository.AutoSize = true;
+            ll_GithubRespository.ForeColor = System.Drawing.Color.White;
+            ll_GithubRespository.LinkColor = System.Drawing.Color.White;
+            ll_GithubRespository.Location = new System.Drawing.Point(829, 41);
+            ll_GithubRespository.Name = "ll_GithubRespository";
+            ll_GithubRespository.Size = new System.Drawing.Size(125, 15);
+            ll_GithubRespository.TabIndex = 85;
+            ll_GithubRespository.TabStop = true;
+            ll_GithubRespository.Text = "Copilot at Github.com";
+            ll_GithubRespository.VisitedLinkColor = System.Drawing.Color.Yellow;
+            ll_GithubRespository.LinkClicked += ll_GithubRespository_LinkClicked;
+            // 
+            // ll_PCGithubURL
+            // 
+            ll_PCGithubURL.ActiveLinkColor = System.Drawing.Color.White;
+            ll_PCGithubURL.AutoSize = true;
+            ll_PCGithubURL.ForeColor = System.Drawing.Color.White;
+            ll_PCGithubURL.LinkColor = System.Drawing.Color.White;
+            ll_PCGithubURL.Location = new System.Drawing.Point(957, 41);
+            ll_PCGithubURL.Name = "ll_PCGithubURL";
+            ll_PCGithubURL.Size = new System.Drawing.Size(110, 15);
+            ll_PCGithubURL.TabIndex = 84;
+            ll_PCGithubURL.TabStop = true;
+            ll_PCGithubURL.Text = "PatCook1.Github.io";
+            ll_PCGithubURL.VisitedLinkColor = System.Drawing.Color.Yellow;
+            ll_PCGithubURL.LinkClicked += ll_PCGithubURL_LinkClicked;
             // 
             // btn_FindM3AFile
             // 
@@ -754,7 +789,7 @@ namespace MB3D_Animation_Copilot
             // 
             mtbx_LookingRollingAngle.ForeColor = System.Drawing.SystemColors.WindowText;
             mtbx_LookingRollingAngle.HideTrailingZeros = true;
-            mtbx_LookingRollingAngle.Location = new System.Drawing.Point(870, 156);
+            mtbx_LookingRollingAngle.Location = new System.Drawing.Point(867, 156);
             mtbx_LookingRollingAngle.MaxLength = 3;
             mtbx_LookingRollingAngle.MaxValue = 360D;
             mtbx_LookingRollingAngle.MinValue = 1D;
@@ -774,7 +809,7 @@ namespace MB3D_Animation_Copilot
             // 
             mtbx_SlidingWalkingCount.ForeColor = System.Drawing.SystemColors.WindowText;
             mtbx_SlidingWalkingCount.HideTrailingZeros = true;
-            mtbx_SlidingWalkingCount.Location = new System.Drawing.Point(870, 129);
+            mtbx_SlidingWalkingCount.Location = new System.Drawing.Point(867, 131);
             mtbx_SlidingWalkingCount.MaxLength = 5;
             mtbx_SlidingWalkingCount.MaxValue = 10000D;
             mtbx_SlidingWalkingCount.MinValue = 1D;
@@ -793,15 +828,15 @@ namespace MB3D_Animation_Copilot
             // mtbx_FarPlane
             // 
             mtbx_FarPlane.BackColor = System.Drawing.Color.Black;
-            mtbx_FarPlane.Font = new System.Drawing.Font("Segoe UI", 28F);
+            mtbx_FarPlane.Font = new System.Drawing.Font("Segoe UI", 26F);
             mtbx_FarPlane.ForeColor = System.Drawing.Color.White;
             mtbx_FarPlane.HideTrailingZeros = true;
-            mtbx_FarPlane.Location = new System.Drawing.Point(1110, 69);
+            mtbx_FarPlane.Location = new System.Drawing.Point(1110, 76);
             mtbx_FarPlane.MaxLength = 5;
             mtbx_FarPlane.MaxValue = 10000D;
             mtbx_FarPlane.MinValue = 0D;
             mtbx_FarPlane.Name = "mtbx_FarPlane";
-            mtbx_FarPlane.Size = new System.Drawing.Size(165, 57);
+            mtbx_FarPlane.Size = new System.Drawing.Size(165, 54);
             mtbx_FarPlane.Style.BackColor = System.Drawing.Color.Black;
             mtbx_FarPlane.Style.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             mtbx_FarPlane.Style.NegativeForeColor = System.Drawing.Color.White;
@@ -816,15 +851,15 @@ namespace MB3D_Animation_Copilot
             // mtbx_FrameCount
             // 
             mtbx_FrameCount.BackColor = System.Drawing.Color.Black;
-            mtbx_FrameCount.Font = new System.Drawing.Font("Segoe UI", 28F);
+            mtbx_FrameCount.Font = new System.Drawing.Font("Segoe UI", 26F);
             mtbx_FrameCount.ForeColor = System.Drawing.Color.White;
             mtbx_FrameCount.HideTrailingZeros = true;
-            mtbx_FrameCount.Location = new System.Drawing.Point(710, 69);
+            mtbx_FrameCount.Location = new System.Drawing.Point(710, 75);
             mtbx_FrameCount.MaxLength = 6;
             mtbx_FrameCount.MaxValue = 100000D;
             mtbx_FrameCount.MinValue = 0D;
             mtbx_FrameCount.Name = "mtbx_FrameCount";
-            mtbx_FrameCount.Size = new System.Drawing.Size(155, 57);
+            mtbx_FrameCount.Size = new System.Drawing.Size(155, 54);
             mtbx_FrameCount.Style.BackColor = System.Drawing.Color.Black;
             mtbx_FrameCount.Style.DisabledBackColor = System.Drawing.Color.Black;
             mtbx_FrameCount.Style.DisabledBorderColor = System.Drawing.Color.Blue;
@@ -882,7 +917,7 @@ namespace MB3D_Animation_Copilot
             lbl_60FPSTimeCalc.BackColor = System.Drawing.Color.Transparent;
             lbl_60FPSTimeCalc.Font = new System.Drawing.Font("Segoe UI", 15F);
             lbl_60FPSTimeCalc.ForeColor = System.Drawing.Color.White;
-            lbl_60FPSTimeCalc.Location = new System.Drawing.Point(996, 94);
+            lbl_60FPSTimeCalc.Location = new System.Drawing.Point(996, 101);
             lbl_60FPSTimeCalc.Name = "lbl_60FPSTimeCalc";
             lbl_60FPSTimeCalc.Size = new System.Drawing.Size(60, 28);
             lbl_60FPSTimeCalc.TabIndex = 63;
@@ -895,7 +930,7 @@ namespace MB3D_Animation_Copilot
             lbl_30FPSTimeCalc.BackColor = System.Drawing.Color.Transparent;
             lbl_30FPSTimeCalc.Font = new System.Drawing.Font("Segoe UI", 15F);
             lbl_30FPSTimeCalc.ForeColor = System.Drawing.Color.White;
-            lbl_30FPSTimeCalc.Location = new System.Drawing.Point(916, 93);
+            lbl_30FPSTimeCalc.Location = new System.Drawing.Point(916, 100);
             lbl_30FPSTimeCalc.Name = "lbl_30FPSTimeCalc";
             lbl_30FPSTimeCalc.Size = new System.Drawing.Size(60, 28);
             lbl_30FPSTimeCalc.TabIndex = 62;
@@ -918,7 +953,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel10.BackColor = System.Drawing.Color.Transparent;
             autoLabel10.ForeColor = System.Drawing.Color.White;
-            autoLabel10.Location = new System.Drawing.Point(1108, 52);
+            autoLabel10.Location = new System.Drawing.Point(1108, 59);
             autoLabel10.Name = "autoLabel10";
             autoLabel10.Size = new System.Drawing.Size(58, 15);
             autoLabel10.TabIndex = 59;
@@ -940,7 +975,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel9.BackColor = System.Drawing.Color.Transparent;
             autoLabel9.ForeColor = System.Drawing.Color.White;
-            autoLabel9.Location = new System.Drawing.Point(996, 79);
+            autoLabel9.Location = new System.Drawing.Point(996, 86);
             autoLabel9.Name = "autoLabel9";
             autoLabel9.Size = new System.Drawing.Size(49, 15);
             autoLabel9.TabIndex = 57;
@@ -952,7 +987,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel8.BackColor = System.Drawing.Color.Transparent;
             autoLabel8.ForeColor = System.Drawing.Color.White;
-            autoLabel8.Location = new System.Drawing.Point(917, 78);
+            autoLabel8.Location = new System.Drawing.Point(917, 85);
             autoLabel8.Name = "autoLabel8";
             autoLabel8.Size = new System.Drawing.Size(49, 15);
             autoLabel8.TabIndex = 56;
@@ -964,7 +999,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel7.BackColor = System.Drawing.Color.Transparent;
             autoLabel7.ForeColor = System.Drawing.Color.White;
-            autoLabel7.Location = new System.Drawing.Point(900, 56);
+            autoLabel7.Location = new System.Drawing.Point(900, 63);
             autoLabel7.Name = "autoLabel7";
             autoLabel7.Size = new System.Drawing.Size(170, 15);
             autoLabel7.TabIndex = 55;
@@ -975,7 +1010,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel6.BackColor = System.Drawing.Color.Transparent;
             autoLabel6.ForeColor = System.Drawing.Color.White;
-            autoLabel6.Location = new System.Drawing.Point(714, 160);
+            autoLabel6.Location = new System.Drawing.Point(707, 160);
             autoLabel6.Name = "autoLabel6";
             autoLabel6.Size = new System.Drawing.Size(155, 15);
             autoLabel6.TabIndex = 54;
@@ -986,7 +1021,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel5.BackColor = System.Drawing.Color.Transparent;
             autoLabel5.ForeColor = System.Drawing.Color.White;
-            autoLabel5.Location = new System.Drawing.Point(714, 134);
+            autoLabel5.Location = new System.Drawing.Point(707, 136);
             autoLabel5.Name = "autoLabel5";
             autoLabel5.Size = new System.Drawing.Size(156, 15);
             autoLabel5.TabIndex = 53;
@@ -997,7 +1032,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel4.BackColor = System.Drawing.Color.Transparent;
             autoLabel4.ForeColor = System.Drawing.Color.White;
-            autoLabel4.Location = new System.Drawing.Point(705, 51);
+            autoLabel4.Location = new System.Drawing.Point(705, 57);
             autoLabel4.Name = "autoLabel4";
             autoLabel4.Size = new System.Drawing.Size(112, 15);
             autoLabel4.TabIndex = 52;
@@ -1084,24 +1119,24 @@ namespace MB3D_Animation_Copilot
             label48.BackColor = System.Drawing.Color.Transparent;
             label48.Font = new System.Drawing.Font("Segoe UI", 8F);
             label48.ForeColor = System.Drawing.Color.White;
-            label48.Location = new System.Drawing.Point(1221, 43);
+            label48.Location = new System.Drawing.Point(1206, 44);
             label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label48.Name = "label48";
             label48.Size = new System.Drawing.Size(57, 13);
             label48.TabIndex = 40;
-            label48.Text = "2/11/2025";
+            label48.Text = "2/23/2025";
             label48.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbl_ApplicationMainTitle
             // 
             lbl_ApplicationMainTitle.AutoSize = true;
             lbl_ApplicationMainTitle.BackColor = System.Drawing.Color.Transparent;
-            lbl_ApplicationMainTitle.Font = new System.Drawing.Font("Times New Roman", 29F, System.Drawing.FontStyle.Bold);
+            lbl_ApplicationMainTitle.Font = new System.Drawing.Font("Times New Roman", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             lbl_ApplicationMainTitle.ForeColor = System.Drawing.Color.White;
-            lbl_ApplicationMainTitle.Location = new System.Drawing.Point(699, 4);
+            lbl_ApplicationMainTitle.Location = new System.Drawing.Point(698, 2);
             lbl_ApplicationMainTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lbl_ApplicationMainTitle.Name = "lbl_ApplicationMainTitle";
-            lbl_ApplicationMainTitle.Size = new System.Drawing.Size(582, 44);
+            lbl_ApplicationMainTitle.Size = new System.Drawing.Size(573, 43);
             lbl_ApplicationMainTitle.TabIndex = 30;
             lbl_ApplicationMainTitle.Text = "Mandelbulb3D Animation Copilot";
             lbl_ApplicationMainTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1194,6 +1229,7 @@ namespace MB3D_Animation_Copilot
             // 
             // pnl_MovesList
             // 
+            pnl_MovesList.Controls.Add(ll_JoyToKey);
             pnl_MovesList.Controls.Add(btn_ShowKeyLegendWindow);
             pnl_MovesList.Controls.Add(panel3);
             pnl_MovesList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1204,10 +1240,25 @@ namespace MB3D_Animation_Copilot
             pnl_MovesList.Size = new System.Drawing.Size(383, 363);
             pnl_MovesList.TabIndex = 15;
             // 
+            // ll_JoyToKey
+            // 
+            ll_JoyToKey.ActiveLinkColor = System.Drawing.Color.White;
+            ll_JoyToKey.AutoSize = true;
+            ll_JoyToKey.ForeColor = System.Drawing.Color.White;
+            ll_JoyToKey.LinkColor = System.Drawing.Color.White;
+            ll_JoyToKey.Location = new System.Drawing.Point(185, 337);
+            ll_JoyToKey.Name = "ll_JoyToKey";
+            ll_JoyToKey.Size = new System.Drawing.Size(114, 13);
+            ll_JoyToKey.TabIndex = 86;
+            ll_JoyToKey.TabStop = true;
+            ll_JoyToKey.Text = "JoyToKey Key Mapper";
+            ll_JoyToKey.VisitedLinkColor = System.Drawing.Color.Yellow;
+            ll_JoyToKey.LinkClicked += ll_JoyToKey_LinkClicked;
+            // 
             // btn_ShowKeyLegendWindow
             // 
             btn_ShowKeyLegendWindow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_ShowKeyLegendWindow.Location = new System.Drawing.Point(116, 329);
+            btn_ShowKeyLegendWindow.Location = new System.Drawing.Point(13, 329);
             btn_ShowKeyLegendWindow.Margin = new System.Windows.Forms.Padding(4);
             btn_ShowKeyLegendWindow.Name = "btn_ShowKeyLegendWindow";
             btn_ShowKeyLegendWindow.Size = new System.Drawing.Size(164, 26);
@@ -1924,12 +1975,12 @@ namespace MB3D_Animation_Copilot
             page_MoveDesigner.ForeColor = System.Drawing.Color.White;
             page_MoveDesigner.Image = null;
             page_MoveDesigner.ImageSize = new System.Drawing.Size(16, 16);
-            page_MoveDesigner.Location = new System.Drawing.Point(3, 2);
+            page_MoveDesigner.Location = new System.Drawing.Point(3, 30);
             page_MoveDesigner.Margin = new System.Windows.Forms.Padding(4);
             page_MoveDesigner.Name = "page_MoveDesigner";
             page_MoveDesigner.Padding = new System.Windows.Forms.Padding(4);
             page_MoveDesigner.ShowCloseButton = true;
-            page_MoveDesigner.Size = new System.Drawing.Size(1284, 568);
+            page_MoveDesigner.Size = new System.Drawing.Size(1284, 540);
             page_MoveDesigner.TabIndex = 1;
             page_MoveDesigner.Text = "     Move Designer     ";
             page_MoveDesigner.ThemesEnabled = true;
@@ -1944,7 +1995,7 @@ namespace MB3D_Animation_Copilot
             panel9.Location = new System.Drawing.Point(4, 4);
             panel9.Margin = new System.Windows.Forms.Padding(4);
             panel9.Name = "panel9";
-            panel9.Size = new System.Drawing.Size(1276, 560);
+            panel9.Size = new System.Drawing.Size(1276, 532);
             panel9.TabIndex = 19;
             // 
             // splitContainer_ManageSeq
@@ -1963,7 +2014,7 @@ namespace MB3D_Animation_Copilot
             // 
             splitContainer_ManageSeq.Panel2.BackColor = System.Drawing.Color.Transparent;
             splitContainer_ManageSeq.Panel2.Controls.Add(panel4);
-            splitContainer_ManageSeq.Size = new System.Drawing.Size(1276, 449);
+            splitContainer_ManageSeq.Size = new System.Drawing.Size(1276, 421);
             splitContainer_ManageSeq.SplitterDistance = 429;
             splitContainer_ManageSeq.TabIndex = 22;
             // 
@@ -1974,7 +2025,7 @@ namespace MB3D_Animation_Copilot
             dgv_ManageMoveSequence.Location = new System.Drawing.Point(12, 0);
             dgv_ManageMoveSequence.Name = "dgv_ManageMoveSequence";
             dgv_ManageMoveSequence.Padding = new System.Windows.Forms.Padding(3);
-            dgv_ManageMoveSequence.Size = new System.Drawing.Size(417, 449);
+            dgv_ManageMoveSequence.Size = new System.Drawing.Size(417, 421);
             dgv_ManageMoveSequence.Style.BorderColor = System.Drawing.Color.FromArgb(100, 100, 100);
             dgv_ManageMoveSequence.Style.CheckBoxStyle.CheckedBackColor = System.Drawing.Color.FromArgb(0, 120, 215);
             dgv_ManageMoveSequence.Style.CheckBoxStyle.CheckedBorderColor = System.Drawing.Color.FromArgb(0, 120, 215);
@@ -1989,7 +2040,7 @@ namespace MB3D_Animation_Copilot
             panel6.Dock = System.Windows.Forms.DockStyle.Left;
             panel6.Location = new System.Drawing.Point(0, 0);
             panel6.Name = "panel6";
-            panel6.Size = new System.Drawing.Size(12, 449);
+            panel6.Size = new System.Drawing.Size(12, 421);
             panel6.TabIndex = 20;
             // 
             // panel4
@@ -2008,7 +2059,7 @@ namespace MB3D_Animation_Copilot
             panel4.Dock = System.Windows.Forms.DockStyle.Left;
             panel4.Location = new System.Drawing.Point(0, 0);
             panel4.Name = "panel4";
-            panel4.Size = new System.Drawing.Size(405, 449);
+            panel4.Size = new System.Drawing.Size(405, 421);
             panel4.TabIndex = 21;
             // 
             // autoLabel17
@@ -2233,11 +2284,11 @@ namespace MB3D_Animation_Copilot
             page_Utilities.ForeColor = System.Drawing.Color.Black;
             page_Utilities.Image = null;
             page_Utilities.ImageSize = new System.Drawing.Size(16, 16);
-            page_Utilities.Location = new System.Drawing.Point(3, 2);
+            page_Utilities.Location = new System.Drawing.Point(3, 30);
             page_Utilities.Margin = new System.Windows.Forms.Padding(4);
             page_Utilities.Name = "page_Utilities";
             page_Utilities.ShowCloseButton = true;
-            page_Utilities.Size = new System.Drawing.Size(1284, 568);
+            page_Utilities.Size = new System.Drawing.Size(1284, 540);
             page_Utilities.TabIndex = 2;
             page_Utilities.Text = "       Utilities         ";
             page_Utilities.ThemesEnabled = true;
@@ -2251,7 +2302,7 @@ namespace MB3D_Animation_Copilot
             panel_UtilitiesPage.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_UtilitiesPage.Location = new System.Drawing.Point(0, 0);
             panel_UtilitiesPage.Name = "panel_UtilitiesPage";
-            panel_UtilitiesPage.Size = new System.Drawing.Size(1284, 568);
+            panel_UtilitiesPage.Size = new System.Drawing.Size(1284, 540);
             panel_UtilitiesPage.TabIndex = 11;
             // 
             // btn_FarPlaneUpdater
@@ -2293,11 +2344,11 @@ namespace MB3D_Animation_Copilot
             page_Library.Controls.Add(panel10);
             page_Library.Image = null;
             page_Library.ImageSize = new System.Drawing.Size(16, 16);
-            page_Library.Location = new System.Drawing.Point(3, 2);
+            page_Library.Location = new System.Drawing.Point(3, 30);
             page_Library.Margin = new System.Windows.Forms.Padding(4);
             page_Library.Name = "page_Library";
             page_Library.ShowCloseButton = true;
-            page_Library.Size = new System.Drawing.Size(1284, 568);
+            page_Library.Size = new System.Drawing.Size(1284, 540);
             page_Library.TabIndex = 4;
             page_Library.Text = "     Mandelbulb3D Library     ";
             page_Library.ThemesEnabled = true;
@@ -2312,7 +2363,7 @@ namespace MB3D_Animation_Copilot
             panel10.Dock = System.Windows.Forms.DockStyle.Fill;
             panel10.Location = new System.Drawing.Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new System.Drawing.Size(1284, 568);
+            panel10.Size = new System.Drawing.Size(1284, 540);
             panel10.TabIndex = 3;
             // 
             // autoLabel23
@@ -2366,11 +2417,11 @@ namespace MB3D_Animation_Copilot
             page_Admin.Controls.Add(panel11);
             page_Admin.Image = null;
             page_Admin.ImageSize = new System.Drawing.Size(16, 16);
-            page_Admin.Location = new System.Drawing.Point(3, 2);
+            page_Admin.Location = new System.Drawing.Point(3, 30);
             page_Admin.Margin = new System.Windows.Forms.Padding(4);
             page_Admin.Name = "page_Admin";
             page_Admin.ShowCloseButton = true;
-            page_Admin.Size = new System.Drawing.Size(1284, 568);
+            page_Admin.Size = new System.Drawing.Size(1284, 540);
             page_Admin.TabIndex = 3;
             page_Admin.Text = "        Admin        ";
             page_Admin.ThemesEnabled = true;
@@ -2384,7 +2435,7 @@ namespace MB3D_Animation_Copilot
             panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             panel11.Location = new System.Drawing.Point(0, 0);
             panel11.Name = "panel11";
-            panel11.Size = new System.Drawing.Size(1284, 568);
+            panel11.Size = new System.Drawing.Size(1284, 540);
             panel11.TabIndex = 2;
             // 
             // autoLabel24
@@ -2580,10 +2631,10 @@ namespace MB3D_Animation_Copilot
             page_About.Controls.Add(panel13);
             page_About.Image = null;
             page_About.ImageSize = new System.Drawing.Size(16, 16);
-            page_About.Location = new System.Drawing.Point(3, 2);
+            page_About.Location = new System.Drawing.Point(3, 30);
             page_About.Name = "page_About";
             page_About.ShowCloseButton = true;
-            page_About.Size = new System.Drawing.Size(1284, 568);
+            page_About.Size = new System.Drawing.Size(1284, 540);
             page_About.TabIndex = 5;
             page_About.Text = "       About       ";
             page_About.ThemesEnabled = true;
@@ -2601,7 +2652,7 @@ namespace MB3D_Animation_Copilot
             panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             panel13.Location = new System.Drawing.Point(0, 0);
             panel13.Name = "panel13";
-            panel13.Size = new System.Drawing.Size(1284, 568);
+            panel13.Size = new System.Drawing.Size(1284, 540);
             panel13.TabIndex = 0;
             // 
             // autoLabel31
@@ -2741,7 +2792,7 @@ namespace MB3D_Animation_Copilot
             Style.MdiChild.IconHorizontalAlignment = System.Windows.Forms.HorizontalAlignment.Center;
             Style.MdiChild.IconVerticalAlignment = System.Windows.Forms.VisualStyles.VerticalAlignment.Center;
             Style.TitleBar.BackColor = System.Drawing.Color.White;
-            Text = "Mandelbuln3D Animation Copilot";
+            Text = "Mandelbulb3D Animation Copilot";
             ThemeName = "HighContrastTheme";
             Activated += Form1_Activated;
             FormClosing += Form1_FormClosing;
@@ -2766,6 +2817,7 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             pnl_MovesList.ResumeLayout(false);
+            pnl_MovesList.PerformLayout();
             panel3.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
@@ -3025,6 +3077,9 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel30;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel29;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel31;
+        private System.Windows.Forms.LinkLabel ll_PCGithubURL;
+        private System.Windows.Forms.LinkLabel ll_GithubRespository;
+        private System.Windows.Forms.LinkLabel ll_JoyToKey;
     }
 }
 
