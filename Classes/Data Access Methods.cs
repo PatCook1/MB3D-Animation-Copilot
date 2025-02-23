@@ -1,5 +1,6 @@
 ﻿using Dapper;
 using MB3D_Animation_Copilot.Models;
+using Microsoft.DotNet.DesignTools.Protocol.Values;
 using Syncfusion.Windows.Forms;
 using Syncfusion.Windows.Forms.Tools;
 using System;
@@ -15,19 +16,24 @@ using System.Linq;
 using System.Text;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
+using System.Windows.Input;
 using System.Windows.Media.Animation;
 
 namespace MB3D_Animation_Copilot.Classes
 {
     internal class Data_Access_Methods
     {
-        private static string LoadConnectionString(string id = "Default")
+        private static string LoadConnectionString()
         {
             try
             {
-                string strAppConfig = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-                string connString = strAppConfig.Replace("[AppDataPath]", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
-                return connString;
+                string strConn = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+
+                strConn = strConn.Replace("[AppDataPath]", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData));
+                strConn = strConn.Replace("[AppDataPathSub]", ConfigurationManager.AppSettings["AppDataPathSub"]);
+                strConn = strConn.Replace("[dbFileName]", ConfigurationManager.AppSettings["dbFileName"]);
+
+                return strConn;
             }
             catch (Exception ex)
             {

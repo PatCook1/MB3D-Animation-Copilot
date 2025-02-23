@@ -4060,15 +4060,27 @@ namespace MB3D_Animation_Copilot
 
         private void GetDatabaseFilePathName()
         {
-            var dbSource = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
+            //var dbSource = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
 
-            DbConnectionStringBuilder builder = new DbConnectionStringBuilder();
-            builder.ConnectionString = dbSource;
-            string ParseddbFileName = ((string)builder["Data Source"]).Trim();
+            //DbConnectionStringBuilder builder = new DbConnectionStringBuilder();
+            //builder.ConnectionString = dbSource;
+            //string ParseddbFileName = ((string)builder["Data Source"]).Trim();
 
-            string workingDirectory = Environment.CurrentDirectory;
-            string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-            string dbFilePathName = Path.Combine(projectDirectory + "\\" + ParseddbFileName);
+            //string workingDirectory = Environment.CurrentDirectory;
+            //string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
+            //string dbFilePathName = Path.Combine(projectDirectory + "\\" + ParseddbFileName);
+
+            string dbFilePathName = string.Empty;
+
+            try
+            {
+                string strAppDataFolder = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+                dbFilePathName = string.Concat(strAppDataFolder, @"\MB3D Copilot\MB3DAnimationCopilot.db");
+            }
+            catch (Exception ex)
+            {
+                MessageBoxAdv.Show(ex.Message, "Error @ LoadConnectionString", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             lbl_DatabaseFileInUse.Text = dbFilePathName;
         }
