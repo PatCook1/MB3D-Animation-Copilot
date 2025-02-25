@@ -46,6 +46,7 @@ using System.Configuration;
 using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.WinForms.DataGrid.Enums;
 using Syncfusion.WinForms.DataGrid.Events;
+using System.Linq.Expressions;
 
 #endregion
 
@@ -261,8 +262,6 @@ namespace MB3D_Animation_Copilot
             this.Style.TitleBar.MinimizeButtonPressedBackColor = Color.Gray;
 
             LoadAndInitMainForm();
-            ValidateMandelbulb3DRunning();
-            ValidateJoyToKeyRunning();
         }
 
         private void LoadAndInitMainForm()
@@ -310,6 +309,9 @@ namespace MB3D_Animation_Copilot
 
             drp_ProjectList.Focus(); //Set focus on the project dropdown
             drp_ProjectList.Select();
+
+            ValidateMandelbulb3DRunning(); //validate if Mandelbulb3D application is running
+            ValidateJoyToKeyRunning(); //validate if JoyToKey application is running
 
             //GetMousePos(); // for development purposes
         }
@@ -1084,7 +1086,7 @@ namespace MB3D_Animation_Copilot
             {
                 if (Convert.ToBoolean(cellValue_Approved))
                 {
-                    DialogResult result1 = MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' is Approved. Are you sure you want to delete the keframe?"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    DialogResult result1 = MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' is Approved. Are you sure you want to delete the keyframe?"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result1 != DialogResult.Yes)
                     {
                         return; //Bail
@@ -1097,7 +1099,7 @@ namespace MB3D_Animation_Copilot
                     return; //Bail
                 }
 
-                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Keyframe #'", cellValue_KFNum, "' and all of its Keyframe Move Actions? This cannot be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Keyframe #'", cellValue_KFNum, "' and all of its Keyframe Move Actions? This can not be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result2 == DialogResult.Yes)
                 {
                     //Delete the keyframe by Keyframe ID
@@ -1633,6 +1635,14 @@ namespace MB3D_Animation_Copilot
         private void SetBusyIndicator(bool bolBusyIndicatorState)
         {
             lbl_BusyLabel.Visible = bolBusyIndicatorState;
+            if (bolBusyIndicatorState)
+            {
+                lbl_BusyLabel.BringToFront();
+            }
+            else
+            {
+                lbl_BusyLabel.SendToBack();
+            }
             this.Refresh();
         }
 
@@ -1655,7 +1665,7 @@ namespace MB3D_Animation_Copilot
         {
             if (!m_EnableCapture == true & mtbx_FarPlane.Value == 0)
             {
-                MessageBoxAdv.Show("Reminder: The Far Plane value is zero.", "Alert?", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show("Reminder: The Far Plane value is zero.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             //Note: m_EnableCapture comes is as !m_EnableCapture
@@ -2446,7 +2456,7 @@ namespace MB3D_Animation_Copilot
 
         private void Form1_Activated(object sender, EventArgs e)
         {
-            //No actions here at this time
+            //No code here at this time
         }
 
         private bool ValidateMandelbulb3DRunning()
@@ -2459,11 +2469,17 @@ namespace MB3D_Animation_Copilot
             //If the Mandelbulb3D Navigator window is NOT found
             if (hWnd == IntPtr.Zero)
             {
-                MessageBoxAdv.Show("This application is an animation helper for the Mandelbulb3D application and therefore requires that the Mandelbulb3D application be running.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lbl_MB3D_AppRun_Warn.Visible = true;
+                lbl_MB3D_AppRun_Warn.BringToFront();
+
+                var NL = Environment.NewLine;
+                MessageBoxAdv.Show(string.Concat("This application is an animation helper toolset for the Mandelbulb3D application", NL, " and therefore requires that the Mandelbulb3D application be running."), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
             else
             {
+                lbl_MB3D_AppRun_Warn.Visible = false;
+                lbl_MB3D_AppRun_Warn.SendToBack();
                 return true;
             }
         }
@@ -2472,11 +2488,17 @@ namespace MB3D_Animation_Copilot
         {
             if (FindWindowByStartsWithCaption(cJoyToKeyStartCaption) == false)
             {
-                MessageBoxAdv.Show("This application uses the JoyToKey application to map a hand-held game controller to the keys used for Mandlebulb3D animation. If using a game controller, please run the JoyToKey application with the appropriate configuration.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                lbl_JTK_AppRun_Warn.Visible = true;
+                lbl_JTK_AppRun_Warn.BringToFront();
+
+                var NL = Environment.NewLine;
+                MessageBoxAdv.Show(string.Concat("This application requires the JoyToKey application to map a hand-held game controller or standard", NL, "PC keboard to the keys used for Mandlebulb3D animation. See the 'About' tab of this", NL, "application for instructions running the JoyToKey application with the appropriate configuration."), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
-            }
+        }
             else
             {
+                lbl_JTK_AppRun_Warn.Visible = false;
+                lbl_JTK_AppRun_Warn.SendToBack();
                 return true;
             }
         }
@@ -2504,7 +2526,7 @@ namespace MB3D_Animation_Copilot
             //If the Mandelbulb3D Navigator window is NOT found
             if (hWnd == IntPtr.Zero)
             {
-                MessageBoxAdv.Show("This application requires that the Mandelbulb3D application is running with its Navigator and Animimation windows open.", "Critical", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show("This application requires that the Mandelbulb3D application be running with its Navigator and Animation windows open.", "Critical", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; //Exit method and return false
             }
             else
@@ -2524,7 +2546,7 @@ namespace MB3D_Animation_Copilot
             //If the Mandelbulb3D Animation window is NOT found
             if (hWnd == IntPtr.Zero)
             {
-                MessageBoxAdv.Show("This application requires that the Mandelbulb3D application is running with its Navigator and Animation windows open.", "Critical", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show("This application requires that the Mandelbulb3D application be running with its Navigator and Animation windows open.", "Critical", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false; //Exit method and return false
             }
             else
@@ -3055,7 +3077,7 @@ namespace MB3D_Animation_Copilot
             //Check if the project have keyframes
             if (Data_Access_Methods.GetProjectKeyframeQuantity(m_SelectedProjectID) <= 0)
             {
-                MessageBoxAdv.Show("This project does not have any keyframes yet.", "Nothing To Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show("This project does not have any keyframes yet - there is nothing to do.", "Nothing To Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 

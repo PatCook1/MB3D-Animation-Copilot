@@ -98,6 +98,7 @@ namespace MB3D_Animation_Copilot
             panel2 = new System.Windows.Forms.Panel();
             lbl_KeyframeStackLineChars = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             label31 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            lbl_MB3D_AppRun_Warn = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             pnl_MovesList = new System.Windows.Forms.Panel();
             btn_ShowKeyLegendWindow = new Syncfusion.WinForms.Controls.SfButton();
@@ -139,6 +140,7 @@ namespace MB3D_Animation_Copilot
             page_AnimationCopilot = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel8 = new System.Windows.Forms.Panel();
             panel7 = new System.Windows.Forms.Panel();
+            lbl_JTK_AppRun_Warn = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             btn_ShowMoveSequenceInfo = new Syncfusion.WinForms.Controls.SfButton();
             mtbx_NextKeyframeNumber = new Syncfusion.WinForms.Input.SfNumericTextBox();
             label46 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -1211,6 +1213,23 @@ namespace MB3D_Animation_Copilot
             label31.Text = "Keyframe Types:";
             label31.ThemeName = "HighContrastTheme";
             // 
+            // lbl_MB3D_AppRun_Warn
+            // 
+            lbl_MB3D_AppRun_Warn.AutoSize = false;
+            lbl_MB3D_AppRun_Warn.BackColor = System.Drawing.Color.Yellow;
+            lbl_MB3D_AppRun_Warn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            lbl_MB3D_AppRun_Warn.ForeColor = System.Drawing.Color.Red;
+            lbl_MB3D_AppRun_Warn.Location = new System.Drawing.Point(681, 17);
+            lbl_MB3D_AppRun_Warn.Name = "lbl_MB3D_AppRun_Warn";
+            lbl_MB3D_AppRun_Warn.Size = new System.Drawing.Size(213, 19);
+            lbl_MB3D_AppRun_Warn.TabIndex = 30;
+            lbl_MB3D_AppRun_Warn.Text = "Mandelbulb3D Application Not Detected";
+            lbl_MB3D_AppRun_Warn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lbl_MB3D_AppRun_Warn.ThemeName = "";
+            lbl_MB3D_AppRun_Warn.ThemeStyle.BackColor = System.Drawing.Color.Yellow;
+            lbl_MB3D_AppRun_Warn.ThemeStyle.ForeColor = System.Drawing.Color.Red;
+            lbl_MB3D_AppRun_Warn.Visible = false;
+            // 
             // splitContainer1
             // 
             splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1803,8 +1822,10 @@ namespace MB3D_Animation_Copilot
             // 
             // panel7
             // 
+            panel7.Controls.Add(lbl_JTK_AppRun_Warn);
             panel7.Controls.Add(btn_ShowMoveSequenceInfo);
             panel7.Controls.Add(mtbx_NextKeyframeNumber);
+            panel7.Controls.Add(lbl_MB3D_AppRun_Warn);
             panel7.Controls.Add(label46);
             panel7.Controls.Add(lbl_ProjectSavingIndicator);
             panel7.Controls.Add(btn_StartOver);
@@ -1825,6 +1846,23 @@ namespace MB3D_Animation_Copilot
             panel7.Name = "panel7";
             panel7.Size = new System.Drawing.Size(1276, 75);
             panel7.TabIndex = 33;
+            // 
+            // lbl_JTK_AppRun_Warn
+            // 
+            lbl_JTK_AppRun_Warn.AutoSize = false;
+            lbl_JTK_AppRun_Warn.BackColor = System.Drawing.Color.Yellow;
+            lbl_JTK_AppRun_Warn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
+            lbl_JTK_AppRun_Warn.ForeColor = System.Drawing.Color.Red;
+            lbl_JTK_AppRun_Warn.Location = new System.Drawing.Point(681, 41);
+            lbl_JTK_AppRun_Warn.Name = "lbl_JTK_AppRun_Warn";
+            lbl_JTK_AppRun_Warn.Size = new System.Drawing.Size(213, 19);
+            lbl_JTK_AppRun_Warn.TabIndex = 31;
+            lbl_JTK_AppRun_Warn.Text = "JoyToKey Key Mapper Not Detected";
+            lbl_JTK_AppRun_Warn.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            lbl_JTK_AppRun_Warn.ThemeName = "";
+            lbl_JTK_AppRun_Warn.ThemeStyle.BackColor = System.Drawing.Color.Yellow;
+            lbl_JTK_AppRun_Warn.ThemeStyle.ForeColor = System.Drawing.Color.Red;
+            lbl_JTK_AppRun_Warn.Visible = false;
             // 
             // btn_ShowMoveSequenceInfo
             // 
@@ -3176,6 +3214,8 @@ namespace MB3D_Animation_Copilot
         private System.Windows.Forms.LinkLabel ll_PCGithubURL_About;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel32;
         private System.Windows.Forms.LinkLabel ll_JoyToKey_About;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_MB3D_AppRun_Warn;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_JTK_AppRun_Warn;
     }
 }
 
