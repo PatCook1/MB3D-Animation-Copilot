@@ -100,7 +100,6 @@ namespace MB3D_Animation_Copilot
             label31 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             splitContainer1 = new System.Windows.Forms.SplitContainer();
             pnl_MovesList = new System.Windows.Forms.Panel();
-            ll_JoyToKey = new System.Windows.Forms.LinkLabel();
             btn_ShowKeyLegendWindow = new Syncfusion.WinForms.Controls.SfButton();
             panel3 = new System.Windows.Forms.Panel();
             lbl_MovesList = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -205,6 +204,13 @@ namespace MB3D_Animation_Copilot
             btn_DBAdmin_Backup = new Syncfusion.WinForms.Controls.SfButton();
             page_About = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel13 = new System.Windows.Forms.Panel();
+            ll_GithubRespository_About = new System.Windows.Forms.LinkLabel();
+            ll_PCGithubURL_About = new System.Windows.Forms.LinkLabel();
+            grp_Admin_JoytoKey = new System.Windows.Forms.GroupBox();
+            autoLabel32 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            ll_JoyToKey_About = new System.Windows.Forms.LinkLabel();
+            lbl_Admin_JoyToKey_Loc = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            lbl_Admin_JoyToKey_Intro = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel31 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel30 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel29 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -289,6 +295,7 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)tbx_DBAdmin_Backup_FolderName).BeginInit();
             page_About.SuspendLayout();
             panel13.SuspendLayout();
+            grp_Admin_JoytoKey.SuspendLayout();
             SuspendLayout();
             // 
             // lbl_RecordingLabel
@@ -642,30 +649,28 @@ namespace MB3D_Animation_Copilot
             // ll_GithubRespository
             // 
             ll_GithubRespository.ActiveLinkColor = System.Drawing.Color.White;
-            ll_GithubRespository.AutoSize = true;
             ll_GithubRespository.ForeColor = System.Drawing.Color.White;
+            ll_GithubRespository.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
             ll_GithubRespository.LinkColor = System.Drawing.Color.White;
-            ll_GithubRespository.Location = new System.Drawing.Point(829, 41);
+            ll_GithubRespository.Location = new System.Drawing.Point(1088, 144);
             ll_GithubRespository.Name = "ll_GithubRespository";
-            ll_GithubRespository.Size = new System.Drawing.Size(125, 15);
+            ll_GithubRespository.Size = new System.Drawing.Size(189, 21);
             ll_GithubRespository.TabIndex = 85;
-            ll_GithubRespository.TabStop = true;
-            ll_GithubRespository.Text = "Copilot at Github.com";
+            ll_GithubRespository.Text = "The Copilot Project at Github.com";
             ll_GithubRespository.VisitedLinkColor = System.Drawing.Color.Yellow;
             ll_GithubRespository.LinkClicked += ll_GithubRespository_LinkClicked;
             // 
             // ll_PCGithubURL
             // 
             ll_PCGithubURL.ActiveLinkColor = System.Drawing.Color.White;
-            ll_PCGithubURL.AutoSize = true;
             ll_PCGithubURL.ForeColor = System.Drawing.Color.White;
+            ll_PCGithubURL.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
             ll_PCGithubURL.LinkColor = System.Drawing.Color.White;
-            ll_PCGithubURL.Location = new System.Drawing.Point(957, 41);
+            ll_PCGithubURL.Location = new System.Drawing.Point(1086, 165);
             ll_PCGithubURL.Name = "ll_PCGithubURL";
-            ll_PCGithubURL.Size = new System.Drawing.Size(110, 15);
+            ll_PCGithubURL.Size = new System.Drawing.Size(194, 21);
             ll_PCGithubURL.TabIndex = 84;
-            ll_PCGithubURL.TabStop = true;
-            ll_PCGithubURL.Text = "PatCook1.Github.io";
+            ll_PCGithubURL.Text = "Support Site at PatCook1.Github.io";
             ll_PCGithubURL.VisitedLinkColor = System.Drawing.Color.Yellow;
             ll_PCGithubURL.LinkClicked += ll_PCGithubURL_LinkClicked;
             // 
@@ -769,7 +774,7 @@ namespace MB3D_Animation_Copilot
             // 
             mtbx_FramesBetween.ForeColor = System.Drawing.SystemColors.WindowText;
             mtbx_FramesBetween.HideTrailingZeros = true;
-            mtbx_FramesBetween.Location = new System.Drawing.Point(1110, 156);
+            mtbx_FramesBetween.Location = new System.Drawing.Point(993, 158);
             mtbx_FramesBetween.MaxLength = 4;
             mtbx_FramesBetween.MaxValue = 5000D;
             mtbx_FramesBetween.MinValue = 1D;
@@ -942,7 +947,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel12.BackColor = System.Drawing.Color.Transparent;
             autoLabel12.ForeColor = System.Drawing.Color.White;
-            autoLabel12.Location = new System.Drawing.Point(1014, 159);
+            autoLabel12.Location = new System.Drawing.Point(969, 136);
             autoLabel12.Name = "autoLabel12";
             autoLabel12.Size = new System.Drawing.Size(96, 15);
             autoLabel12.TabIndex = 61;
@@ -1119,24 +1124,24 @@ namespace MB3D_Animation_Copilot
             label48.BackColor = System.Drawing.Color.Transparent;
             label48.Font = new System.Drawing.Font("Segoe UI", 8F);
             label48.ForeColor = System.Drawing.Color.White;
-            label48.Location = new System.Drawing.Point(1206, 44);
+            label48.Location = new System.Drawing.Point(1215, 53);
             label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label48.Name = "label48";
             label48.Size = new System.Drawing.Size(57, 13);
             label48.TabIndex = 40;
-            label48.Text = "2/23/2025";
+            label48.Text = "2/24/2025";
             label48.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbl_ApplicationMainTitle
             // 
             lbl_ApplicationMainTitle.AutoSize = true;
             lbl_ApplicationMainTitle.BackColor = System.Drawing.Color.Transparent;
-            lbl_ApplicationMainTitle.Font = new System.Drawing.Font("Times New Roman", 28F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            lbl_ApplicationMainTitle.Font = new System.Drawing.Font("Times New Roman", 29F, System.Drawing.FontStyle.Bold);
             lbl_ApplicationMainTitle.ForeColor = System.Drawing.Color.White;
-            lbl_ApplicationMainTitle.Location = new System.Drawing.Point(698, 2);
+            lbl_ApplicationMainTitle.Location = new System.Drawing.Point(697, 8);
             lbl_ApplicationMainTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lbl_ApplicationMainTitle.Name = "lbl_ApplicationMainTitle";
-            lbl_ApplicationMainTitle.Size = new System.Drawing.Size(573, 43);
+            lbl_ApplicationMainTitle.Size = new System.Drawing.Size(582, 44);
             lbl_ApplicationMainTitle.TabIndex = 30;
             lbl_ApplicationMainTitle.Text = "Mandelbulb3D Animation Copilot";
             lbl_ApplicationMainTitle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -1229,7 +1234,6 @@ namespace MB3D_Animation_Copilot
             // 
             // pnl_MovesList
             // 
-            pnl_MovesList.Controls.Add(ll_JoyToKey);
             pnl_MovesList.Controls.Add(btn_ShowKeyLegendWindow);
             pnl_MovesList.Controls.Add(panel3);
             pnl_MovesList.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -1240,25 +1244,10 @@ namespace MB3D_Animation_Copilot
             pnl_MovesList.Size = new System.Drawing.Size(383, 363);
             pnl_MovesList.TabIndex = 15;
             // 
-            // ll_JoyToKey
-            // 
-            ll_JoyToKey.ActiveLinkColor = System.Drawing.Color.White;
-            ll_JoyToKey.AutoSize = true;
-            ll_JoyToKey.ForeColor = System.Drawing.Color.White;
-            ll_JoyToKey.LinkColor = System.Drawing.Color.White;
-            ll_JoyToKey.Location = new System.Drawing.Point(185, 337);
-            ll_JoyToKey.Name = "ll_JoyToKey";
-            ll_JoyToKey.Size = new System.Drawing.Size(114, 13);
-            ll_JoyToKey.TabIndex = 86;
-            ll_JoyToKey.TabStop = true;
-            ll_JoyToKey.Text = "JoyToKey Key Mapper";
-            ll_JoyToKey.VisitedLinkColor = System.Drawing.Color.Yellow;
-            ll_JoyToKey.LinkClicked += ll_JoyToKey_LinkClicked;
-            // 
             // btn_ShowKeyLegendWindow
             // 
             btn_ShowKeyLegendWindow.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_ShowKeyLegendWindow.Location = new System.Drawing.Point(13, 329);
+            btn_ShowKeyLegendWindow.Location = new System.Drawing.Point(108, 329);
             btn_ShowKeyLegendWindow.Margin = new System.Windows.Forms.Padding(4);
             btn_ShowKeyLegendWindow.Name = "btn_ShowKeyLegendWindow";
             btn_ShowKeyLegendWindow.Size = new System.Drawing.Size(164, 26);
@@ -2641,6 +2630,9 @@ namespace MB3D_Animation_Copilot
             // 
             // panel13
             // 
+            panel13.Controls.Add(ll_GithubRespository_About);
+            panel13.Controls.Add(ll_PCGithubURL_About);
+            panel13.Controls.Add(grp_Admin_JoytoKey);
             panel13.Controls.Add(autoLabel31);
             panel13.Controls.Add(autoLabel30);
             panel13.Controls.Add(autoLabel29);
@@ -2655,12 +2647,109 @@ namespace MB3D_Animation_Copilot
             panel13.Size = new System.Drawing.Size(1284, 540);
             panel13.TabIndex = 0;
             // 
+            // ll_GithubRespository_About
+            // 
+            ll_GithubRespository_About.ActiveLinkColor = System.Drawing.Color.White;
+            ll_GithubRespository_About.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            ll_GithubRespository_About.ForeColor = System.Drawing.Color.White;
+            ll_GithubRespository_About.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
+            ll_GithubRespository_About.LinkColor = System.Drawing.Color.White;
+            ll_GithubRespository_About.Location = new System.Drawing.Point(26, 373);
+            ll_GithubRespository_About.Name = "ll_GithubRespository_About";
+            ll_GithubRespository_About.Size = new System.Drawing.Size(325, 27);
+            ll_GithubRespository_About.TabIndex = 87;
+            ll_GithubRespository_About.Text = "The Copilot Project is located at Github.com";
+            ll_GithubRespository_About.VisitedLinkColor = System.Drawing.Color.Yellow;
+            ll_GithubRespository_About.LinkClicked += ll_GithubRespository_About_LinkClicked;
+            // 
+            // ll_PCGithubURL_About
+            // 
+            ll_PCGithubURL_About.ActiveLinkColor = System.Drawing.Color.White;
+            ll_PCGithubURL_About.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            ll_PCGithubURL_About.ForeColor = System.Drawing.Color.White;
+            ll_PCGithubURL_About.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
+            ll_PCGithubURL_About.LinkColor = System.Drawing.Color.White;
+            ll_PCGithubURL_About.Location = new System.Drawing.Point(26, 410);
+            ll_PCGithubURL_About.Name = "ll_PCGithubURL_About";
+            ll_PCGithubURL_About.Size = new System.Drawing.Size(414, 27);
+            ll_PCGithubURL_About.TabIndex = 86;
+            ll_PCGithubURL_About.Text = "The project support site is located at PatCook1.Github.io";
+            ll_PCGithubURL_About.VisitedLinkColor = System.Drawing.Color.Yellow;
+            ll_PCGithubURL_About.LinkClicked += ll_PCGithubURL_About_LinkClicked;
+            // 
+            // grp_Admin_JoytoKey
+            // 
+            grp_Admin_JoytoKey.Controls.Add(autoLabel32);
+            grp_Admin_JoytoKey.Controls.Add(ll_JoyToKey_About);
+            grp_Admin_JoytoKey.Controls.Add(lbl_Admin_JoyToKey_Loc);
+            grp_Admin_JoytoKey.Controls.Add(lbl_Admin_JoyToKey_Intro);
+            grp_Admin_JoytoKey.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            grp_Admin_JoytoKey.ForeColor = System.Drawing.Color.White;
+            grp_Admin_JoytoKey.Location = new System.Drawing.Point(780, 15);
+            grp_Admin_JoytoKey.Name = "grp_Admin_JoytoKey";
+            grp_Admin_JoytoKey.Size = new System.Drawing.Size(478, 188);
+            grp_Admin_JoytoKey.TabIndex = 22;
+            grp_Admin_JoytoKey.TabStop = false;
+            grp_Admin_JoytoKey.Text = "JoyToKey Mapping";
+            // 
+            // autoLabel32
+            // 
+            autoLabel32.AutoSize = false;
+            autoLabel32.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel32.Location = new System.Drawing.Point(11, 132);
+            autoLabel32.Name = "autoLabel32";
+            autoLabel32.Size = new System.Drawing.Size(451, 48);
+            autoLabel32.TabIndex = 88;
+            autoLabel32.Text = "The JoyToKey app mapping Configuration file is located in your installation folder and is named 'MB3D_JoyToKey.cfg'.";
+            autoLabel32.ThemeName = "HighContrastTheme";
+            autoLabel32.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F);
+            // 
+            // ll_JoyToKey_About
+            // 
+            ll_JoyToKey_About.ActiveLinkColor = System.Drawing.Color.White;
+            ll_JoyToKey_About.AutoSize = true;
+            ll_JoyToKey_About.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            ll_JoyToKey_About.ForeColor = System.Drawing.Color.White;
+            ll_JoyToKey_About.LinkArea = new System.Windows.Forms.LinkArea(0, 0);
+            ll_JoyToKey_About.LinkColor = System.Drawing.Color.White;
+            ll_JoyToKey_About.Location = new System.Drawing.Point(299, 99);
+            ll_JoyToKey_About.Name = "ll_JoyToKey_About";
+            ll_JoyToKey_About.Size = new System.Drawing.Size(160, 21);
+            ll_JoyToKey_About.TabIndex = 87;
+            ll_JoyToKey_About.Text = "JoyToKey Key Mapper";
+            ll_JoyToKey_About.VisitedLinkColor = System.Drawing.Color.Yellow;
+            ll_JoyToKey_About.LinkClicked += ll_JoyToKey_About_LinkClicked;
+            // 
+            // lbl_Admin_JoyToKey_Loc
+            // 
+            lbl_Admin_JoyToKey_Loc.AutoSize = false;
+            lbl_Admin_JoyToKey_Loc.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            lbl_Admin_JoyToKey_Loc.Location = new System.Drawing.Point(10, 99);
+            lbl_Admin_JoyToKey_Loc.Name = "lbl_Admin_JoyToKey_Loc";
+            lbl_Admin_JoyToKey_Loc.Size = new System.Drawing.Size(301, 21);
+            lbl_Admin_JoyToKey_Loc.TabIndex = 1;
+            lbl_Admin_JoyToKey_Loc.Text = "The JoyToKey app can be downloaded at:";
+            lbl_Admin_JoyToKey_Loc.ThemeName = "HighContrastTheme";
+            lbl_Admin_JoyToKey_Loc.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F);
+            // 
+            // lbl_Admin_JoyToKey_Intro
+            // 
+            lbl_Admin_JoyToKey_Intro.AutoSize = false;
+            lbl_Admin_JoyToKey_Intro.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            lbl_Admin_JoyToKey_Intro.Location = new System.Drawing.Point(10, 26);
+            lbl_Admin_JoyToKey_Intro.Name = "lbl_Admin_JoyToKey_Intro";
+            lbl_Admin_JoyToKey_Intro.Size = new System.Drawing.Size(462, 73);
+            lbl_Admin_JoyToKey_Intro.TabIndex = 0;
+            lbl_Admin_JoyToKey_Intro.Text = "The JoyToKey app provides mapping of a game controller or standard PC keyboard to the movement keys of the Mandelbulb3D Navigator.";
+            lbl_Admin_JoyToKey_Intro.ThemeName = "HighContrastTheme";
+            lbl_Admin_JoyToKey_Intro.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            // 
             // autoLabel31
             // 
             autoLabel31.AutoSize = false;
             autoLabel31.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             autoLabel31.ForeColor = System.Drawing.Color.White;
-            autoLabel31.Location = new System.Drawing.Point(14, 254);
+            autoLabel31.Location = new System.Drawing.Point(24, 251);
             autoLabel31.Name = "autoLabel31";
             autoLabel31.Size = new System.Drawing.Size(621, 52);
             autoLabel31.TabIndex = 21;
@@ -2673,7 +2762,7 @@ namespace MB3D_Animation_Copilot
             autoLabel30.AutoSize = false;
             autoLabel30.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             autoLabel30.ForeColor = System.Drawing.Color.White;
-            autoLabel30.Location = new System.Drawing.Point(14, 315);
+            autoLabel30.Location = new System.Drawing.Point(24, 312);
             autoLabel30.Name = "autoLabel30";
             autoLabel30.Size = new System.Drawing.Size(587, 47);
             autoLabel30.TabIndex = 20;
@@ -2686,7 +2775,7 @@ namespace MB3D_Animation_Copilot
             autoLabel29.AutoSize = false;
             autoLabel29.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             autoLabel29.ForeColor = System.Drawing.Color.White;
-            autoLabel29.Location = new System.Drawing.Point(16, 192);
+            autoLabel29.Location = new System.Drawing.Point(26, 189);
             autoLabel29.Name = "autoLabel29";
             autoLabel29.Size = new System.Drawing.Size(644, 48);
             autoLabel29.TabIndex = 19;
@@ -2699,7 +2788,7 @@ namespace MB3D_Animation_Copilot
             autoLabel28.AutoSize = false;
             autoLabel28.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             autoLabel28.ForeColor = System.Drawing.Color.White;
-            autoLabel28.Location = new System.Drawing.Point(16, 128);
+            autoLabel28.Location = new System.Drawing.Point(26, 125);
             autoLabel28.Name = "autoLabel28";
             autoLabel28.Size = new System.Drawing.Size(607, 50);
             autoLabel28.TabIndex = 18;
@@ -2710,7 +2799,7 @@ namespace MB3D_Animation_Copilot
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new System.Drawing.Point(501, 254);
+            label2.Location = new System.Drawing.Point(511, 251);
             label2.Name = "label2";
             label2.Size = new System.Drawing.Size(35, 13);
             label2.TabIndex = 17;
@@ -2721,7 +2810,7 @@ namespace MB3D_Animation_Copilot
             autoLabel27.AutoSize = false;
             autoLabel27.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             autoLabel27.ForeColor = System.Drawing.Color.White;
-            autoLabel27.Location = new System.Drawing.Point(16, 45);
+            autoLabel27.Location = new System.Drawing.Point(26, 42);
             autoLabel27.Name = "autoLabel27";
             autoLabel27.Size = new System.Drawing.Size(623, 73);
             autoLabel27.TabIndex = 15;
@@ -2732,7 +2821,7 @@ namespace MB3D_Animation_Copilot
             // autoLabel26
             // 
             autoLabel26.AutoSize = false;
-            autoLabel26.Location = new System.Drawing.Point(83, 65);
+            autoLabel26.Location = new System.Drawing.Point(93, 62);
             autoLabel26.Name = "autoLabel26";
             autoLabel26.Size = new System.Drawing.Size(394, 98);
             autoLabel26.TabIndex = 14;
@@ -2817,7 +2906,6 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
             splitContainer1.ResumeLayout(false);
             pnl_MovesList.ResumeLayout(false);
-            pnl_MovesList.PerformLayout();
             panel3.ResumeLayout(false);
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
@@ -2883,6 +2971,8 @@ namespace MB3D_Animation_Copilot
             page_About.ResumeLayout(false);
             panel13.ResumeLayout(false);
             panel13.PerformLayout();
+            grp_Admin_JoytoKey.ResumeLayout(false);
+            grp_Admin_JoytoKey.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -3079,7 +3169,13 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel31;
         private System.Windows.Forms.LinkLabel ll_PCGithubURL;
         private System.Windows.Forms.LinkLabel ll_GithubRespository;
-        private System.Windows.Forms.LinkLabel ll_JoyToKey;
+        private System.Windows.Forms.GroupBox grp_Admin_JoytoKey;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_Admin_JoyToKey_Loc;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_Admin_JoyToKey_Intro;
+        private System.Windows.Forms.LinkLabel ll_GithubRespository_About;
+        private System.Windows.Forms.LinkLabel ll_PCGithubURL_About;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel32;
+        private System.Windows.Forms.LinkLabel ll_JoyToKey_About;
     }
 }
 
