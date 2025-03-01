@@ -729,8 +729,8 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     //Query for a list of all keyframes for the project ID
-                    //This list is based on the then current keyframe number in ascending order
-                    var lstKeyframes = cnn.Query<KeyframeModel>("SELECT ID,FramesBetween,FrameCount" +
+                    //This list is based on the current keyframe number in ascending order
+                    var lstKeyframes = cnn.Query<KeyframeModel>("SELECT ID" +
                                       " FROM Keyframes" +
                                       " WHERE ProjectID_Ref = @ProjectID" +
                                       " ORDER BY KeyframeNum ASC",
@@ -739,19 +739,10 @@ namespace MB3D_Animation_Copilot.Classes
                         @ProjectID = argProjectID
                     });
 
-                    //Get the highest Keyframe number for the project ID argument
-                    var MaxKeyframeNumber = cnn.ExecuteScalar<int>("SELECT MIN(KeyframeNum)" +
-                                                          " FROM Keyframes" +
-                                                          " WHERE ProjectID_Ref = @ProjectID",
-                    param: new
-                    {
-                        @ProjectID = argProjectID,
-                    });
+                    //Create a variable with an initial value of the lowest keyframe number value (one)
+                    int intRunningKeyframeNumber = 1;
 
-                    //Create a variable with an initial valie of the lowerst keyframe number value
-                    int intRunningKeyframeNumber = MaxKeyframeNumber;
-
-                    //Loop the above list to update each keyframe of the project ID
+                    //Loop the above list to update each keyframe of the project ID to update the Keyframe number
                     foreach (KeyframeModel kf in lstKeyframes)
                     {
                         cnn.Execute("UPDATE Keyframes" +
@@ -1307,7 +1298,7 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("SELECT Step_ID, Step_Group, Step_Name, Step_Count, Step_SendKey ");
+                    sb.Append("SELECT Step_ID, Step_Group, Step_Name, Step_Count, Step_SendKey, Step_SendKeyQty ");
                     sb.Append("FROM Sequence_Steps ");
                     sb.Append("INNER JOIN Sequence_Parent ON Sequence_Parent.ID = Sequence_Steps.SequenceParent_ID ");
                     sb.Append("WHERE Sequence_Parent.ID = ");

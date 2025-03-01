@@ -242,6 +242,9 @@ namespace MB3D_Animation_Copilot
 
             _frm1.ThemeName = "HighContrastThemeExport";
 
+            MessageBoxAdv.MessageBoxStyle = MessageBoxAdv.Style.Metro;
+            MessageBoxAdv.ThemeName = "HighContrastTheme";
+
             //Sets the back color and fore color of the title bar.
             this.Style.TitleBar.BackColor = Color.Black;
             this.Style.TitleBar.ForeColor = Color.White;
@@ -969,7 +972,7 @@ namespace MB3D_Animation_Copilot
 
         private void btn_KeyframeAction_Update_Click(object sender, EventArgs e)
         {
-            if (num_SendKeyQuantity.Value > 0)
+            if (num_SendKeyQuantity.Value > 0 & num_SendKeyStepAngleCount.Value > 0)
             {
                 //Fetch the currently selected dropdown selection
                 KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
@@ -1010,13 +1013,13 @@ namespace MB3D_Animation_Copilot
 
                     //Calculate the Step/Angle count for the Keyframe display ONLY
                     int intStepAngleResult = (itemAction.SendKeyQuantity * itemAction.StepAngleCount);
-                    sb.Append(string.Concat(" {", intStepAngleResult.ToString(), "} "));
+                    sb.Append(string.Concat(" (", intStepAngleResult.ToString(), ") "));
                 }
 
                 Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
                 PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
 
-                LoadFooterMessage("Keyframe Move Action updated. Adjust your Mandelbulb3D keyframes accordingly.", false, true);
+                LoadFooterMessage("Keyframe Move Action updated. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
             }
             else
             {
@@ -1068,7 +1071,7 @@ namespace MB3D_Animation_Copilot
                 Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
                 PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
 
-                LoadFooterMessage("Keyframe Move Action deleted. Adjust your Mandelbulb3D keyframes accordingly.", false, true);
+                LoadFooterMessage("Keyframe Move Action deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
             }
         }
 
@@ -1099,7 +1102,7 @@ namespace MB3D_Animation_Copilot
                     return; //Bail
                 }
 
-                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Keyframe #'", cellValue_KFNum, "' and all of its Keyframe Move Actions? This can not be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Keyframe #", cellValue_KFNum, " and all of its Keyframe Move Actions? This can not be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result2 == DialogResult.Yes)
                 {
                     //Delete the keyframe by Keyframe ID
@@ -1226,8 +1229,7 @@ namespace MB3D_Animation_Copilot
 
                     PopulateKeyframesDatagrid(true); //Repopulate the Keyframe datagrid - set selected row to first
 
-                    LoadFooterMessage("Keyframes deleted. Adjust your Mandelbulb3D keyframes according.", false, true);
-
+                    LoadFooterMessage("Keyframes deleted. Adjust your Mandelbulb3D keyframes according.", true, true);
                 }
             }
             catch (Exception ex)
@@ -1281,12 +1283,12 @@ namespace MB3D_Animation_Copilot
                 if (intFromKeyframe == intToKeyframe)
                 {
                     //If replicating just one keyframe
-                    strConfirmationMessageText = string.Concat("This will replicate keyframe ", intFromKeyframe.ToString(), ", creating a new keyframe for it and will performing each of the Move Actions of the replicated keyframe. Do you want to proceed with the replication of this keyframe and its Move Actions?");
+                    strConfirmationMessageText = string.Concat("This will replicate keyframe ", intFromKeyframe.ToString(), ", creating a new keyframe for it and will performing each of the Move Actions of the replicated keyframe.", NL, "Do you want to proceed with the replication of this keyframe and its Move Actions?");
                 }
                 else
                 {
                     //Else replicating more than one keyframe
-                    strConfirmationMessageText = string.Concat("This will replicate keyframes ", intFromKeyframe.ToString(), " to ", intToKeyframe.ToString(), ", creating a new keyframe for each and performing the Move Action for each replicated keyframe. Do you want to proceed with the replication of these keyframes and the Move Actions of each keyframe?");
+                    strConfirmationMessageText = string.Concat("This will replicate keyframes ", intFromKeyframe.ToString(), " to ", intToKeyframe.ToString(), ", creating a new keyframe for each and performing the Move Action for each replicated keyframe.", NL, "Do you want to proceed with the replication of these keyframes and the Move Actions of each keyframe?");
                 }
 
                 //Get user confirmation
@@ -1703,6 +1705,9 @@ namespace MB3D_Animation_Copilot
             page_Library.TabEnabled = m_EnableCapture;
             page_Admin.TabEnabled = m_EnableCapture;
 
+            //App Move Sequence button
+            btn_UseImmediateSeq.Enabled = !m_EnableCapture;
+
             //Restore Point Controls - disabled while capturing
             btn_SetRestorePoint.Enabled = m_EnableCapture;
             btn_ClearRestorePoint.Enabled = m_EnableCapture;
@@ -1801,7 +1806,7 @@ namespace MB3D_Animation_Copilot
                 StringBuilder sv = new StringBuilder();
                 m_sbMovesList.Append(string.Concat("Be sure to modify the various entries of this new project to reflect the Mandelbulb3D application settings.", NL, NL));
                 m_sbMovesList.Append(string.Concat("New Project Checklist:", NL));
-                m_sbMovesList.Append(string.Concat("1. Provide Project Name & Description", NL));
+                m_sbMovesList.Append(string.Concat("1. Provide Project Name and Description", NL));
                 m_sbMovesList.Append(string.Concat("2. Set Mandelbulb3D File Locations", NL));
                 m_sbMovesList.Append(string.Concat("3. Set Sliding/Walking Step Count", NL));
                 m_sbMovesList.Append(string.Concat("4. Set Looking/Rolling Angle", NL));
@@ -1820,12 +1825,14 @@ namespace MB3D_Animation_Copilot
 
         private void DeleteAnimationProject()
         {
+            var NL = Environment.NewLine;
+
             if (drp_ProjectList.SelectedItem != null)
             {
                 ProjectListModel selectedProject = (ProjectListModel)drp_ProjectList.SelectedItem; //Get the selected project item
                 if (selectedProject.ID >= 0)
                 {
-                    DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete animation project '", selectedProject.Project_Name, "'? This will also delete all keyframe and keyframe action records."), "Confirm Delete?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete animation project '", selectedProject.Project_Name, "'?", NL, "This will also delete all keyframe and keyframe action records."), "Confirm Delete?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                     if (result == DialogResult.Yes)
                     {
                         try
@@ -2196,11 +2203,8 @@ namespace MB3D_Animation_Copilot
 
             if (m_EnableCapture == false)
             {
-                DialogResult result1 = MessageBoxAdv.Show(string.Concat("Capturing is NOT enabled. Do you still want to execute the Move Steps of the selected Move Sequence?"), "Confirm Move Steps", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (result1 != DialogResult.Yes)
-                {
-                    return;
-                }
+                MessageBoxAdv.Show(string.Concat("Capturing is NOT enabled. Please enable capturing mode to apply a Move Sequence"), "Can't Proceed", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
             }
 
             try
@@ -2218,7 +2222,7 @@ namespace MB3D_Animation_Copilot
 
                     var NL = Environment.NewLine;
                     int CountAngleValue = 1;
-                    bool MakeNewKeframe = false;
+                    bool CanMakeNewKeframe = false;
                     int LoopIndex = 0;
 
                     m_HaveMovesToProcess = true;
@@ -2242,20 +2246,20 @@ namespace MB3D_Animation_Copilot
                         switch (MoveStep.Step_Name)
                         {
                             case cWFn or cWRn or cSUn or cSDn or cSLn or cSRn:
-                                CountAngleValue = (MoveStep.Step_Count * SlidingWalkingCount);
+                                CountAngleValue = (MoveStep.Step_SendKeyQty * SlidingWalkingCount);
                                 break;
                             case cLUn or cLDn or cLLn or cLRn or cRCCn or cRCWn:
-                                CountAngleValue = (MoveStep.Step_Count * LookingRollingAngle);
+                                CountAngleValue = (MoveStep.Step_SendKeyQty * LookingRollingAngle);
                                 break;
                         }
-                        sbDisplaySummary.Append(string.Concat(MoveStep.Step_Name, MoveStep.Step_Count.ToString(), " (", CountAngleValue.ToString(), ")", NL));
+                        sbDisplaySummary.Append(string.Concat(MoveStep.Step_Name, MoveStep.Step_SendKeyQty.ToString(), " (", CountAngleValue.ToString(), ")", NL));
 
                         //Update the UI with the MovesList of this loop cycle
                         lbl_MovesList.Text = sbDisplaySummary.ToString();
                         this.Refresh();
 
-                        //Loop for the number of times specified by Step_Count
-                        for (int i = 0; i < MoveStep.Step_Count; i++)
+                        //Loop for the number of times specified by Step_SendKeyQty
+                        for (int i = 0; i < MoveStep.Step_SendKeyQty; i++)
                         {
                             m_StepAngleCountDefaultBypass = (int)MoveStep.Step_Count; //This passes the Step/Angle count to the UpdateKeyStepList procedure
 
@@ -2273,24 +2277,24 @@ namespace MB3D_Animation_Copilot
                         //keyframe and advance to the next group of move steps.
                         //Note: The collection in lstStepsList comes in as sorted by Step_Group
 
-                        MakeNewKeframe = false; //Assume we are not at the end of a group
+                        CanMakeNewKeframe = false; //Assume we are not at the end of a group
                         try
                         {
                             //Look ahead to see if we have more steps in the group
                             if (lstStepsList[LoopIndex + 1].Step_Group != (int)MoveStep.Step_Group)
                             {
                                 //If the group has ended, then set the MakeNewKeyframe flag to true
-                                MakeNewKeframe = true;
+                                CanMakeNewKeframe = true;
                             }
                         }
                         catch
                         {
                             //If we throw an error because there is not a next element of lstStepsList
                             //then set the MakeNewKeyframe flag to true.
-                            MakeNewKeframe = true;
+                            CanMakeNewKeframe = true;
                         }
 
-                        if (MakeNewKeframe)
+                        if (CanMakeNewKeframe)
                         {
                             //Call MakeNewKeyframe
                             MakeNewKeyframe(false, true, false, sbDisplaySummary.ToString(), true);
@@ -2741,7 +2745,7 @@ namespace MB3D_Animation_Copilot
                 if (bolIsNoActionMove)
                 {
                     //Display a footer message
-                    LoadFooterMessage("No-move keyframe created. Adjust your Mandelbulb3D keyframes accordingly.", false, true);
+                    LoadFooterMessage("No-move keyframe created. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
                 }
 
                 PopulateKeyframesDatagrid(true);  //Populate the Keyframes list and select the first datagrid row
@@ -2837,7 +2841,7 @@ namespace MB3D_Animation_Copilot
             //This handles situations where the AutoMove is enabled when the record mode turns off
             if (m_EnableCapture)
             {
-                if (m_EnableAutoMove & drp_AutoLastMove.SelectedIndex > 0 & nup_AutoMoveQuantity.Value > 0)
+                if (m_EnableAutoMove & drp_AutoLastMove.SelectedIndex >= 0 & nup_AutoMoveQuantity.Value > 0)
                 {
                     ProcessAutoLastMove();
                 }
@@ -2854,7 +2858,7 @@ namespace MB3D_Animation_Copilot
 
             //If m_EnableAutoMove is true and a move is selected from the dropdown control
             //and a Step is selected and the Step quantity is greater than zero
-            if (m_EnableAutoMove & drp_AutoLastMove.SelectedIndex > 0 & nup_AutoMoveQuantity.Value > 0)
+            if (m_EnableAutoMove & drp_AutoLastMove.SelectedIndex >= 0 & nup_AutoMoveQuantity.Value > 0)
             {
                 SetBusyIndicator(true); //Show the Busy Indicator
 
@@ -3134,7 +3138,7 @@ namespace MB3D_Animation_Copilot
                 int intRPFrameCount = m_RestorePointDic["TotalFrameCount"]; //The Total Frame Count
                 int intRPLastKeyframeNumber = m_RestorePointDic["LastKeyFrameNumber"]; //The selected keyframe value
 
-                DialogResult result = MessageBoxAdv.Show(string.Concat("This will reset your keyframe work to the last Set Restore Point. The last Set Restore Point is as follows:", NL, NL, "Next KeyFrame # = ", intRPNextKeyframeNumber.ToString(), NL, "Total Frame Count = ", intRPFrameCount.ToString(), NL, "Last Keyframe = ", intRPLastKeyframeNumber.ToString(), NL, NL, "Do you want to proceed?"), "Confirm Restore Point", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBoxAdv.Show(string.Concat("This will reset your keyframe work to the last Set Restore Point as described below.", NL, "The last Set Restore Point is as follows:", NL, NL, "Next KeyFrame # = ", intRPNextKeyframeNumber.ToString(), NL, "Total Frame Count = ", intRPFrameCount.ToString(), NL, "Last Keyframe = ", intRPLastKeyframeNumber.ToString(), NL, NL, "Do you want to proceed?"), "Confirm Restore Point", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     //Restore the next keyframe value

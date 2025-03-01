@@ -776,12 +776,12 @@ namespace MB3D_Animation_Copilot
             // 
             mtbx_FramesBetween.ForeColor = System.Drawing.SystemColors.WindowText;
             mtbx_FramesBetween.HideTrailingZeros = true;
-            mtbx_FramesBetween.Location = new System.Drawing.Point(993, 158);
+            mtbx_FramesBetween.Location = new System.Drawing.Point(1017, 156);
             mtbx_FramesBetween.MaxLength = 4;
             mtbx_FramesBetween.MaxValue = 5000D;
             mtbx_FramesBetween.MinValue = 1D;
             mtbx_FramesBetween.Name = "mtbx_FramesBetween";
-            mtbx_FramesBetween.Size = new System.Drawing.Size(72, 23);
+            mtbx_FramesBetween.Size = new System.Drawing.Size(52, 23);
             mtbx_FramesBetween.Style.FocusBorderColor = System.Drawing.Color.FromArgb(0, 120, 215);
             mtbx_FramesBetween.Style.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             mtbx_FramesBetween.TabIndex = 75;
@@ -949,7 +949,7 @@ namespace MB3D_Animation_Copilot
             // 
             autoLabel12.BackColor = System.Drawing.Color.Transparent;
             autoLabel12.ForeColor = System.Drawing.Color.White;
-            autoLabel12.Location = new System.Drawing.Point(969, 136);
+            autoLabel12.Location = new System.Drawing.Point(919, 161);
             autoLabel12.Name = "autoLabel12";
             autoLabel12.Size = new System.Drawing.Size(96, 15);
             autoLabel12.TabIndex = 61;
@@ -1956,6 +1956,7 @@ namespace MB3D_Animation_Copilot
             // btn_UseImmediateSeq
             // 
             btn_UseImmediateSeq.AllowWrapText = true;
+            btn_UseImmediateSeq.Enabled = false;
             btn_UseImmediateSeq.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             btn_UseImmediateSeq.Location = new System.Drawing.Point(315, 28);
             btn_UseImmediateSeq.Margin = new System.Windows.Forms.Padding(4);
