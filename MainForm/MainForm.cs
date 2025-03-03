@@ -56,8 +56,6 @@ namespace MB3D_Animation_Copilot
     {
         #region Public Variables ==========================================
 
-        private static MainForm _frm1;
-
         public int intKeyEventThreadSleep = 1000; //The Sleep delay use in move sequences
 
         public StringBuilder m_sbMovesList = new StringBuilder(); //Move List
@@ -238,9 +236,8 @@ namespace MB3D_Animation_Copilot
         public MainForm()
         {
             InitializeComponent();
-            _frm1 = this;
 
-            _frm1.ThemeName = "HighContrastThemeExport";
+            this.ThemeName = "HighContrastThemeExport";
 
             MessageBoxAdv.MessageBoxStyle = MessageBoxAdv.Style.Metro;
             MessageBoxAdv.ThemeName = "HighContrastTheme";
@@ -729,8 +726,8 @@ namespace MB3D_Animation_Copilot
                 }
                 catch (Exception ex)
                 {
-                    //var error = ex.Message;
-                    MessageBoxAdv.Show(ex.Message, "Error @ btn_FindM3PIFile_Click", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LogException("btn_FindM3PIFile_Click", ex); //Log this error
+                    MessageBoxAdv.Show(ex.Message, "Error @ btn_FindM3PIFile_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -749,8 +746,8 @@ namespace MB3D_Animation_Copilot
                 }
                 catch (Exception ex)
                 {
-                    //var error = ex.Message;
-                    MessageBoxAdv.Show(ex.Message, "Error @ btn_FindM3A_Click", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    LogException("btn_FindM3AFile_Click", ex); //Log this error
+                    MessageBoxAdv.Show(ex.Message, "Error @ btn_FindM3A_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -1132,8 +1129,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ btn_DeleteKeyframe_Click", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("btn_DeleteKeyframe_Click", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ btn_DeleteKeyframe_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1234,8 +1231,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ DeleteKeyframeRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("DeleteKeyframeRange", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DeleteKeyframeRange. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1423,8 +1420,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ ReplicateKeyframeRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ReplicateKeyframeRange/PerformSequenceReplicate",ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ReplicateKeyframeRange/PerformSequenceReplicate. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1468,8 +1465,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ ApproveKeyframeRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ApproveKeyframeRange",ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ApproveKeyframeRange. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1501,8 +1498,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ UpdateFarPlaneRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("UpdateFarPlaneRange", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ UpdateFarPlaneRange. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1545,8 +1542,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ UpdateFramesBetweenRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("UpdateFramesBetweenRange", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ UpdateFramesBetweenRange. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1612,8 +1609,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ MakeMoveSequenceFromRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("MakeMoveSequenceFromRange", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ MakeMoveSequenceFromRange. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1845,8 +1842,8 @@ namespace MB3D_Animation_Copilot
                         }
                         catch (Exception ex)
                         {
-                            //string error = ex.Message;
-                            MessageBoxAdv.Show(ex.Message, "Error @ DeleteAnimationProject", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            LogException("DeleteAnimationProject", ex); //Log this error
+                            MessageBoxAdv.Show(ex.Message, "Error @ DeleteAnimationProject. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
 
                         //Repopulate the project dropdown
@@ -1939,8 +1936,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //string error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ SaveAnimationProject", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("SaveAnimationProject", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ SaveAnimationProject. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2045,7 +2042,21 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(string.Concat("There was an error saving the project keyframes to a file. ", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("btn_SaveToFile_Click", ex); //Log this error
+                MessageBoxAdv.Show(string.Concat("There was an error saving the project keyframes to a file. Error was logged.", ex.Message), "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public int GetStepAngleCountValue_FromMainForm(string Step_Name)
+        {
+            switch (Step_Name)
+            {
+                case cWFn or cWRn or cSUn or cSDn or cSLn or cSRn:
+                    return (int)mtbx_SlidingWalkingCount.Value;
+                case cLUn or cLDn or cLLn or cLRn or cRCCn or cRCWn:
+                    return (int)mtbx_LookingRollingAngle.Value;
+                default:
+                    return 0;
             }
         }
 
@@ -2315,8 +2326,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ ApplyImmediateSeq", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ApplyImmediateSeq", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ApplyImmediateSeq. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -2498,7 +2509,7 @@ namespace MB3D_Animation_Copilot
                 var NL = Environment.NewLine;
                 MessageBoxAdv.Show(string.Concat("This application requires the JoyToKey application to map a hand-held game controller or standard", NL, "PC keboard to the keys used for Mandlebulb3D animation. See the 'About' tab of this", NL, "application for instructions running the JoyToKey application with the appropriate configuration."), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
-        }
+            }
             else
             {
                 lbl_JTK_AppRun_Warn.Visible = false;
@@ -2808,8 +2819,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //string x = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ MakeNewKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                LogException("MakeNewKeyframe", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ MakeNewKeyframe. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
         }
 
@@ -3014,8 +3025,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //string x = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ RepeatLastMove", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("RepeatLastMove", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ RepeatLastMove. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -3193,7 +3204,7 @@ namespace MB3D_Animation_Copilot
                 //////    {
                 //////        int vkCode = Marshal.ReadInt32(lParam);
                 //////        //Console.WriteLine($"KEYDOWN=[{(Keys)vkCode}]");
-                //////        _frm1.ProcessKeyUpEvent_ForSeqRecording(((Keys)vkCode).ToString());
+                //////        Program._MainForm.ProcessKeyUpEvent_ForSeqRecording(((Keys)vkCode).ToString());
                 //////    }
 
                 //////    return IntPtr.Zero;
@@ -3214,7 +3225,7 @@ namespace MB3D_Animation_Copilot
                     {
                         //If the incoming key is NOT MakeNewKeyframe (cMNKk) ...
                         if (strKey != cMNKk) { m_BlockInsertKeyframe = true; } //...block an Insert Keyframe command
-                        _frm1.ProcessKeyDownEvent(strKey); //...and pass the incoming key command
+                        Program._MainForm.ProcessKeyDownEvent(strKey); //...and pass the incoming key command
                     }
                     else
                     {
@@ -3236,7 +3247,7 @@ namespace MB3D_Animation_Copilot
                     }
                     else
                     {
-                        _frm1.ProcessKeyUpEvent(strKey);
+                        Program._MainForm.ProcessKeyUpEvent(strKey);
                     }
                 }
 
@@ -3245,8 +3256,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //string x = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ HookCallback", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("HookCallback", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ HookCallback. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return IntPtr.Zero;
             }
         }
@@ -3855,9 +3866,10 @@ namespace MB3D_Animation_Copilot
 
             //Column definitions
             dgv_ManageMoveSequence.Columns.Add(new GridNumericColumn() { MappingName = "Step_ID", HeaderText = "Step ID", Width = 50, AllowEditing = false, Visible = false, Format = "0.#####" });
-            dgv_ManageMoveSequence.Columns.Add(new GridNumericColumn() { MappingName = "Step_Group", HeaderText = "Step Group", MinimumWidth = 8, Width = 75, AllowEditing = false, Format = "0.#####" });
-            dgv_ManageMoveSequence.Columns.Add(new GridNumericColumn() { MappingName = "Step_Name", HeaderText = "Step Name", MinimumWidth = 8, Width = 75, AllowEditing = false });
-            dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_Count", HeaderText = "Step/Angle Count", MinimumWidth = 8, Width = 125, AllowEditing = false, Format = "0.#####" });
+            dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_Group", HeaderText = "Step Group", MinimumWidth = 8, Width = 75, AllowEditing = false, Visible = false, Format = "0.#####" });
+            dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_Name", HeaderText = "Step Name", MinimumWidth = 8, Width = 75, AllowEditing = false });
+            dgv_ManageMoveSequence.Columns.Add(new GridNumericColumn() { MappingName = "Step_SendKeyQty", HeaderText = "Send Qty", MinimumWidth = 8, Width = 75, AllowEditing = false, Format = "0.#####" });
+            dgv_ManageMoveSequence.Columns.Add(new GridNumericColumn() { MappingName = "Step_Count", HeaderText = "Step Count", MinimumWidth = 8, Width = 75, AllowEditing = false, Format = "0.#####" });
             dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_SendKey", HeaderText = "Send Key", MinimumWidth = 8, Width = 75, AllowEditing = false, Visible = false });
             dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_Display", HeaderText = "Step Display", MinimumWidth = 8, Width = 100, AllowEditing = false });
 
@@ -3901,15 +3913,17 @@ namespace MB3D_Animation_Copilot
 
             var cellValue_StepID = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_ID"); //Get the Step_ID column value
             m_SelectedMoveSeqStepID = (int)cellValue_StepID; //Update the global variable value
-            var cellValue_Step_Name = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_Name"); //Get the Step_Name column value            
+            var cellValue_Step_Name = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_Name"); //Get the Step_Name column value
+            var cellValue_Step_SendKey = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_SendKey"); //Get the Step_SendKey column value
+            var cellValue_Step_SendKeyQty = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_SendKeyQty"); //Get the Step_SendKeyQty column value
             var cellValue_Step_Count = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_Count"); //Get the Step_ID column value
 
             //Show which step is selected for possible editing
             lbl_ManageSeqSelected.Text = string.Concat("Selected Step is Step ID:", m_SelectedMoveSeqStepID.ToString(), ", Step Name:", cellValue_Step_Name.ToString(), " Step/Angle Count:", cellValue_Step_Count.ToString());
 
             //Set the controls per the selected Move Step values
-            drp_ManageSeqStepNameList.SelectedItem = cellValue_Step_Name;
-            num_ManageSeqStepCount.Value = (int)cellValue_Step_Count;
+            drp_ManageSeqStepNameList.SelectedValue = cellValue_Step_SendKey;
+            num_ManageSeqSendKeyQty.Value = (int)cellValue_Step_SendKeyQty;
         }
 
         private void btn_ManageSeqUpdateStep_Click(object sender, EventArgs e)
@@ -3928,34 +3942,36 @@ namespace MB3D_Animation_Copilot
                 return;
             }
 
-            if (drp_ManageSeqStepNameList.SelectedIndex <= 0)
+            //Let's make sure the user has selected a Seq Step name from the dropdown list
+            if (drp_ManageSeqStepNameList.SelectedValue.ToString() == "")
             {
-                MessageBoxAdv.Show(this, "Please select a Move Step.", "Move Step Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show(this, "Please select a Step Name.", "Move Step Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 drp_ManageSeqStepNameList.Select();
                 return;
             }
 
-            //Get delete confirmation
+            //Get modify confirmation
             DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to modify Move Step '", cellValue_Step_Display, "'? This cannot be undone!"), "Confirm Step Change", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
                 //Collect the data values for the step addition
-                MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
-                string SeqParentID = selectedSeq.ID.ToString(); //Get the selected sequence parent ID
+                MoveSequenceModel selectedSeqName = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
+                string SeqParentID = selectedSeqName.ID.ToString(); //Get the selected sequence parent ID
+
                 StepNameListModel selectedStepNameList = (StepNameListModel)drp_ManageSeqStepNameList.SelectedItem;
 
                 //Get the step values from the selectedStepNameList object
-                string StepName = selectedStepNameList.Step_Name; //Get the selected step StepName (ex WF)
-                string StepSendKey = selectedStepNameList.Step_SendKey; //Get the selected step SendKey (ex w)
+                string StepName = selectedStepNameList.Step_Name.ToString(); //Get the selected step StepName (ex WF)
+                string StepSendKey = selectedStepNameList.Step_SendKey.ToString(); //Get the selected step SendKey (ex w)
 
-                //Get the entered step count
+                //Get the entered send key count
                 //Minimum value of control is one so no need to check for zero entry
-                int StepCountEntry = (int)num_ManageSeqStepCount.Value;
+                int StepCountEntry = (int)num_ManageSeqSendKeyQty.Value;
 
                 //Call the update to the Step per Step_ID
                 Data_Access_Methods.ManageSeqUpdateStep((int)cellValue_StepID, (int)cellValue_StepGroup, StepName, StepCountEntry, StepSendKey);
 
-                num_ManageSeqStepCount.Value = 1; //Restore the step count entry to 1 before this step update
+                num_ManageSeqSendKeyQty.Value = 1; //Restore the step count entry to 1 after this step update
 
                 //Reload the Steps dataggrid
                 LoadSequenceSteps(m_SelectedMoveSequenceID, false);
@@ -3999,7 +4015,8 @@ namespace MB3D_Animation_Copilot
 
         private void btn_ManageSeqAddStep_Click(object sender, EventArgs e)
         {
-            if (drp_ManageSeqStepNameList.SelectedIndex <= 0)
+            //Let's make sure the user has selected a Seq Step name from the dropdown list
+            if (drp_ManageSeqStepNameList.SelectedValue.ToString() == "")
             {
                 MessageBoxAdv.Show(this, "Please select a Move Step.", "Move Step Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 drp_ManageSeqStepNameList.Select();
@@ -4017,7 +4034,7 @@ namespace MB3D_Animation_Copilot
             string MoveStepSendKey = selectedStepNameList.Step_SendKey; //Get the selected step SendKey (ex w)
 
             //Get the entered step count
-            int MoveStepCount = (int)num_ManageSeqStepCount.Value;
+            int MoveStepCount = (int)num_ManageSeqSendKeyQty.Value;
 
             //Call the add Move Step proc
             Data_Access_Methods.ManageSeqAddMoveStep(MoveSeqParentID, MoveStepGroup, MoveStepName, MoveStepCount, MoveStepSendKey);
@@ -4111,7 +4128,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(ex.Message, "Error @ LoadConnectionString", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("GetDatabaseFilePathName", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ GetDatabaseFilePathName. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
             lbl_DatabaseFileInUse.Text = dbFilePathName;
@@ -4172,8 +4190,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //string error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ btn_DBAdmin_Backup_Click", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("btn_DBAdmin_Backup_Click", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ btn_DBAdmin_Backup_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -4219,8 +4237,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                //string error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ btn_DBAdmin_Restore_Click", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("btn_DBAdmin_Restore_Click", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ btn_DBAdmin_Restore_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -4240,7 +4258,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(ex.Message, "Error @ ll_GithubRespository_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ll_GithubRespository_LinkClicked", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_GithubRespository_LinkClicked. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -4256,7 +4275,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(ex.Message, "Error @ ll_GithubRespository_About_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ll_GithubRespository_About_LinkClicked", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_GithubRespository_About_LinkClicked. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -4272,7 +4292,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(ex.Message, "Error @ ll_PCGithubURL_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ll_PCGithubURL_LinkClicked", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_PCGithubURL_LinkClicked. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -4288,7 +4309,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(ex.Message, "Error @ ll_PCGithubURL_About_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ll_PCGithubURL_About_LinkClicked", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_PCGithubURL_About_LinkClicked. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -4304,7 +4326,8 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(ex.Message, "Error @ ll_JoyToKey_About_LinkClicked", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("ll_JoyToKey_About_LinkClicked", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ ll_JoyToKey_About_LinkClicked. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -4493,7 +4516,34 @@ namespace MB3D_Animation_Copilot
         [DllImport("User32.dll")]
         public static extern bool SetCursorPos(int x, int y);
 
-    }
+        #endregion
 
-    #endregion
+        #region Error Handling and Logging =========================================================================== 
+
+        public void LogException(string argProcedureName, Exception ex)
+        {
+
+            string ErrorFilePathName = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"/", ConfigurationManager.AppSettings["ErrorLogFileName"]);
+
+            using (StreamWriter writer = new StreamWriter(ErrorFilePathName, true))
+            {
+                writer.WriteLine("-----------------------------------------------------------------------------");
+                writer.WriteLine("Error @ " + argProcedureName);
+                writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
+
+                writer.WriteLine();
+                while (ex != null)
+                {
+                    writer.WriteLine(ex.GetType().FullName);
+                    writer.WriteLine("Message : " + ex.Message);
+                    writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                    ex = ex.InnerException;
+                }
+            }
+        }
+
+        #endregion
+
+    }
 }

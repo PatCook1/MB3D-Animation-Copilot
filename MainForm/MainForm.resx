@@ -121,7 +121,7 @@
     <value>409, 27</value>
   </metadata>
   <data name="autoLabel17.Text" xml:space="preserve">
-    <value>Note: Walking and sliding Move Steps use the 'Sliding+Walking step' setting of the Mandlebulb3D Navigator. Looking and rolling Move Steps use the 'Looking+Rolling angle' setting of the Mandlebulb3D Navigator.</value>
+    <value>For the Step Count value: Walking and sliding move steps (WF, WR, SR, SL, SU and SD) use the 'Sliding+Walking Step Count' value of the top panel of this application. Looking and rolling move steps (LR, LL, LU, LD, RC and RCC) use the 'Looking+Rolling Step Angle' value of the top panel of this application.</value>
   </data>
   <data name="autoLabel21.Text" xml:space="preserve">
     <value>Capture and store Mandelbulb3D project information into a local database, including the MP3 parameter set, project file locations, keyframe data and screenshots of the Mandelbulb graphics. The goal is to have a local source of information that describes each Mandelbulb3D project that is in the works or that has been completed and published.</value>

@@ -5,14 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace MB3D_Animation_Copilot
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
+        public static MainForm _MainForm = new MainForm();
+
         [STAThread]
         static void Main()
         {
@@ -26,7 +26,8 @@ namespace MB3D_Animation_Copilot
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MainForm());
+
+            Application.Run(_MainForm);
         }
     }
 }

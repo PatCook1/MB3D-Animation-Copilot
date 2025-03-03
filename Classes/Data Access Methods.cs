@@ -1317,6 +1317,7 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
+
         public static void ManageSeqUpdateStep(int argStepID, int argStepGroup, string argStepName, int argStepCount, string argStepSendKey)
         {
             try
@@ -1327,6 +1328,7 @@ namespace MB3D_Animation_Copilot.Classes
                         " SET Step_Group=@StepGroup," +
                         " Step_Name=@StepName," +
                         " Step_Count=@StepCount," +
+                        " Step_SendKeyQty=@StepSendKeyQty," +
                         " Step_SendKey=@StepSendKey " +
                         " WHERE Step_ID = @StepID ",
                     param: new
@@ -1334,6 +1336,7 @@ namespace MB3D_Animation_Copilot.Classes
                         @StepGroup = argStepGroup,
                         @StepName = argStepName,
                         @StepCount = argStepCount,
+                        @StepSendKeyQty = argStepCount,
                         @StepSendKey = argStepSendKey,
                         @StepID = argStepID
                     });
@@ -1353,15 +1356,27 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     cnn.Execute("INSERT INTO Sequence_Steps " +
-                                "(SequenceParent_ID, Step_Group, Step_Name, Step_Count, Step_SendKey) " +
-                                "VALUES(@SequenceParentID, @StepGroup, @MoveStepName, @MoveStepCount, @MoveStepSendKey)",
+                                "(SequenceParent_ID," +
+                                " Step_Group," +
+                                " Step_Name," +
+                                " Step_Count," +
+                                " Step_SendKey, " +
+                                " Step_SendKeyQty) " +
+                                "VALUES(@SequenceParentID," +
+                                " @StepGroup," +
+                                " @MoveStepName," +
+                                " @MoveStepCount," +
+                                " @MoveStepSendKey," +
+                                " @MoveSendKeyQty)",
                     param: new
                     {
                         @SequenceParentID = argSequenceParentID,
                         @StepGroup = argStepGroup,
                         @MoveStepName = argMoveStepName,
                         @MoveStepCount = argMoveStepCount,
-                        @MoveStepSendKey = argMoveStepSendKey
+                        @MoveStepSendKey = argMoveStepSendKey,
+                        @MoveSendKeyQty = argMoveStepCount,
+
                     });
                 }
             }

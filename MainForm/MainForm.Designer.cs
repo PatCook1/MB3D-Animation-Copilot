@@ -162,7 +162,7 @@ namespace MB3D_Animation_Copilot
             btn_ManageSeqDeleteStep = new Syncfusion.WinForms.Controls.SfButton();
             btn_ManageSeqUpdateStep = new Syncfusion.WinForms.Controls.SfButton();
             drp_ManageSeqStepNameList = new Syncfusion.WinForms.ListView.SfComboBox();
-            num_ManageSeqStepCount = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
+            num_ManageSeqSendKeyQty = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
             autoLabel19 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel18 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             lbl_ManageSeqSelected = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -280,7 +280,7 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)dgv_ManageMoveSequence).BeginInit();
             panel4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)drp_ManageSeqStepNameList).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)num_ManageSeqStepCount).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)num_ManageSeqSendKeyQty).BeginInit();
             panel_ManageSeqTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_SequenceDesc_Manage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)drp_ManageSeqMoveSequences).BeginInit();
@@ -2079,7 +2079,7 @@ namespace MB3D_Animation_Copilot
             panel4.Controls.Add(btn_ManageSeqDeleteStep);
             panel4.Controls.Add(btn_ManageSeqUpdateStep);
             panel4.Controls.Add(drp_ManageSeqStepNameList);
-            panel4.Controls.Add(num_ManageSeqStepCount);
+            panel4.Controls.Add(num_ManageSeqSendKeyQty);
             panel4.Controls.Add(autoLabel19);
             panel4.Controls.Add(autoLabel18);
             panel4.Controls.Add(lbl_ManageSeqSelected);
@@ -2093,20 +2093,20 @@ namespace MB3D_Animation_Copilot
             // autoLabel17
             // 
             autoLabel17.AutoSize = false;
-            autoLabel17.Location = new System.Drawing.Point(28, 129);
+            autoLabel17.Location = new System.Drawing.Point(26, 118);
             autoLabel17.Name = "autoLabel17";
-            autoLabel17.Size = new System.Drawing.Size(345, 52);
+            autoLabel17.Size = new System.Drawing.Size(351, 67);
             autoLabel17.TabIndex = 36;
             autoLabel17.Text = resources.GetString("autoLabel17.Text");
             // 
             // btn_ManageSeqAddStep
             // 
             btn_ManageSeqAddStep.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_ManageSeqAddStep.Location = new System.Drawing.Point(28, 257);
+            btn_ManageSeqAddStep.Location = new System.Drawing.Point(28, 269);
             btn_ManageSeqAddStep.Name = "btn_ManageSeqAddStep";
-            btn_ManageSeqAddStep.Size = new System.Drawing.Size(157, 33);
+            btn_ManageSeqAddStep.Size = new System.Drawing.Size(203, 33);
             btn_ManageSeqAddStep.TabIndex = 35;
-            btn_ManageSeqAddStep.Text = "Add Move Step";
+            btn_ManageSeqAddStep.Text = "Add as New Move Step";
             btn_ManageSeqAddStep.ThemeName = "HighContrastTheme";
             btn_ManageSeqAddStep.Click += btn_ManageSeqAddStep_Click;
             // 
@@ -2126,12 +2126,12 @@ namespace MB3D_Animation_Copilot
             btn_ManageSeqDeleteStep.AllowWrapText = true;
             btn_ManageSeqDeleteStep.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_ManageSeqDeleteStep.ForeColor = System.Drawing.Color.Red;
-            btn_ManageSeqDeleteStep.Location = new System.Drawing.Point(295, 184);
+            btn_ManageSeqDeleteStep.Location = new System.Drawing.Point(295, 196);
             btn_ManageSeqDeleteStep.Name = "btn_ManageSeqDeleteStep";
-            btn_ManageSeqDeleteStep.Size = new System.Drawing.Size(78, 55);
+            btn_ManageSeqDeleteStep.Size = new System.Drawing.Size(78, 73);
             btn_ManageSeqDeleteStep.Style.ForeColor = System.Drawing.Color.Red;
             btn_ManageSeqDeleteStep.TabIndex = 33;
-            btn_ManageSeqDeleteStep.Text = "Delete Move Step";
+            btn_ManageSeqDeleteStep.Text = "Delete Selected Move Step";
             btn_ManageSeqDeleteStep.ThemeName = "HighContrastTheme";
             toolTip1.SetToolTip(btn_ManageSeqDeleteStep, "Delete the selected Move Step");
             btn_ManageSeqDeleteStep.Click += btn_ManageSeqDeleteStep_Click;
@@ -2139,11 +2139,11 @@ namespace MB3D_Animation_Copilot
             // btn_ManageSeqUpdateStep
             // 
             btn_ManageSeqUpdateStep.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_ManageSeqUpdateStep.Location = new System.Drawing.Point(28, 184);
+            btn_ManageSeqUpdateStep.Location = new System.Drawing.Point(28, 196);
             btn_ManageSeqUpdateStep.Name = "btn_ManageSeqUpdateStep";
-            btn_ManageSeqUpdateStep.Size = new System.Drawing.Size(157, 55);
+            btn_ManageSeqUpdateStep.Size = new System.Drawing.Size(203, 55);
             btn_ManageSeqUpdateStep.TabIndex = 32;
-            btn_ManageSeqUpdateStep.Text = "Update Move Step";
+            btn_ManageSeqUpdateStep.Text = "Update Selected Move Step";
             btn_ManageSeqUpdateStep.ThemeName = "HighContrastTheme";
             toolTip1.SetToolTip(btn_ManageSeqUpdateStep, "Update the selected Move Step");
             btn_ManageSeqUpdateStep.Click += btn_ManageSeqUpdateStep_Click;
@@ -2152,7 +2152,7 @@ namespace MB3D_Animation_Copilot
             // 
             drp_ManageSeqStepNameList.DropDownPosition = Syncfusion.WinForms.Core.Enums.PopupRelativeAlignment.Center;
             drp_ManageSeqStepNameList.DropDownStyle = Syncfusion.WinForms.ListView.Enums.DropDownStyle.DropDownList;
-            drp_ManageSeqStepNameList.Location = new System.Drawing.Point(98, 92);
+            drp_ManageSeqStepNameList.Location = new System.Drawing.Point(98, 85);
             drp_ManageSeqStepNameList.Margin = new System.Windows.Forms.Padding(4);
             drp_ManageSeqStepNameList.MaxDropDownItems = 12;
             drp_ManageSeqStepNameList.Name = "drp_ManageSeqStepNameList";
@@ -2163,29 +2163,30 @@ namespace MB3D_Animation_Copilot
             toolTip1.SetToolTip(drp_ManageSeqStepNameList, "Select a pre-made Move Sequence");
             drp_ManageSeqStepNameList.Watermark = "Select Move Sequence";
             // 
-            // num_ManageSeqStepCount
+            // num_ManageSeqSendKeyQty
             // 
-            num_ManageSeqStepCount.BeforeTouchSize = new System.Drawing.Size(73, 20);
-            num_ManageSeqStepCount.Location = new System.Drawing.Point(295, 93);
-            num_ManageSeqStepCount.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
-            num_ManageSeqStepCount.Name = "num_ManageSeqStepCount";
-            num_ManageSeqStepCount.Size = new System.Drawing.Size(73, 20);
-            num_ManageSeqStepCount.TabIndex = 24;
-            num_ManageSeqStepCount.ThemeName = "HighContrastTheme";
-            num_ManageSeqStepCount.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            num_ManageSeqSendKeyQty.BeforeTouchSize = new System.Drawing.Size(73, 20);
+            num_ManageSeqSendKeyQty.Location = new System.Drawing.Point(295, 86);
+            num_ManageSeqSendKeyQty.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            num_ManageSeqSendKeyQty.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
+            num_ManageSeqSendKeyQty.Name = "num_ManageSeqSendKeyQty";
+            num_ManageSeqSendKeyQty.Size = new System.Drawing.Size(73, 20);
+            num_ManageSeqSendKeyQty.TabIndex = 24;
+            num_ManageSeqSendKeyQty.ThemeName = "HighContrastTheme";
+            num_ManageSeqSendKeyQty.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // autoLabel19
             // 
-            autoLabel19.Location = new System.Drawing.Point(203, 97);
+            autoLabel19.Location = new System.Drawing.Point(236, 90);
             autoLabel19.Name = "autoLabel19";
-            autoLabel19.Size = new System.Drawing.Size(95, 13);
+            autoLabel19.Size = new System.Drawing.Size(54, 13);
             autoLabel19.TabIndex = 23;
-            autoLabel19.Text = "Step/Angle Count:";
+            autoLabel19.Text = "Send Qty:";
             autoLabel19.ThemeName = "HighContrastTheme";
             // 
             // autoLabel18
             // 
-            autoLabel18.Location = new System.Drawing.Point(28, 97);
+            autoLabel18.Location = new System.Drawing.Point(28, 90);
             autoLabel18.Name = "autoLabel18";
             autoLabel18.Size = new System.Drawing.Size(63, 13);
             autoLabel18.TabIndex = 22;
@@ -2986,7 +2987,7 @@ namespace MB3D_Animation_Copilot
             panel4.ResumeLayout(false);
             panel4.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)drp_ManageSeqStepNameList).EndInit();
-            ((System.ComponentModel.ISupportInitialize)num_ManageSeqStepCount).EndInit();
+            ((System.ComponentModel.ISupportInitialize)num_ManageSeqSendKeyQty).EndInit();
             panel_ManageSeqTop.ResumeLayout(false);
             panel_ManageSeqTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_SequenceDesc_Manage).EndInit();
@@ -3173,7 +3174,7 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel18;
         private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_ManageSeqSelected;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel16;
-        private Syncfusion.Windows.Forms.Tools.NumericUpDownExt num_ManageSeqStepCount;
+        private Syncfusion.Windows.Forms.Tools.NumericUpDownExt num_ManageSeqSendKeyQty;
         private Syncfusion.WinForms.ListView.SfComboBox drp_ManageSeqStepNameList;
         private Syncfusion.WinForms.Controls.SfButton btn_ManageSeqUpdateStep;
         private Syncfusion.WinForms.Controls.SfButton btn_ManageSeqDeleteStep;
