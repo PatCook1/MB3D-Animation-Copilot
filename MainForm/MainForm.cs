@@ -48,6 +48,8 @@ using Syncfusion.WinForms.DataGrid.Enums;
 using Syncfusion.WinForms.DataGrid.Events;
 using System.Linq.Expressions;
 using Windows.Storage;
+using Microsoft.VisualBasic.Logging;
+using static Microsoft.DotNet.DesignTools.Protocol.Endpoints.Response;
 
 #endregion
 
@@ -1421,7 +1423,7 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                LogException("ReplicateKeyframeRange/PerformSequenceReplicate",ex); //Log this error
+                LogException("ReplicateKeyframeRange/PerformSequenceReplicate", ex); //Log this error
                 MessageBoxAdv.Show(ex.Message, "Error @ ReplicateKeyframeRange/PerformSequenceReplicate. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -1466,7 +1468,7 @@ namespace MB3D_Animation_Copilot
             }
             catch (Exception ex)
             {
-                LogException("ApproveKeyframeRange",ex); //Log this error
+                LogException("ApproveKeyframeRange", ex); //Log this error
                 MessageBoxAdv.Show(ex.Message, "Error @ ApproveKeyframeRange. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -3197,20 +3199,6 @@ namespace MB3D_Animation_Copilot
         {
             try
             {
-                ////////Used for Move Sequence Recording
-                ////////This is KEYDOWN
-                //////if (m_SequenceRecordingOn)
-                //////{
-                //////    if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
-                //////    {
-                //////        int vkCode = Marshal.ReadInt32(lParam);
-                //////        //Console.WriteLine($"KEYDOWN=[{(Keys)vkCode}]");
-                //////        Program._MainForm.ProcessKeyUpEvent_ForSeqRecording(((Keys)vkCode).ToString());
-                //////    }
-
-                //////    return IntPtr.Zero;
-                //////}
-
                 //Used for Normal Move Recording
                 //This is KEYDOWN
                 if (nCode >= 0 && wParam == (IntPtr)WM_KEYDOWN)
@@ -3796,6 +3784,12 @@ namespace MB3D_Animation_Copilot
                 //Call the proc to locate and display path and file name of the Sqlite db file in use
                 GetDatabaseFilePathName();
             }
+
+            if (tabControl1.SelectedTab.Name == "page_About")
+            {
+                //Call the proc to load the error file content into the About textbox
+                LoadErrorFileTextbox();
+            }
         }
 
         private void PopulateManageSeqStepNameList()
@@ -3908,23 +3902,31 @@ namespace MB3D_Animation_Copilot
 
         private void dgv_ManageMoveSequence_SelectionChanged(object sender, Syncfusion.WinForms.DataGrid.Events.SelectionChangedEventArgs e)
         {
-            //Fetch the currently selected datagrid row
-            var rowIndex = this.dgv_ManageMoveSequence.SelectionController.DataGrid.CurrentCell.RowIndex;
-            var recordIndex = dgv_ManageMoveSequence.TableControl.ResolveToRecordIndex(rowIndex);
+            try
+            {
+                //Fetch the currently selected datagrid row
+                var rowIndex = this.dgv_ManageMoveSequence.SelectionController.DataGrid.CurrentCell.RowIndex;
+                var recordIndex = dgv_ManageMoveSequence.TableControl.ResolveToRecordIndex(rowIndex);
 
-            var cellValue_StepID = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_ID"); //Get the Step_ID column value
-            m_SelectedMoveSeqStepID = (int)cellValue_StepID; //Update the global variable value
-            var cellValue_Step_Name = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_Name"); //Get the Step_Name column value
-            var cellValue_Step_SendKey = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_SendKey"); //Get the Step_SendKey column value
-            var cellValue_Step_SendKeyQty = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_SendKeyQty"); //Get the Step_SendKeyQty column value
-            var cellValue_Step_Count = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_Count"); //Get the Step_ID column value
+                var cellValue_StepID = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_ID"); //Get the Step_ID column value
+                m_SelectedMoveSeqStepID = (int)cellValue_StepID; //Update the global variable value
+                var cellValue_Step_Name = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_Name"); //Get the Step_Name column value
+                var cellValue_Step_SendKey = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_SendKey"); //Get the Step_SendKey column value
+                var cellValue_Step_SendKeyQty = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_SendKeyQty"); //Get the Step_SendKeyQty column value
+                var cellValue_Step_Count = DataGridHelper.GetCellValue(dgv_ManageMoveSequence, recordIndex, -1, "Step_Count"); //Get the Step_ID column value
 
-            //Show which step is selected for possible editing
-            lbl_ManageSeqSelected.Text = string.Concat("Selected Step is Step ID:", m_SelectedMoveSeqStepID.ToString(), ", Step Name:", cellValue_Step_Name.ToString(), " Step/Angle Count:", cellValue_Step_Count.ToString());
+                //Show which step is selected for possible editing
+                lbl_ManageSeqSelected.Text = string.Concat("Selected Step is Step ID:", m_SelectedMoveSeqStepID.ToString(), ", Step Name:", cellValue_Step_Name.ToString(), " Step/Angle Count:", cellValue_Step_Count.ToString());
 
-            //Set the controls per the selected Move Step values
-            drp_ManageSeqStepNameList.SelectedValue = cellValue_Step_SendKey;
-            num_ManageSeqSendKeyQty.Value = (int)cellValue_Step_SendKeyQty;
+                //Set the controls per the selected Move Step values
+                drp_ManageSeqStepNameList.SelectedValue = cellValue_Step_SendKey;
+                num_ManageSeqSendKeyQty.Value = (int)cellValue_Step_SendKeyQty;
+            }
+            catch (Exception ex)
+            {
+                LogException("dgv_ManageMoveSequence_SelectionChanged", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ dgv_ManageMoveSequence_SelectionChanged. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btn_ManageSeqUpdateStep_Click(object sender, EventArgs e)
@@ -4524,11 +4526,11 @@ namespace MB3D_Animation_Copilot
         public void LogException(string argProcedureName, Exception ex)
         {
 
-            string ErrorFilePathName = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\", ConfigurationManager.AppSettings["AppDataPathSub"], @"\", ConfigurationManager.AppSettings["ErrorLogFileName"]);
+            string ErrorFilePathName = GetErrorLogPathName();
 
             using (StreamWriter writer = new StreamWriter(ErrorFilePathName, true))
             {
-                writer.WriteLine("-----------------------------------------------------------------------------");
+                writer.WriteLine("-----------------------------------------------------");
                 writer.WriteLine("Error @ " + argProcedureName);
                 writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
 
@@ -4542,6 +4544,83 @@ namespace MB3D_Animation_Copilot
                     ex = ex.InnerException;
                 }
             }
+        }
+
+        public void LoadErrorFileTextbox()
+        {
+            string ErrorFilePathName = GetErrorLogPathName();
+
+            if (File.Exists(ErrorFilePathName))
+            {
+                using (StreamReader reader = new StreamReader(ErrorFilePathName))
+                {
+                    tbx_ErrorLogContent.Text = reader.ReadToEnd();
+                }
+            }
+            else
+            {
+                tbx_ErrorLogContent.Text = "No Log File Found";
+            }
+        }
+
+        private void btn_CopyLog_Click(object sender, EventArgs e)
+        {
+            string ErrorFilePathName = GetErrorLogPathName();
+
+            if (File.Exists(ErrorFilePathName))
+            {
+                string ErrorText = String.Empty;
+                using (StreamReader reader = new StreamReader(ErrorFilePathName))
+                {
+                    ErrorText = reader.ReadToEnd();
+                }
+                System.Windows.Forms.Clipboard.SetText(ErrorText);
+                MessageBoxAdv.Show("The Error Log was copied to your Windows Clipboard.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBoxAdv.Show("No Error Log was found.", "Nothing to Copy", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btn_ErrorLogLocation_Click(object sender, EventArgs e)
+        {
+
+            string ErrorFilePathName = GetErrorLogPathName();
+
+            if (File.Exists(ErrorFilePathName))
+            {
+                MessageBoxAdv.Show(string.Concat("The Error Log file is located at:", Environment.NewLine, Environment.NewLine, ErrorFilePathName), "Error Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBoxAdv.Show(string.Concat("When an Error Log file exists, it's location will be:", Environment.NewLine, Environment.NewLine, ErrorFilePathName), "Error Log", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void btn_EraseLog_Click(object sender, EventArgs e)
+        {
+            string ErrorFilePathName = GetErrorLogPathName();
+
+            if (File.Exists(ErrorFilePathName))
+            {
+                DialogResult result = MessageBoxAdv.Show("Are you sure you want to erase the Error Log?", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    File.Delete(ErrorFilePathName);
+                    LoadErrorFileTextbox();
+                    MessageBoxAdv.Show("The Error Log was erased.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            else
+            {
+                MessageBoxAdv.Show("No Error Log was found.", "Nothing to Erase", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private string GetErrorLogPathName()
+        {
+            return string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\", ConfigurationManager.AppSettings["AppDataPathSub"], @"\", ConfigurationManager.AppSettings["ErrorLogFileName"]);
         }
 
         #endregion
