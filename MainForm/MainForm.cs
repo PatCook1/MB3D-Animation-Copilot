@@ -47,6 +47,7 @@ using Syncfusion.Windows.Forms.Grid;
 using Syncfusion.WinForms.DataGrid.Enums;
 using Syncfusion.WinForms.DataGrid.Events;
 using System.Linq.Expressions;
+using Windows.Storage;
 
 #endregion
 
@@ -4523,7 +4524,7 @@ namespace MB3D_Animation_Copilot
         public void LogException(string argProcedureName, Exception ex)
         {
 
-            string ErrorFilePathName = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"/", ConfigurationManager.AppSettings["ErrorLogFileName"]);
+            string ErrorFilePathName = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\", ConfigurationManager.AppSettings["AppDataPathSub"], @"\", ConfigurationManager.AppSettings["ErrorLogFileName"]);
 
             using (StreamWriter writer = new StreamWriter(ErrorFilePathName, true))
             {
