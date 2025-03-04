@@ -2702,39 +2702,42 @@ namespace MB3D_Animation_Copilot
             // 
             btn_ErrorLogLocation.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_ErrorLogLocation.ForeColor = System.Drawing.Color.White;
-            btn_ErrorLogLocation.Location = new System.Drawing.Point(964, 509);
+            btn_ErrorLogLocation.Location = new System.Drawing.Point(957, 509);
             btn_ErrorLogLocation.Name = "btn_ErrorLogLocation";
-            btn_ErrorLogLocation.Size = new System.Drawing.Size(126, 18);
+            btn_ErrorLogLocation.Size = new System.Drawing.Size(129, 18);
             btn_ErrorLogLocation.Style.ForeColor = System.Drawing.Color.White;
             btn_ErrorLogLocation.TabIndex = 92;
             btn_ErrorLogLocation.Text = "Error Log Location";
             btn_ErrorLogLocation.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_ErrorLogLocation, "Display the location of the Error Log file");
             btn_ErrorLogLocation.Click += btn_ErrorLogLocation_Click;
             // 
             // btn_CopyLog
             // 
             btn_CopyLog.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_CopyLog.ForeColor = System.Drawing.Color.White;
-            btn_CopyLog.Location = new System.Drawing.Point(778, 509);
+            btn_CopyLog.Location = new System.Drawing.Point(779, 509);
             btn_CopyLog.Name = "btn_CopyLog";
-            btn_CopyLog.Size = new System.Drawing.Size(80, 18);
+            btn_CopyLog.Size = new System.Drawing.Size(129, 18);
             btn_CopyLog.Style.ForeColor = System.Drawing.Color.White;
             btn_CopyLog.TabIndex = 91;
-            btn_CopyLog.Text = "Copy Log";
+            btn_CopyLog.Text = "Copy Error Log Text";
             btn_CopyLog.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_CopyLog, "Copt the text of the Error Log to Windows Clipboard");
             btn_CopyLog.Click += btn_CopyLog_Click;
             // 
             // btn_EraseLog
             // 
             btn_EraseLog.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_EraseLog.ForeColor = System.Drawing.Color.Red;
-            btn_EraseLog.Location = new System.Drawing.Point(1178, 509);
+            btn_EraseLog.Location = new System.Drawing.Point(1130, 509);
             btn_EraseLog.Name = "btn_EraseLog";
-            btn_EraseLog.Size = new System.Drawing.Size(80, 18);
+            btn_EraseLog.Size = new System.Drawing.Size(129, 18);
             btn_EraseLog.Style.ForeColor = System.Drawing.Color.Red;
             btn_EraseLog.TabIndex = 90;
-            btn_EraseLog.Text = "Erase Log";
+            btn_EraseLog.Text = "Erase Error Log";
             btn_EraseLog.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_EraseLog, "Erase the content of the Error Log file");
             btn_EraseLog.Click += btn_EraseLog_Click;
             // 
             // autoLabel33

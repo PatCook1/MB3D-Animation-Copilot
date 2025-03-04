@@ -1,4 +1,14 @@
-﻿using Syncfusion.Windows.Forms;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Child_Forms.frm_Update_Keyframes_LookLeft
+Description: A child form of parent MainForm to perform the functions relating to updating
+             of keyframes at the Mandelbulb application so as to modify the look left
+             value of each keyframe of the Mandelbulb Animation window.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using Syncfusion.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

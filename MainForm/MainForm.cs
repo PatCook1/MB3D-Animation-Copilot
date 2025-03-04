@@ -1,4 +1,12 @@
-﻿#region Using References Region =========================================
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Mainform
+Description: This class performs functions of the application's primary form.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+#region Using References Region =========================================
 
 using MB3D_Animation_Copilot.Models;
 using System;
@@ -50,6 +58,7 @@ using System.Linq.Expressions;
 using Windows.Storage;
 using Microsoft.VisualBasic.Logging;
 using static Microsoft.DotNet.DesignTools.Protocol.Endpoints.Response;
+using System.Windows.Shapes;
 
 #endregion
 
@@ -239,7 +248,12 @@ namespace MB3D_Animation_Copilot
         public MainForm()
         {
             InitializeComponent();
+            SetStylesAndThemes();
+            LoadAndInitMainForm();
+        }
 
+        private void SetStylesAndThemes()
+        {
             this.ThemeName = "HighContrastThemeExport";
 
             MessageBoxAdv.MessageBoxStyle = MessageBoxAdv.Style.Metro;
@@ -263,8 +277,6 @@ namespace MB3D_Animation_Copilot
             this.Style.TitleBar.CloseButtonPressedBackColor = Color.Gray;
             this.Style.TitleBar.MaximizeButtonPressedBackColor = Color.Gray;
             this.Style.TitleBar.MinimizeButtonPressedBackColor = Color.Gray;
-
-            LoadAndInitMainForm();
         }
 
         private void LoadAndInitMainForm()
@@ -4528,12 +4540,16 @@ namespace MB3D_Animation_Copilot
 
             string ErrorFilePathName = GetErrorLogPathName();
 
-            using (StreamWriter writer = new StreamWriter(ErrorFilePathName, true))
+            string ExistingErrorText = string.Empty;
+            if (File.Exists(ErrorFilePathName))
             {
-                writer.WriteLine("-----------------------------------------------------");
-                writer.WriteLine("Error @ " + argProcedureName);
-                writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
+                ExistingErrorText = File.ReadAllText(ErrorFilePathName);
+            }
 
+            using (StreamWriter writer = new StreamWriter(ErrorFilePathName, false))
+            {
+                writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
+                writer.WriteLine("Error @ " + argProcedureName);
                 writer.WriteLine();
                 while (ex != null)
                 {
@@ -4543,6 +4559,18 @@ namespace MB3D_Animation_Copilot
 
                     ex = ex.InnerException;
                 }
+                writer.WriteLine("============================================================================");
+
+                if (ExistingErrorText.Length > 0)
+                {
+                    writer.WriteLine(ExistingErrorText);
+                }
+            }
+
+            //If the About page is open, load the Error Log textbox immediately
+            if (tabControl1.SelectedTab.Name == "page_About")
+            {
+                LoadErrorFileTextbox();
             }
         }
 
@@ -4573,8 +4601,14 @@ namespace MB3D_Animation_Copilot
                 using (StreamReader reader = new StreamReader(ErrorFilePathName))
                 {
                     ErrorText = reader.ReadToEnd();
+                    reader.Dispose();
                 }
-                System.Windows.Forms.Clipboard.SetText(ErrorText);
+
+                Clipboard.Clear();
+
+                //Ref: Clipboard.SetDataObject(object data, bool copy, int retryTimes, int retryDelay)
+                Clipboard.SetDataObject(ErrorText, true, 10, 100);
+
                 MessageBoxAdv.Show("The Error Log was copied to your Windows Clipboard.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else

@@ -1,4 +1,13 @@
-﻿using System;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Key_Legend_Child_Window
+Description: A child form of parent MainForm to display illustration images of controller
+             and keyboard key mapping.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;

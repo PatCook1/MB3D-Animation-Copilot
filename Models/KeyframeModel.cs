@@ -1,4 +1,12 @@
-﻿using System;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Models.KeyframeModel
+Description: This class provides the data structure for a keyframe.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Linq;

@@ -1,4 +1,14 @@
-﻿using Dapper;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Classes.Data_Access_Methods
+Description: This class performs functions that interact with a local Sqlite database file.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+#region Using References Region =========================================
+
+using Dapper;
 using MB3D_Animation_Copilot.Models;
 using Microsoft.DotNet.DesignTools.Protocol.Values;
 using Syncfusion.Windows.Forms;
@@ -19,6 +29,8 @@ using System.Windows.Forms;
 using System.Windows.Input;
 using System.Windows.Media.Animation;
 
+#endregion
+
 namespace MB3D_Animation_Copilot.Classes
 {
     internal class Data_Access_Methods
@@ -37,7 +49,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                MessageBoxAdv.Show(ex.Message, "Error @ LoadConnectionString", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadConnectionString", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadConnectionString. Error was Logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -56,8 +69,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadProjectsList", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadProjectsList", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadProjectsList. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -79,8 +92,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadProjectData", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadProjectData", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadProjectData. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -97,8 +110,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadProjectData_LastSaved", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadProjectData_LastSaved", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadProjectData_LastSaved. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -160,8 +173,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ InsertProjectData", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM InsertProjectData", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM InsertProjectData. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
             }
         }
@@ -183,8 +196,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ DeleteAnimationProject", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM DeleteAnimationProject", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteAnimationProject. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -229,8 +242,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //string error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ UpdateProjectData", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM UpdateProjectData", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM UpdateProjectData. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -252,8 +265,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ GetProjectLastSavedDateTime", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetProjectLastSavedDateTime", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectLastSavedDateTime. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return Convert.ToDateTime(DateTime.Today);
             }
         }
@@ -289,8 +302,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ InsertKeyframeData", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM InsertKeyframeData", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM InsertKeyframeData. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return -1;
             }
         }
@@ -325,8 +338,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ InsertKeyframeActionData", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM InsertKeyframeActionData", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM InsertKeyframeActionData. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -363,8 +376,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadKeyframes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadKeyframes", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadKeyframes. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -387,8 +400,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ UpdateKeyframeDisplay", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM UpdateKeyframeDisplay", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM UpdateKeyframeDisplay. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -417,8 +430,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ DeleteKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM DeleteKeyframeAndKeyframeActions", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteKeyframeAndKeyframeActions. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -446,8 +459,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ DeleteKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM DeleteAllKeyframeAndKeyframeActions", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteAllKeyframeAndKeyframeActions. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -499,8 +512,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ DeleteKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM DeleteRangeOfKeyframeAndKeyframeActions", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteRangeOfKeyframeAndKeyframeActions. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -526,8 +539,8 @@ namespace MB3D_Animation_Copilot.Classes
                 }
                 catch (Exception ex)
                 {
-                    //var error = ex.Message;
-                    MessageBox.Show(ex.Message, "Error @ ApproveRangeOfKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Program._MainForm.LogException("DAM ApproveRangeOfKeyframe", ex); //Log this error
+                    MessageBoxAdv.Show(ex.Message, "Error @ DAM ApproveRangeOfKeyframe. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -553,8 +566,8 @@ namespace MB3D_Animation_Copilot.Classes
                 }
                 catch (Exception ex)
                 {
-                    //var error = ex.Message;
-                    MessageBox.Show(ex.Message, "Error @ ApproveByKeyframeID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Program._MainForm.LogException("DAM ApproveByKeyframeID", ex); //Log this error
+                    MessageBoxAdv.Show(ex.Message, "Error @ DAM ApproveByKeyframeID. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -580,8 +593,8 @@ namespace MB3D_Animation_Copilot.Classes
                 }
                 catch (Exception ex)
                 {
-                    //var error = ex.Message;
-                    MessageBox.Show(ex.Message, "Error @ UpdateNoteByKeyframeID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Program._MainForm.LogException("DAM UpdateNoteByKeyframeID", ex); //Log this error
+                    MessageBoxAdv.Show(ex.Message, "Error @ DAM UpdateNoteByKeyframeID. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -608,8 +621,8 @@ namespace MB3D_Animation_Copilot.Classes
                 }
                 catch (Exception ex)
                 {
-                    //var error = ex.Message;
-                    MessageBox.Show(ex.Message, "Error @ UpdateFarPlaneRangeOfKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Program._MainForm.LogException("DAM UpdateFarPlaneRangeOfKeyframe", ex); //Log this error
+                    MessageBoxAdv.Show(ex.Message, "Error @ DAM UpdateFarPlaneRangeOfKeyframe. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -636,8 +649,8 @@ namespace MB3D_Animation_Copilot.Classes
                 }
                 catch (Exception ex)
                 {
-                    //var error = ex.Message;
-                    MessageBox.Show(ex.Message, "Error @ UpdateFramesBetweenRangeOfKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    Program._MainForm.LogException("DAM UpdateFramesBetweenRangeOfKeyframe", ex); //Log this error
+                    MessageBoxAdv.Show(ex.Message, "Error @ DAM UpdateFramesBetweenRangeOfKeyframe. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -680,8 +693,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ RecalculateFrameCountAllRecords", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM RecalculateFrameCountAllRecords", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM RecalculateFrameCountAllRecords. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -716,8 +729,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ RecalculateFrameCountAllRecords", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetProjectTotalSeconds", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectTotalSeconds. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -761,8 +774,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ RecalculateKeyframeNumberingAllRecords", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM RecalculateKeyframeNumberingAllRecords", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM RecalculateKeyframeNumberingAllRecords. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -791,8 +804,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ GetKeyframeMoveActionsQuantity", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetKeyframeMoveActionsQuantity", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetKeyframeMoveActionsQuantity. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -817,8 +830,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadKeyframeActionsList", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadKeyframeActionsList", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadKeyframeActionsList. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
 
             }
@@ -844,8 +857,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadKeyframeActionsList_ForKeyframeReplicate", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadKeyframeActionsList_ForKeyframeReplicate", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadKeyframeActionsList_ForKeyframeReplicate. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -873,8 +886,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadLastKeyframeActionsList_ForKeyframeRepeat", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadLastKeyframeActionsList_ForKeyframeRepeat", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadLastKeyframeActionsList_ForKeyframeRepeat. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -898,8 +911,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadKeyframeAction", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadKeyframeAction", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadKeyframeAction. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -928,8 +941,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ UpdateKeyframeAction", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM UpdateKeyframeAction", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM UpdateKeyframeAction. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -949,8 +962,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ DeleteKeyframeAction", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM DeleteKeyframeAction", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteKeyframeAction. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -978,8 +991,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ GetProjectLastKeyframeNumber", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetProjectLastKeyframeNumber", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectLastKeyframeNumber. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -1015,8 +1028,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ GetProjectNextKeyframeNumber", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetProjectNextKeyframeNumber", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectNextKeyframeNumber. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 1;
             }
         }
@@ -1058,8 +1071,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ GetProjectLastKeyframeID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetProjectLastKeyframeID", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectLastKeyframeID. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -1088,8 +1101,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ RecalculateFrameCountAllRecords", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetProjectFirstKeyframeNumber", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM RecalculateFrameCountAllRecords. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -1118,8 +1131,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ GetProjectKeyframeQuantity", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM GetProjectKeyframeQuantity", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectKeyframeQuantity. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -1154,7 +1167,7 @@ namespace MB3D_Animation_Copilot.Classes
             catch (Exception ex)
             {
                 //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadKeyframes", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show(ex.Message, "Error @ LoadKeyframes", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -1184,7 +1197,7 @@ namespace MB3D_Animation_Copilot.Classes
             catch (Exception ex)
             {
                 //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ InsertMoveSeqStepsByKeyframeRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show(ex.Message, "Error @ InsertMoveSeqStepsByKeyframeRange", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1201,7 +1214,7 @@ namespace MB3D_Animation_Copilot.Classes
             catch (Exception ex)
             {
                 //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadMoveSeqencesList", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show(ex.Message, "Error @ LoadMoveSeqencesList", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -1224,7 +1237,7 @@ namespace MB3D_Animation_Copilot.Classes
             catch (Exception ex)
             {
                 //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadMoveSeqenceByParentID", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show(ex.Message, "Error @ LoadMoveSeqenceByParentID", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
@@ -1252,7 +1265,7 @@ namespace MB3D_Animation_Copilot.Classes
             catch (Exception ex)
             {
                 //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ AddNewSequenceParent", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show(ex.Message, "Error @ AddNewSequenceParent", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -1283,7 +1296,7 @@ namespace MB3D_Animation_Copilot.Classes
             catch (Exception ex)
             {
                 //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ DeleteSequence", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBoxAdv.Show(ex.Message, "Error @ DeleteSequence", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1311,12 +1324,11 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ LoadSequenceStepList", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM LoadSequenceStepList", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM LoadSequenceStepList. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return null;
             }
         }
-
 
         public static void ManageSeqUpdateStep(int argStepID, int argStepGroup, string argStepName, int argStepCount, string argStepSendKey)
         {
@@ -1344,8 +1356,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ UpdateStep", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM ManageSeqUpdateStep", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM ManageSeqUpdateStep. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1382,8 +1394,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ AddStep", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM ManageSeqAddMoveStep", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM ManageSeqAddMoveStep. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1404,8 +1416,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ DeleteStep", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM DeleteStep", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteStep. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1429,8 +1441,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ BackupDatabase", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM BackupDatabase", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM BackupDatabase. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }
@@ -1451,8 +1463,8 @@ namespace MB3D_Animation_Copilot.Classes
             }
             catch (Exception ex)
             {
-                //var error = ex.Message;
-                MessageBox.Show(ex.Message, "Error @ RestoreDatabase", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Program._MainForm.LogException("DAM RestoreDatabase", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM RestoreDatabase. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }

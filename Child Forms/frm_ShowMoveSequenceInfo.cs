@@ -1,4 +1,13 @@
-﻿using MB3D_Animation_Copilot.Classes;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Child_Forms.frm_ShowMoveSequences
+Description: A child form of parent MainForm to display moves (actions) that were selected
+             at the Mainform to become a move sequence.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using MB3D_Animation_Copilot.Classes;
 using MB3D_Animation_Copilot.Models;
 using Syncfusion.Styles;
 using Syncfusion.WinForms.DataGrid;

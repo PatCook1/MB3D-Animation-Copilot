@@ -1,4 +1,12 @@
-﻿using MB3D_Animation_Copilot;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Models.StepSequenceModel
+Description: This class provides the data structure the details of keyframe steps.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using MB3D_Animation_Copilot;
 using System;
 using System.Collections.Generic;
 using System.Linq;
