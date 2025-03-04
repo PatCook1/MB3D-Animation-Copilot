@@ -188,6 +188,10 @@ namespace MB3D_Animation_Copilot
             label40 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             page_Admin = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel11 = new System.Windows.Forms.Panel();
+            groupBox1 = new System.Windows.Forms.GroupBox();
+            btn_EraseAllDatabaseRecords_KeepMS = new Syncfusion.WinForms.Controls.SfButton();
+            autoLabel34 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            btn_EraseAllDatabaseRecords = new Syncfusion.WinForms.Controls.SfButton();
             autoLabel24 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             gb_DBAdmin_Restore = new System.Windows.Forms.GroupBox();
             btn_DBAdmin_RestoreDBFile = new Syncfusion.WinForms.Controls.SfButton();
@@ -295,6 +299,7 @@ namespace MB3D_Animation_Copilot
             panel10.SuspendLayout();
             page_Admin.SuspendLayout();
             panel11.SuspendLayout();
+            groupBox1.SuspendLayout();
             gb_DBAdmin_Restore.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_DBAdmin_Restore_DBFolder).BeginInit();
             gb_DBAdmin_Backup.SuspendLayout();
@@ -456,7 +461,7 @@ namespace MB3D_Animation_Copilot
             // btn_Exit
             // 
             btn_Exit.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_Exit.Location = new System.Drawing.Point(1172, 8);
+            btn_Exit.Location = new System.Drawing.Point(1174, 8);
             btn_Exit.Margin = new System.Windows.Forms.Padding(4);
             btn_Exit.Name = "btn_Exit";
             btn_Exit.Size = new System.Drawing.Size(88, 46);
@@ -2464,6 +2469,7 @@ namespace MB3D_Animation_Copilot
             // 
             // panel11
             // 
+            panel11.Controls.Add(groupBox1);
             panel11.Controls.Add(autoLabel24);
             panel11.Controls.Add(gb_DBAdmin_Restore);
             panel11.Controls.Add(gb_DBAdmin_Backup);
@@ -2472,6 +2478,63 @@ namespace MB3D_Animation_Copilot
             panel11.Name = "panel11";
             panel11.Size = new System.Drawing.Size(1284, 540);
             panel11.TabIndex = 2;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(btn_EraseAllDatabaseRecords_KeepMS);
+            groupBox1.Controls.Add(autoLabel34);
+            groupBox1.Controls.Add(btn_EraseAllDatabaseRecords);
+            groupBox1.ForeColor = System.Drawing.Color.White;
+            groupBox1.Location = new System.Drawing.Point(22, 283);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new System.Drawing.Size(491, 238);
+            groupBox1.TabIndex = 13;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Erase Database Records";
+            // 
+            // btn_EraseAllDatabaseRecords_KeepMS
+            // 
+            btn_EraseAllDatabaseRecords_KeepMS.AllowWrapText = true;
+            btn_EraseAllDatabaseRecords_KeepMS.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            btn_EraseAllDatabaseRecords_KeepMS.ForeColor = System.Drawing.Color.Red;
+            btn_EraseAllDatabaseRecords_KeepMS.Location = new System.Drawing.Point(291, 178);
+            btn_EraseAllDatabaseRecords_KeepMS.Name = "btn_EraseAllDatabaseRecords_KeepMS";
+            btn_EraseAllDatabaseRecords_KeepMS.Size = new System.Drawing.Size(185, 44);
+            btn_EraseAllDatabaseRecords_KeepMS.Style.ForeColor = System.Drawing.Color.Red;
+            btn_EraseAllDatabaseRecords_KeepMS.TabIndex = 2;
+            btn_EraseAllDatabaseRecords_KeepMS.Text = "Purge Database of All Records Except Move Sequences";
+            btn_EraseAllDatabaseRecords_KeepMS.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_EraseAllDatabaseRecords_KeepMS, "Erase all database records but keep Move Sequence r5ecords");
+            btn_EraseAllDatabaseRecords_KeepMS.Click += btn_EraseAllDatabaseRecords_KeepMS_Click;
+            // 
+            // autoLabel34
+            // 
+            autoLabel34.AutoSize = false;
+            autoLabel34.BackColor = System.Drawing.Color.Black;
+            autoLabel34.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel34.Location = new System.Drawing.Point(9, 21);
+            autoLabel34.Name = "autoLabel34";
+            autoLabel34.Size = new System.Drawing.Size(467, 154);
+            autoLabel34.TabIndex = 1;
+            autoLabel34.Text = resources.GetString("autoLabel34.Text");
+            autoLabel34.ThemeName = "HighContrastTheme";
+            autoLabel34.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel34.ThemeStyle.ForeColor = System.Drawing.Color.White;
+            // 
+            // btn_EraseAllDatabaseRecords
+            // 
+            btn_EraseAllDatabaseRecords.AllowWrapText = true;
+            btn_EraseAllDatabaseRecords.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            btn_EraseAllDatabaseRecords.ForeColor = System.Drawing.Color.Red;
+            btn_EraseAllDatabaseRecords.Location = new System.Drawing.Point(9, 178);
+            btn_EraseAllDatabaseRecords.Name = "btn_EraseAllDatabaseRecords";
+            btn_EraseAllDatabaseRecords.Size = new System.Drawing.Size(181, 44);
+            btn_EraseAllDatabaseRecords.Style.ForeColor = System.Drawing.Color.Red;
+            btn_EraseAllDatabaseRecords.TabIndex = 0;
+            btn_EraseAllDatabaseRecords.Text = "Purge Database of All Records";
+            btn_EraseAllDatabaseRecords.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_EraseAllDatabaseRecords, "Erase all database records");
+            btn_EraseAllDatabaseRecords.Click += btn_EraseAllDatabaseRecords_Click;
             // 
             // autoLabel24
             // 
@@ -3004,6 +3067,7 @@ namespace MB3D_Animation_Copilot
             ThemeName = "HighContrastTheme";
             Activated += Form1_Activated;
             FormClosing += Form1_FormClosing;
+            Shown += MainForm_Shown;
             pnl_Bottom.ResumeLayout(false);
             pnl_Bottom.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)num_AutoSaveTrigger).EndInit();
@@ -3080,6 +3144,7 @@ namespace MB3D_Animation_Copilot
             page_Admin.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel11.PerformLayout();
+            groupBox1.ResumeLayout(false);
             gb_DBAdmin_Restore.ResumeLayout(false);
             gb_DBAdmin_Restore.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_DBAdmin_Restore_DBFolder).EndInit();
@@ -3303,6 +3368,10 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.WinForms.Controls.SfButton btn_CopyLog;
         private Syncfusion.WinForms.Controls.SfButton btn_EraseLog;
         private Syncfusion.WinForms.Controls.SfButton btn_ErrorLogLocation;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private Syncfusion.WinForms.Controls.SfButton btn_EraseAllDatabaseRecords;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel34;
+        private Syncfusion.WinForms.Controls.SfButton btn_EraseAllDatabaseRecords_KeepMS;
     }
 }
 

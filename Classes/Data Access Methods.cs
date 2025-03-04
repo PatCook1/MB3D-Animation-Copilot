@@ -57,6 +57,30 @@ namespace MB3D_Animation_Copilot.Classes
 
         #region Project Data Access Methods ==========================================================================
 
+        public static int GetProjectRecordCount()
+        {
+            try
+            {
+
+                int KeyframeQuantity = 0;
+
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+
+                    //Get the coount of project recordws
+                    KeyframeQuantity = cnn.ExecuteScalar<int>("SELECT COUNT (*) FROM Animation_Project");
+                }
+
+                return KeyframeQuantity;
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM GetProjectRecordCount", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectRecordCount. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
         public static List<ProjectListModel> LoadProjectsList()
         {
             try
@@ -1465,6 +1489,35 @@ namespace MB3D_Animation_Copilot.Classes
             {
                 Program._MainForm.LogException("DAM RestoreDatabase", ex); //Log this error
                 MessageBoxAdv.Show(ex.Message, "Error @ DAM RestoreDatabase. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
+        public static bool EraseAllDatabaseRecords(bool DeleteMoveSequenceRecords)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    if (DeleteMoveSequenceRecords)
+                    {
+                        cnn.Execute("DELETE FROM Sequence_Steps");
+                        cnn.Execute("DELETE FROM Sequence_Parent");
+                    }
+
+                    cnn.Execute("DELETE FROM Keyframe_Actions");
+                    cnn.Execute("DELETE FROM Keyframes");
+
+                    cnn.Execute("DELETE FROM Animation_Project");
+                }
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM EraseAllDatabaseRecords", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM EraseAllDatabaseRecords. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return false;
             }
         }

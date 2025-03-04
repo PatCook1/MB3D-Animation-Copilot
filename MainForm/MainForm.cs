@@ -369,18 +369,26 @@ namespace MB3D_Animation_Copilot
 
         private void PopulateProjectList(int ProjectID)
         {
+            //If applicable, find the project list item that matches the Project ID
+            List<ProjectListModel> lstProjectList = null;
+            lstProjectList = Data_Access_Methods.LoadProjectsList();
+
+            drp_ProjectList.Text = string.Empty; //Clear any previous text
             drp_ProjectList.DataSource = null; //Clear any previous binding
 
-            drp_ProjectList.DataSource = Data_Access_Methods.LoadProjectsList();
+            drp_ProjectList.DataSource = lstProjectList;
             drp_ProjectList.DisplayMember = "Project_Name";
             drp_ProjectList.ValueMember = "ID";
 
-            //If applicable, find the project list item that matches the Project ID
-            List<ProjectListModel> lstProjectList = null;
+            if (lstProjectList.Count == 0)
+            {
+                return; //Bail - no project records
+            }
+
             if (ProjectID > 0)
             {
                 //Loop across the project list and try to find a matching project ID
-                lstProjectList = Data_Access_Methods.LoadProjectsList();
+
                 var idx = 0;
                 foreach (ProjectListModel item in lstProjectList)
                 {
@@ -1677,9 +1685,16 @@ namespace MB3D_Animation_Copilot
 
         private void SetControlsStateForCapture(bool m_EnableCapture)
         {
-            if (!m_EnableCapture == true & mtbx_FarPlane.Value == 0)
+            if (Data_Access_Methods.GetProjectRecordCount() == 0)
             {
-                MessageBoxAdv.Show("Reminder: The Far Plane value is zero.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show("You will need to create a new project to use this application.", "Need Project", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+            else
+            {
+                if (!m_EnableCapture == true & mtbx_FarPlane.Value == 0)
+                {
+                    MessageBoxAdv.Show("Reminder: The Far Plane value is zero.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                }
             }
 
             //Note: m_EnableCapture comes is as !m_EnableCapture
@@ -1879,6 +1894,12 @@ namespace MB3D_Animation_Copilot
 
         private void SaveAnimationProject(bool isNewRecord, bool bolBeepSound)
         {
+            //If there are no project records (such as new install) be sure we handle this as a new project record
+            if (Data_Access_Methods.GetProjectRecordCount() == 0)
+            {
+                isNewRecord = true;
+            }
+
             if (tbx_AnimationName.Text.Length == 0)
             {
                 DialogResult result = MessageBoxAdv.Show("Please provide a project name.", "Project Name Required", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -2487,6 +2508,14 @@ namespace MB3D_Animation_Copilot
         private void Form1_Activated(object sender, EventArgs e)
         {
             //No code here at this time
+        }
+
+        private void MainForm_Shown(object sender, EventArgs e)
+        {
+            if (Data_Access_Methods.GetProjectRecordCount() == 0)
+            {
+                MessageBoxAdv.Show("You will need to create a new project to use this application.", "Need Project", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
         }
 
         private bool ValidateMandelbulb3DRunning()
@@ -3769,16 +3798,24 @@ namespace MB3D_Animation_Copilot
 
             if (tabControl1.SelectedTab.Name == "page_MoveDesigner")
             {
+                try
+                {
+                    m_SelectedMoveSequenceID = 0;
+                    m_SelectedMoveSeqStepID = 0;
 
-                m_SelectedMoveSequenceID = 0;
-                m_SelectedMoveSeqStepID = 0;
+                    PopulateAvailableSeqDropdown();
 
-                PopulateAvailableSeqDropdown();
-
-                MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
-                tbx_SequenceDesc_Manage.Text = selectedSeq.SequenceDesc;
-                LoadSequenceSteps(selectedSeq.ID, true);
-
+                    MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
+                    if (selectedSeq != null)
+                    {
+                        tbx_SequenceDesc_Manage.Text = selectedSeq.SequenceDesc;
+                        LoadSequenceSteps(selectedSeq.ID, true);
+                    }
+                }
+                catch
+                {
+                    //Do not hrow - there may be no Move Sequence records
+                }
             }
 
             if (tabControl1.SelectedTab.Name == "page_Utilities")
@@ -3835,7 +3872,14 @@ namespace MB3D_Animation_Copilot
             drp_ManageSeqMoveSequences.DisplayMember = "SequenceName";
             drp_ManageSeqMoveSequences.ValueMember = "ID";
 
-            drp_ManageSeqMoveSequences.SelectedIndex = 0; //Select the first row
+            try
+            {
+                drp_ManageSeqMoveSequences.SelectedIndex = 0; //Select the first row
+            }
+            catch
+            {
+                //do not throw - there may be no Move Sequence records"
+            };
         }
 
         private void drp_ManageSeqMoveSequences_SelectedIndexChanged(object sender, EventArgs e)
@@ -3848,8 +3892,15 @@ namespace MB3D_Animation_Copilot
 
         private void btn_ManageSeqDeleteSequence_Click(object sender, EventArgs e)
         {
-            //Collect the data values for the sequence deletion
+
             MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
+            if (selectedSeq == null)
+            {
+                MessageBoxAdv.Show("Please select a Move Sequence.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return; //Bail
+            }
+
+            //Collect the data values for the sequence deletion
             string SeqParentID = selectedSeq.ID.ToString(); //Get the selected sequence parent ID
             string SeqName = selectedSeq.SequenceName; //Get the selected sequence name
 
@@ -3943,6 +3994,13 @@ namespace MB3D_Animation_Copilot
 
         private void btn_ManageSeqUpdateStep_Click(object sender, EventArgs e)
         {
+            MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
+            if (selectedSeq == null)
+            {
+                MessageBoxAdv.Show("Please select a Move Sequence.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return; //Bail
+            }
+
             //Fetch the currently selected datagrid row
             var rowIndex = this.dgv_ManageMoveSequence.SelectionController.DataGrid.CurrentCell.RowIndex;
             var recordIndex = dgv_ManageMoveSequence.TableControl.ResolveToRecordIndex(rowIndex);
@@ -3953,7 +4011,7 @@ namespace MB3D_Animation_Copilot
 
             if (recordIndex < 0) //If we do not have a record selected (recordIndex = -1)
             {
-                MessageBoxAdv.Show(string.Concat("Please select a Move Step Sequence."), "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show(string.Concat("Please select a Move Sequence."), "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -3997,6 +4055,13 @@ namespace MB3D_Animation_Copilot
 
         private void btn_ManageSeqDeleteStep_Click(object sender, EventArgs e)
         {
+            MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
+            if (selectedSeq == null)
+            {
+                MessageBoxAdv.Show("Please select a Move Sequence.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return; //Bail
+            }
+
             //Fetch the currently selected datagrid row
             var rowIndex = this.dgv_ManageMoveSequence.SelectionController.DataGrid.CurrentCell.RowIndex;
             var recordIndex = dgv_ManageMoveSequence.TableControl.ResolveToRecordIndex(rowIndex);
@@ -4006,7 +4071,7 @@ namespace MB3D_Animation_Copilot
 
             if (recordIndex < 0) //If we do not have a record selected
             {
-                MessageBoxAdv.Show(string.Concat("Please select a Move Step Sequence."), "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show(string.Concat("Please select a Move Sequence."), "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return;
             }
 
@@ -4030,6 +4095,13 @@ namespace MB3D_Animation_Copilot
 
         private void btn_ManageSeqAddStep_Click(object sender, EventArgs e)
         {
+            MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
+            if (selectedSeq == null)
+            {
+                MessageBoxAdv.Show("Please select a Move Sequence.", "Selection Required", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return; //Bail
+            }
+
             //Let's make sure the user has selected a Seq Step name from the dropdown list
             if (drp_ManageSeqStepNameList.SelectedValue.ToString() == "")
             {
@@ -4039,7 +4111,6 @@ namespace MB3D_Animation_Copilot
             }
 
             //Collect the data values for the step addition
-            MoveSequenceModel selectedSeq = (MoveSequenceModel)drp_ManageSeqMoveSequences.SelectedItem;
             int MoveSeqParentID = selectedSeq.ID; //Get the selected sequence parent ID
 
             //Get the selected Step Name List item
@@ -4124,16 +4195,6 @@ namespace MB3D_Animation_Copilot
 
         private void GetDatabaseFilePathName()
         {
-            //var dbSource = ConfigurationManager.ConnectionStrings["Default"].ConnectionString;
-
-            //DbConnectionStringBuilder builder = new DbConnectionStringBuilder();
-            //builder.ConnectionString = dbSource;
-            //string ParseddbFileName = ((string)builder["Data Source"]).Trim();
-
-            //string workingDirectory = Environment.CurrentDirectory;
-            //string projectDirectory = Directory.GetParent(workingDirectory).Parent.FullName;
-            //string dbFilePathName = Path.Combine(projectDirectory + "\\" + ParseddbFileName);
-
             string dbFilePathName = string.Empty;
 
             try
@@ -4255,6 +4316,73 @@ namespace MB3D_Animation_Copilot
                 LogException("btn_DBAdmin_Restore_Click", ex); //Log this error
                 MessageBoxAdv.Show(ex.Message, "Error @ btn_DBAdmin_Restore_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void btn_EraseAllDatabaseRecords_Click(object sender, EventArgs e)
+        {
+            var NL = Environment.NewLine;
+
+            //Get database purge confirmation
+            DialogResult result1 = MessageBoxAdv.Show(string.Concat("You are about to delete all of the records of your database!", NL, NL, "This can only be undone if you restore the database from a backup.", NL, NL, "Proceed"), "Confirm Database Purge", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result1 == DialogResult.Yes)
+            {
+                //Get database purge confirmation
+                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you very sure?", NL, NL, "This will delete all projects, all keyframes and all Move Sequence records.", NL, NL, "This can only be undone if you restore the database from a backup.", NL, NL, "Proceed?"), "Confirm Database Purge", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result2 == DialogResult.Yes)
+                {
+                    //Perform the database purge                
+                    if (Data_Access_Methods.EraseAllDatabaseRecords(true))
+                    {
+                        PrepareMainformPostPurge();
+                        MessageBoxAdv.Show("Your database has been purged of all records.", "Purge Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        private void btn_EraseAllDatabaseRecords_KeepMS_Click(object sender, EventArgs e)
+        {
+            var NL = Environment.NewLine;
+
+            //Get database purge confirmation
+            DialogResult result1 = MessageBoxAdv.Show(string.Concat("You are about to delete all of the records of your database except Move Sequence records!", NL, NL, "This can only be undone if you restore the database from a backup.", NL, NL, "Proceed"), "Confirm Database Purge", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result1 == DialogResult.Yes)
+            {
+                //Get database purge confirmation
+                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you very sure?", NL, NL, "This will delete all projects and all keyframes (keeping Move Sequence records).", NL, NL, "This can only be undone if you restore the database from a backup.", NL, NL, "Proceed?"), "Confirm Database Purge", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result2 == DialogResult.Yes)
+                {
+                    //Perform the database purge                
+                    if (Data_Access_Methods.EraseAllDatabaseRecords(false))
+                    {
+                        PrepareMainformPostPurge();
+                        MessageBoxAdv.Show("Your database has been purged of all records except Move Sequence records.", "Purge Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                }
+            }
+        }
+
+        private void PrepareMainformPostPurge()
+        {
+            PopulateProjectList(-1);
+
+            tbx_AnimationName.Text = string.Empty;
+            tbx_ProjectNotes.Text = string.Empty;
+            mtbx_SlidingWalkingCount.Value = cSlideWalkStepCountDefault;
+            mtbx_LookingRollingAngle.Value = cLookingRollingAngleDefault;
+            mtbx_FramesBetween.Value = cFramesBetweenDefault;
+            mtbx_KeyDelay.Value = cKeyDelayDefault;
+            mtbx_FrameCount.Value = 0;
+            m_TotalFramesCount = 0;
+            mtbx_FarPlane.Value = 0;
+            lbl_30FPSTimeCalc.Text = "00:00";
+            lbl_60FPSTimeCalc.Text = "00:00";
+            tbx_M3PI_FileLocation.Text = string.Empty;
+            tbx_M3A_FileLocation.Text = string.Empty;
+
+            PopulateKeyframesDatagrid(false);
+            PopulateUseSequenceList();
+            PopulateManageSeqStepNameList();
         }
 
         #endregion

@@ -126,6 +126,9 @@
   <data name="autoLabel21.Text" xml:space="preserve">
     <value>Capture and store Mandelbulb3D project information into a local database, including the MP3 parameter set, project file locations, keyframe data and screenshots of the Mandelbulb graphics. The goal is to have a local source of information that describes each Mandelbulb3D project that is in the works or that has been completed and published.</value>
   </data>
+  <data name="autoLabel34.Text" xml:space="preserve">
+    <value>In situations where you want a clean start with your data, you can purge the Copilot's database of all records, including all project records and all the keyframe records of each project, as well as all of the Move Sequences if you prefer. To purge all records use the left button below. To keep your Move Sequences use the right button below. You should make a backup of the Copilot database in case purging turns out to be a mistake.</value>
+  </data>
   <data name="autoLabel27.Text" xml:space="preserve">
     <value>The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.</value>
   </data>
