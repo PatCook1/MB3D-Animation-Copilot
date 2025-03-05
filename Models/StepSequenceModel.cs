@@ -27,11 +27,8 @@ namespace MB3D_Animation_Copilot.Models
         {
             get
             {
-                //Calculate the total step count for the Move Step
-                double StepAngleCount = Program._MainForm.GetStepAngleCountValue_FromMainForm(Step_Name);
-                int StepAngleCountTally = Step_Count * (int)StepAngleCount;
-
-                return string.Concat(Step_Name, Step_SendKeyQty.ToString(), " (", StepAngleCountTally.ToString(), ")");
+                //Assemble the Step Display
+                return string.Concat(Step_Name, Step_SendKeyQty.ToString(), " (", (Step_SendKeyQty * Step_Count).ToString(), ")");
             }
         }
     }

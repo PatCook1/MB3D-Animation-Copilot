@@ -59,6 +59,7 @@ using Windows.Storage;
 using Microsoft.VisualBasic.Logging;
 using static Microsoft.DotNet.DesignTools.Protocol.Endpoints.Response;
 using System.Windows.Shapes;
+using Windows.Media.Protection.PlayReady;
 
 #endregion
 
@@ -254,7 +255,7 @@ namespace MB3D_Animation_Copilot
 
         private void SetStylesAndThemes()
         {
-            this.ThemeName = "HighContrastThemeExport";
+            this.ThemeName = "HighContrastTheme";
 
             MessageBoxAdv.MessageBoxStyle = MessageBoxAdv.Style.Metro;
             MessageBoxAdv.ThemeName = "HighContrastTheme";
@@ -939,17 +940,8 @@ namespace MB3D_Animation_Copilot
                     {
                         tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
                         tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
-                        int intSendKeyQuantity = lstKeyframeAction[0].SendKeyQuantity;
-                        int intStepAngleCount = lstKeyframeAction[0].StepAngleCount;
-
-                        if (intSendKeyQuantity > 0)
-                        {
-                            //We want the Step/Angle count that is divided by the Step Count - not the total value
-                            intStepAngleCount = (intStepAngleCount / intSendKeyQuantity);
-                        }
-
-                        num_SendKeyQuantity.Value = intSendKeyQuantity;
-                        num_SendKeyStepAngleCount.Value = intStepAngleCount;
+                        num_SendKeyQuantity.Value = lstKeyframeAction[0].SendKeyQuantity;
+                        num_SendKeyStepAngleCount.Value = lstKeyframeAction[0].StepAngleCount;
 
                         //Enable the UI controls that may have been disabled by a previous No-Move Action selection
                         num_SendKeyQuantity.Enabled = true;
@@ -1038,6 +1030,10 @@ namespace MB3D_Animation_Copilot
 
                 Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
                 PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
+
+                //Set these number inputs to zero to protect the user from indvertently changing the action
+                num_SendKeyQuantity.Value = 0;
+                num_SendKeyStepAngleCount.Value = 0;
 
                 LoadFooterMessage("Keyframe Move Action updated. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
             }
@@ -1342,7 +1338,6 @@ namespace MB3D_Animation_Copilot
                 //Increment idxKeyframe from intFromKeyframe while idxKeyframe is less or equal to intToKeyframe
                 for (int idxKeyframeNumber = intFromKeyframe; idxKeyframeNumber <= intToKeyframe; idxKeyframeNumber++)
                 {
-
                     //Get the Keyframe Move Actions for the specified keyframe number
                     List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
                     lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList_ForKeyframeReplicate(m_SelectedProjectID, idxKeyframeNumber);
@@ -1415,7 +1410,7 @@ namespace MB3D_Animation_Copilot
                     }
 
                     //Call MakeNewKeyframe
-                    MakeNewKeyframe(true, false, false, DisplaySummary, true);
+                    MakeNewKeyframe(true, false, false, DisplaySummary, true, string.Concat("Copy of Keyframe #", idxKeyframeNumber.ToString()));
 
                     ClearMoveList(); //Make sure any moves are cleared out
                 }
@@ -2344,7 +2339,7 @@ namespace MB3D_Animation_Copilot
                         if (CanMakeNewKeframe)
                         {
                             //Call MakeNewKeyframe
-                            MakeNewKeyframe(false, true, false, sbDisplaySummary.ToString(), true);
+                            MakeNewKeyframe(false, true, false, sbDisplaySummary.ToString(), true, string.Concat("Move Sequence: ",selectedSeq.SequenceName));
                             ClearMoveList(); //Make sure any moves are cleared out
                             sbDisplaySummary.Clear();
                             this.Refresh();
@@ -2636,7 +2631,7 @@ namespace MB3D_Animation_Copilot
             m_KeysStack = string.Empty; //Clear m_KeysStack
         }
 
-        private void MakeNewKeyframe(bool bolIsRepeatMove, bool bolIsSequenceMove, bool bolIsNoActionMove, string strMoveSummary, bool bolBypassBusyIndicator)
+        private void MakeNewKeyframe(bool bolIsRepeatMove, bool bolIsSequenceMove, bool bolIsNoActionMove, string strMoveSummary, bool bolBypassBusyIndicator, string strKeyframeNote)
         {
             //Try to set focus to the Mandelbulb3D Navigator
             if (BringFocusToMB3DNavigator() == false)
@@ -2708,7 +2703,7 @@ namespace MB3D_Animation_Copilot
                 itemKeyframe.FramesBetween = intFramesBetween;
                 itemKeyframe.FrameCount = m_TotalFramesCount;
                 itemKeyframe.FarPlane = (int)mtbx_FarPlane.Value;
-                itemKeyframe.KeyframeNote = string.Empty; //No note from MakeNewKeyframe
+                itemKeyframe.KeyframeNote = strKeyframeNote;
 
                 //Insert into the DB which returns the ID of the newly inserted record
                 int intKeyframeID = Data_Access_Methods.InsertKeyframeData(m_SelectedProjectID, itemKeyframe);
@@ -3056,7 +3051,7 @@ namespace MB3D_Animation_Copilot
                     }
 
                     //Call MakeNewKeyframe
-                    MakeNewKeyframe(true, false, false, sbDisplaySummary.ToString(), true);
+                    MakeNewKeyframe(true, false, false, sbDisplaySummary.ToString(), true, "Repeat last Move");
 
                     ClearMoveList(); //Make sure any moves are cleared out
 
@@ -3342,7 +3337,7 @@ namespace MB3D_Animation_Copilot
                 //so that a new keyframe isn't made in the animator window
                 if (m_HaveMovesToProcess & m_MoveGroupTrackerDic.Count > 0)
                 {
-                    MakeNewKeyframe(false, false, false, string.Empty, false);
+                    MakeNewKeyframe(false, false, false, string.Empty, false, string.Empty);
                 }
                 else
                 {
@@ -3366,7 +3361,7 @@ namespace MB3D_Animation_Copilot
                     m_sbMovesList.Append(string.Concat(cNMKfn, NL));
                     lbl_MovesList.Text = String.Concat(m_sbMovesList.ToString()); //Write this MovesList to the UI (with the newline "NL")
 
-                    MakeNewKeyframe(false, false, true, string.Empty, false); //Call the MakeNewKeyframe immediately
+                    MakeNewKeyframe(false, false, true, string.Empty, false, "No Move Keyframe"); //Call the MakeNewKeyframe immediately
                 }
                 else
                 {
@@ -4039,10 +4034,13 @@ namespace MB3D_Animation_Copilot
 
                 //Get the entered send key count
                 //Minimum value of control is one so no need to check for zero entry
-                int StepCountEntry = (int)num_ManageSeqSendKeyQty.Value;
+                int SendKeyQtyUserEntry = (int)num_ManageSeqSendKeyQty.Value;
+
+                //Fetch the appropriate value from mtbx_SlidingWalkingCount or mtbx_LookingRollingAngle
+                int CountAngleMainformEntry = GetStepAngleCountValue_FromMainForm(StepName);
 
                 //Call the update to the Step per Step_ID
-                Data_Access_Methods.ManageSeqUpdateStep((int)cellValue_StepID, (int)cellValue_StepGroup, StepName, StepCountEntry, StepSendKey);
+                Data_Access_Methods.ManageSeqUpdateStep((int)cellValue_StepID, (int)cellValue_StepGroup, StepName, SendKeyQtyUserEntry, StepSendKey, CountAngleMainformEntry);
 
                 num_ManageSeqSendKeyQty.Value = 1; //Restore the step count entry to 1 after this step update
 
@@ -4392,7 +4390,7 @@ namespace MB3D_Animation_Copilot
 
             if (Data_Access_Methods.ProjectRecordExistByProjectName(SampleProjectName) > 0)
             {
-                DialogResult result = MessageBoxAdv.Show(string.Concat("A sample animation project already exists and will need to be over-written.", NL, NL, "Proceed with over-writting the existing sample project?"), "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBoxAdv.Show(string.Concat("A sample animation project already exists and will need to be replaced.", NL, NL, "Proceed with replacing the existing sample project?"), "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     goto CreateSampleProject;

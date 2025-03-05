@@ -177,6 +177,9 @@ namespace MB3D_Animation_Copilot
             label24 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             page_Utilities = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel_UtilitiesPage = new System.Windows.Forms.Panel();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            btn_CreateSampleProject = new Syncfusion.WinForms.Controls.SfButton();
+            autoLabel35 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             btn_FarPlaneUpdater = new Syncfusion.WinForms.Controls.SfButton();
             autoLabel20 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             btn_LookLeftUpdater = new Syncfusion.WinForms.Controls.SfButton();
@@ -188,9 +191,6 @@ namespace MB3D_Animation_Copilot
             label40 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             page_Admin = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel11 = new System.Windows.Forms.Panel();
-            groupBox2 = new System.Windows.Forms.GroupBox();
-            btn_CreateSampleProject = new Syncfusion.WinForms.Controls.SfButton();
-            autoLabel35 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             groupBox1 = new System.Windows.Forms.GroupBox();
             btn_EraseAllDatabaseRecords_KeepMS = new Syncfusion.WinForms.Controls.SfButton();
             autoLabel34 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -298,11 +298,11 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)drp_ManageSeqMoveSequences).BeginInit();
             page_Utilities.SuspendLayout();
             panel_UtilitiesPage.SuspendLayout();
+            groupBox2.SuspendLayout();
             page_Library.SuspendLayout();
             panel10.SuspendLayout();
             page_Admin.SuspendLayout();
             panel11.SuspendLayout();
-            groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             gb_DBAdmin_Restore.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_DBAdmin_Restore_DBFolder).BeginInit();
@@ -1660,8 +1660,7 @@ namespace MB3D_Animation_Copilot
             num_SendKeyStepAngleCount.TabIndex = 23;
             num_SendKeyStepAngleCount.ThemeName = "HighContrastTheme";
             num_SendKeyStepAngleCount.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            toolTip1.SetToolTip(num_SendKeyStepAngleCount, "Edit Step Quantity");
-            num_SendKeyStepAngleCount.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            toolTip1.SetToolTip(num_SendKeyStepAngleCount, "Edit Step Quantity. Max 10,000");
             // 
             // btn_KeyframeAction_Delete
             // 
@@ -1696,14 +1695,12 @@ namespace MB3D_Animation_Copilot
             num_SendKeyQuantity.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             num_SendKeyQuantity.Location = new System.Drawing.Point(13, 124);
             num_SendKeyQuantity.Margin = new System.Windows.Forms.Padding(4);
-            num_SendKeyQuantity.Maximum = new decimal(new int[] { 1000, 0, 0, 0 });
             num_SendKeyQuantity.Name = "num_SendKeyQuantity";
             num_SendKeyQuantity.Size = new System.Drawing.Size(75, 23);
             num_SendKeyQuantity.TabIndex = 9;
             num_SendKeyQuantity.ThemeName = "HighContrastTheme";
             num_SendKeyQuantity.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            toolTip1.SetToolTip(num_SendKeyQuantity, "Edit Step Quantity");
-            num_SendKeyQuantity.Value = new decimal(new int[] { 1, 0, 0, 0 });
+            toolTip1.SetToolTip(num_SendKeyQuantity, "Edit Step Quantity. Max 100");
             // 
             // tbx_SendKeyChar
             // 
@@ -2108,7 +2105,7 @@ namespace MB3D_Animation_Copilot
             // autoLabel17
             // 
             autoLabel17.AutoSize = false;
-            autoLabel17.Location = new System.Drawing.Point(26, 118);
+            autoLabel17.Location = new System.Drawing.Point(26, 127);
             autoLabel17.Name = "autoLabel17";
             autoLabel17.Size = new System.Drawing.Size(351, 67);
             autoLabel17.TabIndex = 36;
@@ -2117,7 +2114,7 @@ namespace MB3D_Animation_Copilot
             // btn_ManageSeqAddStep
             // 
             btn_ManageSeqAddStep.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_ManageSeqAddStep.Location = new System.Drawing.Point(28, 269);
+            btn_ManageSeqAddStep.Location = new System.Drawing.Point(28, 285);
             btn_ManageSeqAddStep.Name = "btn_ManageSeqAddStep";
             btn_ManageSeqAddStep.Size = new System.Drawing.Size(203, 33);
             btn_ManageSeqAddStep.TabIndex = 35;
@@ -2128,20 +2125,20 @@ namespace MB3D_Animation_Copilot
             // lbl_ManageSeqFooterMsgArea
             // 
             lbl_ManageSeqFooterMsgArea.AutoSize = false;
-            lbl_ManageSeqFooterMsgArea.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lbl_ManageSeqFooterMsgArea.Location = new System.Drawing.Point(28, 314);
+            lbl_ManageSeqFooterMsgArea.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            lbl_ManageSeqFooterMsgArea.Location = new System.Drawing.Point(28, 330);
             lbl_ManageSeqFooterMsgArea.Name = "lbl_ManageSeqFooterMsgArea";
-            lbl_ManageSeqFooterMsgArea.Size = new System.Drawing.Size(345, 89);
+            lbl_ManageSeqFooterMsgArea.Size = new System.Drawing.Size(345, 79);
             lbl_ManageSeqFooterMsgArea.TabIndex = 34;
             lbl_ManageSeqFooterMsgArea.ThemeName = "HighContrastTheme";
-            lbl_ManageSeqFooterMsgArea.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            lbl_ManageSeqFooterMsgArea.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             // 
             // btn_ManageSeqDeleteStep
             // 
             btn_ManageSeqDeleteStep.AllowWrapText = true;
             btn_ManageSeqDeleteStep.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_ManageSeqDeleteStep.ForeColor = System.Drawing.Color.Red;
-            btn_ManageSeqDeleteStep.Location = new System.Drawing.Point(295, 196);
+            btn_ManageSeqDeleteStep.Location = new System.Drawing.Point(295, 212);
             btn_ManageSeqDeleteStep.Name = "btn_ManageSeqDeleteStep";
             btn_ManageSeqDeleteStep.Size = new System.Drawing.Size(78, 73);
             btn_ManageSeqDeleteStep.Style.ForeColor = System.Drawing.Color.Red;
@@ -2154,7 +2151,7 @@ namespace MB3D_Animation_Copilot
             // btn_ManageSeqUpdateStep
             // 
             btn_ManageSeqUpdateStep.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_ManageSeqUpdateStep.Location = new System.Drawing.Point(28, 196);
+            btn_ManageSeqUpdateStep.Location = new System.Drawing.Point(28, 212);
             btn_ManageSeqUpdateStep.Name = "btn_ManageSeqUpdateStep";
             btn_ManageSeqUpdateStep.Size = new System.Drawing.Size(203, 55);
             btn_ManageSeqUpdateStep.TabIndex = 32;
@@ -2340,6 +2337,7 @@ namespace MB3D_Animation_Copilot
             // 
             // panel_UtilitiesPage
             // 
+            panel_UtilitiesPage.Controls.Add(groupBox2);
             panel_UtilitiesPage.Controls.Add(btn_FarPlaneUpdater);
             panel_UtilitiesPage.Controls.Add(autoLabel20);
             panel_UtilitiesPage.Controls.Add(btn_LookLeftUpdater);
@@ -2348,6 +2346,46 @@ namespace MB3D_Animation_Copilot
             panel_UtilitiesPage.Name = "panel_UtilitiesPage";
             panel_UtilitiesPage.Size = new System.Drawing.Size(1284, 540);
             panel_UtilitiesPage.TabIndex = 11;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(btn_CreateSampleProject);
+            groupBox2.Controls.Add(autoLabel35);
+            groupBox2.ForeColor = System.Drawing.Color.White;
+            groupBox2.Location = new System.Drawing.Point(746, 23);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(514, 248);
+            groupBox2.TabIndex = 15;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Create Sample Project";
+            // 
+            // btn_CreateSampleProject
+            // 
+            btn_CreateSampleProject.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            btn_CreateSampleProject.Location = new System.Drawing.Point(151, 184);
+            btn_CreateSampleProject.Margin = new System.Windows.Forms.Padding(4);
+            btn_CreateSampleProject.Name = "btn_CreateSampleProject";
+            btn_CreateSampleProject.Size = new System.Drawing.Size(218, 44);
+            btn_CreateSampleProject.TabIndex = 15;
+            btn_CreateSampleProject.Text = "Create Sample Animation Project";
+            btn_CreateSampleProject.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_CreateSampleProject, "Create a sample animation project");
+            btn_CreateSampleProject.UseVisualStyleBackColor = true;
+            btn_CreateSampleProject.Click += btn_CreateSampleProject_Click;
+            // 
+            // autoLabel35
+            // 
+            autoLabel35.AutoSize = false;
+            autoLabel35.BackColor = System.Drawing.Color.Black;
+            autoLabel35.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel35.Location = new System.Drawing.Point(13, 21);
+            autoLabel35.Name = "autoLabel35";
+            autoLabel35.Size = new System.Drawing.Size(489, 154);
+            autoLabel35.TabIndex = 2;
+            autoLabel35.Text = resources.GetString("autoLabel35.Text");
+            autoLabel35.ThemeName = "HighContrastTheme";
+            autoLabel35.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel35.ThemeStyle.ForeColor = System.Drawing.Color.White;
             // 
             // btn_FarPlaneUpdater
             // 
@@ -2473,7 +2511,6 @@ namespace MB3D_Animation_Copilot
             // 
             // panel11
             // 
-            panel11.Controls.Add(groupBox2);
             panel11.Controls.Add(groupBox1);
             panel11.Controls.Add(autoLabel24);
             panel11.Controls.Add(gb_DBAdmin_Restore);
@@ -2484,53 +2521,13 @@ namespace MB3D_Animation_Copilot
             panel11.Size = new System.Drawing.Size(1284, 540);
             panel11.TabIndex = 2;
             // 
-            // groupBox2
-            // 
-            groupBox2.Controls.Add(btn_CreateSampleProject);
-            groupBox2.Controls.Add(autoLabel35);
-            groupBox2.ForeColor = System.Drawing.Color.White;
-            groupBox2.Location = new System.Drawing.Point(724, 283);
-            groupBox2.Name = "groupBox2";
-            groupBox2.Size = new System.Drawing.Size(514, 238);
-            groupBox2.TabIndex = 14;
-            groupBox2.TabStop = false;
-            groupBox2.Text = "Create Sample Project";
-            // 
-            // btn_CreateSampleProject
-            // 
-            btn_CreateSampleProject.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_CreateSampleProject.Location = new System.Drawing.Point(140, 178);
-            btn_CreateSampleProject.Margin = new System.Windows.Forms.Padding(4);
-            btn_CreateSampleProject.Name = "btn_CreateSampleProject";
-            btn_CreateSampleProject.Size = new System.Drawing.Size(218, 44);
-            btn_CreateSampleProject.TabIndex = 15;
-            btn_CreateSampleProject.Text = "Create Sample Animation Project";
-            btn_CreateSampleProject.ThemeName = "HighContrastTheme";
-            toolTip1.SetToolTip(btn_CreateSampleProject, "Create a sample animation project");
-            btn_CreateSampleProject.UseVisualStyleBackColor = true;
-            btn_CreateSampleProject.Click += btn_CreateSampleProject_Click;
-            // 
-            // autoLabel35
-            // 
-            autoLabel35.AutoSize = false;
-            autoLabel35.BackColor = System.Drawing.Color.Black;
-            autoLabel35.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            autoLabel35.Location = new System.Drawing.Point(13, 21);
-            autoLabel35.Name = "autoLabel35";
-            autoLabel35.Size = new System.Drawing.Size(489, 154);
-            autoLabel35.TabIndex = 2;
-            autoLabel35.Text = resources.GetString("autoLabel35.Text");
-            autoLabel35.ThemeName = "HighContrastTheme";
-            autoLabel35.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            autoLabel35.ThemeStyle.ForeColor = System.Drawing.Color.White;
-            // 
             // groupBox1
             // 
             groupBox1.Controls.Add(btn_EraseAllDatabaseRecords_KeepMS);
             groupBox1.Controls.Add(autoLabel34);
             groupBox1.Controls.Add(btn_EraseAllDatabaseRecords);
             groupBox1.ForeColor = System.Drawing.Color.White;
-            groupBox1.Location = new System.Drawing.Point(22, 283);
+            groupBox1.Location = new System.Drawing.Point(18, 283);
             groupBox1.Name = "groupBox1";
             groupBox1.Size = new System.Drawing.Size(491, 238);
             groupBox1.TabIndex = 13;
@@ -2599,11 +2596,11 @@ namespace MB3D_Animation_Copilot
             gb_DBAdmin_Restore.Controls.Add(label55);
             gb_DBAdmin_Restore.Controls.Add(btn_DBAdmin_Restore);
             gb_DBAdmin_Restore.ForeColor = System.Drawing.Color.White;
-            gb_DBAdmin_Restore.Location = new System.Drawing.Point(22, 175);
+            gb_DBAdmin_Restore.Location = new System.Drawing.Point(18, 177);
             gb_DBAdmin_Restore.Margin = new System.Windows.Forms.Padding(4);
             gb_DBAdmin_Restore.Name = "gb_DBAdmin_Restore";
             gb_DBAdmin_Restore.Padding = new System.Windows.Forms.Padding(4);
-            gb_DBAdmin_Restore.Size = new System.Drawing.Size(1216, 93);
+            gb_DBAdmin_Restore.Size = new System.Drawing.Size(1251, 93);
             gb_DBAdmin_Restore.TabIndex = 1;
             gb_DBAdmin_Restore.TabStop = false;
             gb_DBAdmin_Restore.Text = "Database Restore";
@@ -2611,7 +2608,7 @@ namespace MB3D_Animation_Copilot
             // btn_DBAdmin_RestoreDBFile
             // 
             btn_DBAdmin_RestoreDBFile.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_DBAdmin_RestoreDBFile.Location = new System.Drawing.Point(725, 38);
+            btn_DBAdmin_RestoreDBFile.Location = new System.Drawing.Point(768, 38);
             btn_DBAdmin_RestoreDBFile.Margin = new System.Windows.Forms.Padding(4);
             btn_DBAdmin_RestoreDBFile.Name = "btn_DBAdmin_RestoreDBFile";
             btn_DBAdmin_RestoreDBFile.Size = new System.Drawing.Size(278, 26);
@@ -2627,7 +2624,7 @@ namespace MB3D_Animation_Copilot
             tbx_DBAdmin_Restore_DBFolder.Location = new System.Drawing.Point(146, 43);
             tbx_DBAdmin_Restore_DBFolder.Margin = new System.Windows.Forms.Padding(4);
             tbx_DBAdmin_Restore_DBFolder.Name = "tbx_DBAdmin_Restore_DBFolder";
-            tbx_DBAdmin_Restore_DBFolder.Size = new System.Drawing.Size(549, 20);
+            tbx_DBAdmin_Restore_DBFolder.Size = new System.Drawing.Size(599, 20);
             tbx_DBAdmin_Restore_DBFolder.TabIndex = 13;
             tbx_DBAdmin_Restore_DBFolder.ThemeName = "HighContrastTheme";
             toolTip1.SetToolTip(tbx_DBAdmin_Restore_DBFolder, "Enter or select the database file to Restore");
@@ -2644,7 +2641,7 @@ namespace MB3D_Animation_Copilot
             // btn_DBAdmin_Restore
             // 
             btn_DBAdmin_Restore.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_DBAdmin_Restore.Location = new System.Drawing.Point(1031, 17);
+            btn_DBAdmin_Restore.Location = new System.Drawing.Point(1068, 17);
             btn_DBAdmin_Restore.Margin = new System.Windows.Forms.Padding(4);
             btn_DBAdmin_Restore.Name = "btn_DBAdmin_Restore";
             btn_DBAdmin_Restore.Size = new System.Drawing.Size(164, 62);
@@ -2668,11 +2665,11 @@ namespace MB3D_Animation_Copilot
             gb_DBAdmin_Backup.Controls.Add(label53);
             gb_DBAdmin_Backup.Controls.Add(btn_DBAdmin_Backup);
             gb_DBAdmin_Backup.ForeColor = System.Drawing.Color.White;
-            gb_DBAdmin_Backup.Location = new System.Drawing.Point(22, 41);
+            gb_DBAdmin_Backup.Location = new System.Drawing.Point(18, 41);
             gb_DBAdmin_Backup.Margin = new System.Windows.Forms.Padding(4);
             gb_DBAdmin_Backup.Name = "gb_DBAdmin_Backup";
             gb_DBAdmin_Backup.Padding = new System.Windows.Forms.Padding(4);
-            gb_DBAdmin_Backup.Size = new System.Drawing.Size(1216, 126);
+            gb_DBAdmin_Backup.Size = new System.Drawing.Size(1251, 126);
             gb_DBAdmin_Backup.TabIndex = 0;
             gb_DBAdmin_Backup.TabStop = false;
             gb_DBAdmin_Backup.Text = "Database Backup";
@@ -2726,7 +2723,7 @@ namespace MB3D_Animation_Copilot
             // btn_DBAdmin_BackupFolder
             // 
             btn_DBAdmin_BackupFolder.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_DBAdmin_BackupFolder.Location = new System.Drawing.Point(725, 88);
+            btn_DBAdmin_BackupFolder.Location = new System.Drawing.Point(768, 88);
             btn_DBAdmin_BackupFolder.Margin = new System.Windows.Forms.Padding(4);
             btn_DBAdmin_BackupFolder.Name = "btn_DBAdmin_BackupFolder";
             btn_DBAdmin_BackupFolder.Size = new System.Drawing.Size(278, 26);
@@ -2742,7 +2739,7 @@ namespace MB3D_Animation_Copilot
             tbx_DBAdmin_Backup_FolderName.Location = new System.Drawing.Point(146, 91);
             tbx_DBAdmin_Backup_FolderName.Margin = new System.Windows.Forms.Padding(4);
             tbx_DBAdmin_Backup_FolderName.Name = "tbx_DBAdmin_Backup_FolderName";
-            tbx_DBAdmin_Backup_FolderName.Size = new System.Drawing.Size(549, 20);
+            tbx_DBAdmin_Backup_FolderName.Size = new System.Drawing.Size(599, 20);
             tbx_DBAdmin_Backup_FolderName.TabIndex = 5;
             tbx_DBAdmin_Backup_FolderName.ThemeName = "HighContrastTheme";
             toolTip1.SetToolTip(tbx_DBAdmin_Backup_FolderName, "Enter or select the folder for the database backup file");
@@ -2758,7 +2755,7 @@ namespace MB3D_Animation_Copilot
             // btn_DBAdmin_Backup
             // 
             btn_DBAdmin_Backup.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_DBAdmin_Backup.Location = new System.Drawing.Point(1031, 56);
+            btn_DBAdmin_Backup.Location = new System.Drawing.Point(1068, 56);
             btn_DBAdmin_Backup.Margin = new System.Windows.Forms.Padding(4);
             btn_DBAdmin_Backup.Name = "btn_DBAdmin_Backup";
             btn_DBAdmin_Backup.Size = new System.Drawing.Size(164, 59);
@@ -3183,13 +3180,13 @@ namespace MB3D_Animation_Copilot
             page_Utilities.ResumeLayout(false);
             panel_UtilitiesPage.ResumeLayout(false);
             panel_UtilitiesPage.PerformLayout();
+            groupBox2.ResumeLayout(false);
             page_Library.ResumeLayout(false);
             panel10.ResumeLayout(false);
             panel10.PerformLayout();
             page_Admin.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel11.PerformLayout();
-            groupBox2.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             gb_DBAdmin_Restore.ResumeLayout(false);
             gb_DBAdmin_Restore.PerformLayout();
@@ -3419,8 +3416,8 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel34;
         private Syncfusion.WinForms.Controls.SfButton btn_EraseAllDatabaseRecords_KeepMS;
         private System.Windows.Forms.GroupBox groupBox2;
-        private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel35;
         private Syncfusion.WinForms.Controls.SfButton btn_CreateSampleProject;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel35;
     }
 }
 

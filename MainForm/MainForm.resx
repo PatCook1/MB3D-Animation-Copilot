@@ -121,13 +121,13 @@
     <value>409, 27</value>
   </metadata>
   <data name="autoLabel17.Text" xml:space="preserve">
-    <value>For the Step Count value: Walking and sliding move steps (WF, WR, SR, SL, SU and SD) use the 'Sliding+Walking Step Count' value of the top panel of this application. Looking and rolling move steps (LR, LL, LU, LD, RC and RCC) use the 'Looking+Rolling Step Angle' value of the top panel of this application.</value>
-  </data>
-  <data name="autoLabel21.Text" xml:space="preserve">
-    <value>Capture and store Mandelbulb3D project information into a local database, including the MP3 parameter set, project file locations, keyframe data and screenshots of the Mandelbulb graphics. The goal is to have a local source of information that describes each Mandelbulb3D project that is in the works or that has been completed and published.</value>
+    <value>Note: When you perform a move step update or add, the walking and sliding move steps (WF, WR, SR, SL, SU and SD) will use the 'Sliding/Walking Step Count' value of the top panel of this application. Looking and rolling move steps (LR, LL, LU, LD, RC and RCC) will use the 'Looking/Rolling Step Angle' value of the top panel of this application.</value>
   </data>
   <data name="autoLabel35.Text" xml:space="preserve">
     <value>You can create a sample animation project, with sample keyframes, to look over and experiment with. The sample project will create a variety of keyframe records that include various keyframe movements (actions). You will also be able to modify the sample keyframe movement with the Move Designer. If a sample animation project already exists, it will be over-written by a new sample project. To create a sample animation project click the button below.</value>
+  </data>
+  <data name="autoLabel21.Text" xml:space="preserve">
+    <value>Capture and store Mandelbulb3D project information into a local database, including the MP3 parameter set, project file locations, keyframe data and screenshots of the Mandelbulb graphics. The goal is to have a local source of information that describes each Mandelbulb3D project that is in the works or that has been completed and published.</value>
   </data>
   <data name="autoLabel34.Text" xml:space="preserve">
     <value>In situations where you want a clean start with your data, you can purge the Copilot's database of all records, including all project records and all the keyframe records of each project, as well as all of the Move Sequences if you prefer. To purge all records use the left button below. To keep your Move Sequences use the right button below. You should make a backup of the Copilot database in case purging turns out to be a mistake.</value>
