@@ -188,6 +188,9 @@ namespace MB3D_Animation_Copilot
             label40 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             page_Admin = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel11 = new System.Windows.Forms.Panel();
+            groupBox2 = new System.Windows.Forms.GroupBox();
+            btn_CreateSampleProject = new Syncfusion.WinForms.Controls.SfButton();
+            autoLabel35 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             groupBox1 = new System.Windows.Forms.GroupBox();
             btn_EraseAllDatabaseRecords_KeepMS = new Syncfusion.WinForms.Controls.SfButton();
             autoLabel34 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -299,6 +302,7 @@ namespace MB3D_Animation_Copilot
             panel10.SuspendLayout();
             page_Admin.SuspendLayout();
             panel11.SuspendLayout();
+            groupBox2.SuspendLayout();
             groupBox1.SuspendLayout();
             gb_DBAdmin_Restore.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_DBAdmin_Restore_DBFolder).BeginInit();
@@ -2469,6 +2473,7 @@ namespace MB3D_Animation_Copilot
             // 
             // panel11
             // 
+            panel11.Controls.Add(groupBox2);
             panel11.Controls.Add(groupBox1);
             panel11.Controls.Add(autoLabel24);
             panel11.Controls.Add(gb_DBAdmin_Restore);
@@ -2478,6 +2483,46 @@ namespace MB3D_Animation_Copilot
             panel11.Name = "panel11";
             panel11.Size = new System.Drawing.Size(1284, 540);
             panel11.TabIndex = 2;
+            // 
+            // groupBox2
+            // 
+            groupBox2.Controls.Add(btn_CreateSampleProject);
+            groupBox2.Controls.Add(autoLabel35);
+            groupBox2.ForeColor = System.Drawing.Color.White;
+            groupBox2.Location = new System.Drawing.Point(724, 283);
+            groupBox2.Name = "groupBox2";
+            groupBox2.Size = new System.Drawing.Size(514, 238);
+            groupBox2.TabIndex = 14;
+            groupBox2.TabStop = false;
+            groupBox2.Text = "Create Sample Project";
+            // 
+            // btn_CreateSampleProject
+            // 
+            btn_CreateSampleProject.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            btn_CreateSampleProject.Location = new System.Drawing.Point(140, 178);
+            btn_CreateSampleProject.Margin = new System.Windows.Forms.Padding(4);
+            btn_CreateSampleProject.Name = "btn_CreateSampleProject";
+            btn_CreateSampleProject.Size = new System.Drawing.Size(218, 44);
+            btn_CreateSampleProject.TabIndex = 15;
+            btn_CreateSampleProject.Text = "Create Sample Animation Project";
+            btn_CreateSampleProject.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_CreateSampleProject, "Create a sample animation project");
+            btn_CreateSampleProject.UseVisualStyleBackColor = true;
+            btn_CreateSampleProject.Click += btn_CreateSampleProject_Click;
+            // 
+            // autoLabel35
+            // 
+            autoLabel35.AutoSize = false;
+            autoLabel35.BackColor = System.Drawing.Color.Black;
+            autoLabel35.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel35.Location = new System.Drawing.Point(13, 21);
+            autoLabel35.Name = "autoLabel35";
+            autoLabel35.Size = new System.Drawing.Size(489, 154);
+            autoLabel35.TabIndex = 2;
+            autoLabel35.Text = resources.GetString("autoLabel35.Text");
+            autoLabel35.ThemeName = "HighContrastTheme";
+            autoLabel35.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel35.ThemeStyle.ForeColor = System.Drawing.Color.White;
             // 
             // groupBox1
             // 
@@ -3144,6 +3189,7 @@ namespace MB3D_Animation_Copilot
             page_Admin.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel11.PerformLayout();
+            groupBox2.ResumeLayout(false);
             groupBox1.ResumeLayout(false);
             gb_DBAdmin_Restore.ResumeLayout(false);
             gb_DBAdmin_Restore.PerformLayout();
@@ -3372,6 +3418,9 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.WinForms.Controls.SfButton btn_EraseAllDatabaseRecords;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel34;
         private Syncfusion.WinForms.Controls.SfButton btn_EraseAllDatabaseRecords_KeepMS;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel35;
+        private Syncfusion.WinForms.Controls.SfButton btn_CreateSampleProject;
     }
 }
 

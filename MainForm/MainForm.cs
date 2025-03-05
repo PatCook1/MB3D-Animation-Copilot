@@ -4385,6 +4385,60 @@ namespace MB3D_Animation_Copilot
             PopulateManageSeqStepNameList();
         }
 
+        private void btn_CreateSampleProject_Click(object sender, EventArgs e)
+        {
+            var NL = Environment.NewLine;
+            string SampleProjectName = ConfigurationManager.AppSettings["SampleProjectName"];
+
+            if (Data_Access_Methods.ProjectRecordExistByProjectName(SampleProjectName) > 0)
+            {
+                DialogResult result = MessageBoxAdv.Show(string.Concat("A sample animation project already exists and will need to be over-written.", NL, NL, "Proceed with over-writting the existing sample project?"), "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    goto CreateSampleProject;
+                }
+                return; //Bail
+            }
+
+            //Get user confirmation
+            DialogResult result1 = MessageBoxAdv.Show(string.Concat("You are about to create a sample animation project named '", SampleProjectName, "'.", NL, NL, "Proceed"), "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            if (result1 == DialogResult.Yes)
+            {
+                goto CreateSampleProject;
+            }
+            return; //Bail
+
+        CreateSampleProject:
+
+            if (Data_Access_Methods.CreateSampleAnimationProject(SampleProjectName))
+            {
+                mtbx_FarPlane.Value = 500; //Update the UI to be consistent with the value of FarPlane for the sample records
+
+                PopulateProjectList(-1);
+
+                List<ProjectListModel> lstProjectList = null;
+                lstProjectList = Data_Access_Methods.LoadProjectsList();
+
+                var idx = 0;
+                //Loop across the project list and try to find a matching project ID
+                foreach (ProjectListModel item in lstProjectList)
+                {
+                    if (item.Project_Name == SampleProjectName)
+                    {
+                        break;
+                    }
+                    idx += 1;
+                }
+
+                //And set the dropdown to the found item
+                //Note: The Change event of drp_ProjectList will fire LoadProjectData and PopulateKeyframesDatagrid to populate the UI
+                drp_ProjectList.SelectedIndex = idx;
+
+                MessageBoxAdv.Show(string.Concat("A sample animation project named '", SampleProjectName, "' has been created."), "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+        }
+
         #endregion
 
         #region External Link Methods =============================================================================== 
@@ -4785,7 +4839,6 @@ namespace MB3D_Animation_Copilot
             return string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\", ConfigurationManager.AppSettings["AppDataPathSub"], @"\", ConfigurationManager.AppSettings["ErrorLogFileName"]);
         }
 
-        #endregion
-
+#endregion
     }
 }

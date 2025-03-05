@@ -23,6 +23,7 @@ using System.Data.SQLite;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Windows.Controls.Primitives;
 using System.Windows.Forms;
@@ -77,6 +78,34 @@ namespace MB3D_Animation_Copilot.Classes
             {
                 Program._MainForm.LogException("DAM GetProjectRecordCount", ex); //Log this error
                 MessageBoxAdv.Show(ex.Message, "Error @ DAM GetProjectRecordCount. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return 0;
+            }
+        }
+
+        public static int ProjectRecordExistByProjectName(string argProjectName)
+        {
+            try
+            {
+
+                int RecordQuantity = 0;
+
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+
+                    //Get the coount of project recordws
+                    RecordQuantity = cnn.ExecuteScalar<int>("SELECT COUNT (*) FROM Animation_Project WHERE Project_Name = @ProjectName",
+                    param: new
+                    {
+                        @ProjectName = argProjectName
+                    });
+                }
+
+                return RecordQuantity;
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM ProjectRecordExistByProjectName", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM ProjectRecordExistByProjectName. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return 0;
             }
         }
@@ -1172,7 +1201,7 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
 
-                    var output = cnn.Query< KeyframeModel>("SELECT *" +
+                    var output = cnn.Query<KeyframeModel>("SELECT *" +
                                       " FROM Keyframes" +
                                       " WHERE ProjectID_Ref = @ProjectID" +
                                       " AND KeyframeNum BETWEEN @FromKeyframeNum AND @ToKeyframeNum" +
@@ -1521,6 +1550,164 @@ namespace MB3D_Animation_Copilot.Classes
                 return false;
             }
         }
+
+        public static bool CreateSampleAnimationProject(string argSampleProjectName)
+        {
+            try
+            {
+                //Delete the existing sample project record, keyframes and action records
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+
+                    int ProjectID = 0;
+
+                    //Get the ID of the existing sample project record
+                    ProjectID = cnn.ExecuteScalar<int>("SELECT ID FROM Animation_Project WHERE Project_Name = @ProjectName",
+                    param: new
+                    {
+                        @ProjectName = argSampleProjectName
+                    });
+
+                    //Delete all of the project's keyframe and keyframe actions
+                    DeleteAllKeyframeAndKeyframeActions(ProjectID);
+
+                    //Lastly, delete the project record
+                    DeleteAnimationProject(ProjectID);
+                }
+
+                //Collect the data for a sample project record into a collection object
+                Collection<ProjectModel> colProjectData = new Collection<ProjectModel>();
+                colProjectData.Add(new ProjectModel());
+
+                colProjectData[0].Project_Name = argSampleProjectName;
+                colProjectData[0].Project_Notes = "This is a sample animation project for review and experimentation.";
+                colProjectData[0].SlideWalk_StepCount = MainForm.cSlideWalkStepCountDefault;
+                colProjectData[0].LookingRolling_Angle = MainForm.cLookingRollingAngleDefault;
+                colProjectData[0].Frames_Between = MainForm.cFramesBetweenDefault;
+                colProjectData[0].Key_Delay = MainForm.cKeyDelayDefault;
+                colProjectData[0].Total_Frames_Count = 0;
+                colProjectData[0].Far_Plane = "500";
+                colProjectData[0].Animation_Length_30 = "00:00";
+                colProjectData[0].Animation_Length_60 = "00:00";
+                colProjectData[0].M3PIFileLocation = string.Empty;
+                colProjectData[0].M3AFileLocation = string.Empty;
+
+                int SampleProjectID = InsertProjectData(colProjectData);
+
+                //Insert sample keyframes if we have a parent project record
+                if (SampleProjectID > 0)
+                {
+
+                    //These defined here to reduce the number of characters in the list add statements
+                    string KT = MainForm.cKeyStackLineChar_Manual;
+                    int FB = MainForm.cFramesBetweenDefault;
+                    int FP = 500;
+
+                    //Create a temporary list to hold the sample keyframe data
+                    List<SampleProjectKeyframesModel> lstSampleDataModel = new List<SampleProjectKeyframesModel>();
+
+                    //Create a temporary list to hold the sample keyframe action data
+                    List<SampleProjectActionsModel> lstKeyframeAction_temp = new List<SampleProjectActionsModel>();
+
+                    //Notes:
+                    //KeyframeNum is manually incremented here
+                    //The value in KeyframeDisplay is made up
+                    //FrameCount increments by the value of Frames Between
+                    
+                    //Walk forward
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 1, KeyframeType = KT, KeyframeNum = 1, KeyframeDisplay = "WF1 (500)", FramesBetween = FB, FrameCount = 50, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 1, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 2, KeyframeType = KT, KeyframeNum = 2, KeyframeDisplay = "WF1 (500)", FramesBetween = FB, FrameCount = 100, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+
+                    //Right banking turn
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 3, KeyframeType = KT, KeyframeNum = 3, KeyframeDisplay = "WF1 (500) LL1 (5), RCW1 (5)", FramesBetween = FB, FrameCount = 150, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "starting banking right turn "});
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1 });
+
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 4, KeyframeType = KT, KeyframeNum = 4, KeyframeDisplay = "WF1 (500) LL1 (5), RCW1 (5)", FramesBetween = FB, FrameCount = 200, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1 });
+
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 5, KeyframeType = KT, KeyframeNum = 5, KeyframeDisplay = "WF1 (500) LL1 (5), RCW1 (5)", FramesBetween = FB, FrameCount = 250, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1 });
+
+                    //Leveling out right banking turn
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 6, KeyframeType = KT, KeyframeNum = 6, KeyframeDisplay = "WF1 (500), RCC1 (5)", FramesBetween = FB, FrameCount = 300, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "leveling out from banking right turn " });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 6, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 6, ActionName = "RCC", SendKeyChar = "o", SendKeyQuantity = 1 });
+
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 7, KeyframeType = KT, KeyframeNum = 7, KeyframeDisplay = "WF1 (500) RCC1 (5)", FramesBetween = FB, FrameCount = 350, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "cont leveling out from banking right turn " });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 7, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 7, ActionName = "RCC", SendKeyChar = "o", SendKeyQuantity = 1 });
+
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 8, KeyframeType = KT, KeyframeNum = 8, KeyframeDisplay = "WF1 (500) RCC1 (5)", FramesBetween = FB, FrameCount = 400, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "cont leveling out from banking right turn " });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 8, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 8, ActionName = "RCC", SendKeyChar = "o", SendKeyQuantity = 1 });
+
+                    //Resume walk forward
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 9, KeyframeType = KT, KeyframeNum = 9, KeyframeDisplay = "WF1 (500)", FramesBetween = FB, FrameCount = 450, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "turn ended, resuming walk forward" });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 9, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 10, KeyframeType = KT, KeyframeNum = 10, KeyframeDisplay = "WF1 (500)", FramesBetween = FB, FrameCount = 500, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 10, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1 });
+
+                    //Insert the sample keyframe records defined above
+                    KeyframeModel itemKeyframe = new KeyframeModel();
+                    foreach (var itemKF in lstSampleDataModel)
+                    {
+                        itemKeyframe.KeyframeType = itemKF.KeyframeType;
+                        itemKeyframe.KeyframeNum = itemKF.KeyframeNum;
+                        itemKeyframe.KeyframeDisplay = itemKF.KeyframeDisplay;
+                        itemKeyframe.FramesBetween = itemKF.FramesBetween;
+                        itemKeyframe.FrameCount = itemKF.FrameCount;
+                        itemKeyframe.FarPlane = itemKF.FarPlane;
+                        itemKeyframe.KeyframeNote = itemKF.KeyframeNote;
+
+                        //Insert into the DB which returns the ID of the newly inserted keyframe record
+                        int KeyframeID = Data_Access_Methods.InsertKeyframeData(SampleProjectID, itemKeyframe);
+                        if (KeyframeID > 0)
+                        {
+                            //Insert the sample keyframe actions as defined in lstKeyframeAction_temp list above
+                            KeyframeActionsModel lstKeyframeAction = new KeyframeActionsModel();
+                            foreach (var itemAct in lstKeyframeAction_temp)
+                            {
+                                if (itemAct.SampleKeyframeID_Ref == itemKF.SampleKeyframeID)
+                                {
+                                    lstKeyframeAction.ActionName = itemAct.ActionName;
+                                    lstKeyframeAction.SendKeyChar = itemAct.SendKeyChar;
+                                    lstKeyframeAction.SendKeyQuantity = itemAct.SendKeyQuantity;
+
+                                    InsertKeyframeActionData(KeyframeID, lstKeyframeAction);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            //Something went wrong with the keyframe insert (zero was returned
+
+                            //>>>>>>>>>>>>>>>>>>>>>> handle this
+                        }
+
+                    }
+
+                }
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM CreateSampleAnimationProject", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM CreateSampleAnimationProject. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
     }
 
     #endregion
