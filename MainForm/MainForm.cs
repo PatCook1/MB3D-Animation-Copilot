@@ -2339,7 +2339,7 @@ namespace MB3D_Animation_Copilot
                         if (CanMakeNewKeframe)
                         {
                             //Call MakeNewKeyframe
-                            MakeNewKeyframe(false, true, false, sbDisplaySummary.ToString(), true, string.Concat("Move Sequence: ",selectedSeq.SequenceName));
+                            MakeNewKeyframe(false, true, false, sbDisplaySummary.ToString(), true, string.Concat("Move Sequence: ", selectedSeq.SequenceName));
                             ClearMoveList(); //Make sure any moves are cleared out
                             sbDisplaySummary.Clear();
                             this.Refresh();
@@ -3732,57 +3732,6 @@ namespace MB3D_Animation_Copilot
 
         #region Manage Move Sequence Methods =============================================================== 
 
-        private void tabControl1_Selecting(object sender, TabControlCancelEventArgs e)
-        {
-            if (tabControl1.SelectedTab.Name == "page_MoveDesigner")
-            {
-                //Don't allow Move Designer tab page if in Record Mode
-                if (m_EnableCapture)
-                {
-                    e.Cancel = true;
-                    //tabControl1.SelectedTab.Name = "pageAnimationCopilot";
-                    MessageBoxAdv.Show("Disable Record Mode before using the Move Designer.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-            }
-
-            if (tabControl1.SelectedTab.Name == "page_Utilities")
-            {
-                //Don't allow Move Designer tab page if in Record Mode
-                if (m_EnableCapture)
-                {
-                    e.Cancel = true;
-                    //tabControl1.SelectedTab.Name = "pageAnimationCopilot";
-                    MessageBoxAdv.Show("Disable Record Mode before using the utilities.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-            }
-
-            if (tabControl1.SelectedTab.Name == "page_Library")
-            {
-                //Don't allow Move Designer tab page if in Record Mode
-                if (m_EnableCapture)
-                {
-                    e.Cancel = true;
-                    //tabControl1.SelectedTab.Name = "pageAnimationCopilot";
-                    MessageBoxAdv.Show("Disable Record Mode before using the Library functions.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-            }
-
-            if (tabControl1.SelectedTab.Name == "page_Admin")
-            {
-
-                //Call the proc to locate and display path and file name of the Sqlite db file in use
-                GetDatabaseFilePathName();
-
-                //Don't allow Move Designer tab page if in Record Mode
-                if (m_EnableCapture)
-                {
-                    e.Cancel = true;
-                    //tabControl1.SelectedTab.Name = "pageAnimationCopilot";
-                    MessageBoxAdv.Show("Disable Record Mode before using the Admin functions.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                }
-            }
-        }
-
         private void tabControl1_SelectedIndexChanged(object sender, EventArgs e)
         {
 
@@ -3827,12 +3776,29 @@ namespace MB3D_Animation_Copilot
             {
                 //Call the proc to locate and display path and file name of the Sqlite db file in use
                 GetDatabaseFilePathName();
+
+                //Call the proc to load the error file content into the About textbox
+                LoadErrorFileTextbox();
             }
 
             if (tabControl1.SelectedTab.Name == "page_About")
             {
-                //Call the proc to load the error file content into the About textbox
-                LoadErrorFileTextbox();
+                string exePath = System.Reflection.Assembly.GetExecutingAssembly().Location; //Get location of executable
+                string workPath = System.IO.Path.GetDirectoryName(exePath);
+                string ReadMeInstallFilePathName = string.Concat(workPath, @"\README Install.rtf");
+                string LicenseInstallFilePathName = string.Concat(workPath, @"\LICENSE Install.rtf");
+
+                if (File.Exists(ReadMeInstallFilePathName))
+                {
+                    rtbx_ReadMeRTF.LoadFile(ReadMeInstallFilePathName);
+                    rtbx_LicenseRTF.LoadFile(LicenseInstallFilePathName);
+                }
+                else
+                {
+                    rtbx_ReadMeRTF.Text = "The README file for this application was not found.";
+                    rtbx_LicenseRTF.Text = "The LICENSE file for this application was not found.";
+                }
+
             }
         }
 
@@ -4526,6 +4492,18 @@ namespace MB3D_Animation_Copilot
             }
         }
 
+        private void rtbx_ReadMeRTF_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            //Call the Process.Start method to open the default browser with a URL:
+            Process.Start(new ProcessStartInfo(e.LinkText) { UseShellExecute = true });
+        }
+
+        private void rtbx_LicenseRTF_LinkClicked(object sender, LinkClickedEventArgs e)
+        {
+            //Call the Process.Start method to open the default browser with a URL:
+            Process.Start(new ProcessStartInfo(e.LinkText) { UseShellExecute = true });
+        }
+
         #endregion
 
         #region Send Key & Mouse Event =============================================================================== 
@@ -4747,11 +4725,12 @@ namespace MB3D_Animation_Copilot
                 }
             }
 
-            //If the About page is open, load the Error Log textbox immediately
-            if (tabControl1.SelectedTab.Name == "page_About")
+            //If the Admin page is open, load the Error Log textbox immediately
+            if (tabControl1.SelectedTab.Name == "page_Admin")
             {
                 LoadErrorFileTextbox();
             }
+
         }
 
         public void LoadErrorFileTextbox()
@@ -4837,6 +4816,7 @@ namespace MB3D_Animation_Copilot
             return string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\", ConfigurationManager.AppSettings["AppDataPathSub"], @"\", ConfigurationManager.AppSettings["ErrorLogFileName"]);
         }
 
-#endregion
+        #endregion
+
     }
 }

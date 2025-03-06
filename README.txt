@@ -13,7 +13,7 @@ To use this Copilot application for your own animation projects you will need th
 1. Windows 10 OS and above (Mac is not supported),
 2. The installation of this application,
 3. The latest Mandelbulb3D (https://mb3d.overwhale.com) application installed,
-4. The JoyToKey (htps://joytokey.net) application installed,
+4. The JoyToKey (https://joytokey.net/en) application installed,
 5. An xBox controller (wired or Bluetooth) or your standard PC keyboard.
 
 This Copilot application is in continual development and the author provides no warranty that it will perform as intended. Please use caution if you elect to use this Copilot application to help create Mandelbulb3D animations for commercial purposes. This application is released under the GNU General Public License Version 3.

@@ -132,9 +132,6 @@
   <data name="autoLabel34.Text" xml:space="preserve">
     <value>In situations where you want a clean start with your data, you can purge the Copilot's database of all records, including all project records and all the keyframe records of each project, as well as all of the Move Sequences if you prefer. To purge all records use the left button below. To keep your Move Sequences use the right button below. You should make a backup of the Copilot database in case purging turns out to be a mistake.</value>
   </data>
-  <data name="autoLabel27.Text" xml:space="preserve">
-    <value>The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.</value>
-  </data>
   <data name="autoLabel26.Text" xml:space="preserve">
     <value>The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.</value>
   </data>
@@ -158,6 +155,9 @@
   </metadata>
   <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>857, 67</value>
+  </metadata>
+  <metadata name="sfToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1039, 67</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>70</value>
