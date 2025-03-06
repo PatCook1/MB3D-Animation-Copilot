@@ -117,6 +117,7 @@ namespace MB3D_Animation_Copilot
             dgv_Keyframes_sf = new SfDataGrid();
             panel12 = new System.Windows.Forms.Panel();
             grpManageKeyframes = new System.Windows.Forms.GroupBox();
+            cbx_MngKFMessages = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             btn_ManageKeyframeCommandGo = new Syncfusion.WinForms.Controls.SfButton();
             drpKeyframeCommands = new Syncfusion.WinForms.ListView.SfComboBox();
             btn_DeleteKeyframe = new Syncfusion.WinForms.Controls.SfButton();
@@ -268,6 +269,7 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)dgv_Keyframes_sf).BeginInit();
             panel12.SuspendLayout();
             grpManageKeyframes.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)cbx_MngKFMessages).BeginInit();
             ((System.ComponentModel.ISupportInitialize)drpKeyframeCommands).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_EndDeleteKeyframe).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_StartDeleteKeyframe).BeginInit();
@@ -1494,6 +1496,7 @@ namespace MB3D_Animation_Copilot
             grpManageKeyframes.AllowDrop = true;
             grpManageKeyframes.BackColor = System.Drawing.Color.Transparent;
             grpManageKeyframes.CausesValidation = false;
+            grpManageKeyframes.Controls.Add(cbx_MngKFMessages);
             grpManageKeyframes.Controls.Add(btn_ManageKeyframeCommandGo);
             grpManageKeyframes.Controls.Add(drpKeyframeCommands);
             grpManageKeyframes.Controls.Add(btn_DeleteKeyframe);
@@ -1512,13 +1515,27 @@ namespace MB3D_Animation_Copilot
             grpManageKeyframes.TabStop = false;
             grpManageKeyframes.Text = "Manage Keyframes";
             // 
+            // cbx_MngKFMessages
+            // 
+            cbx_MngKFMessages.AccessibilityEnabled = true;
+            cbx_MngKFMessages.BeforeTouchSize = new System.Drawing.Size(55, 21);
+            cbx_MngKFMessages.Checked = true;
+            cbx_MngKFMessages.CheckState = System.Windows.Forms.CheckState.Checked;
+            cbx_MngKFMessages.Location = new System.Drawing.Point(124, 25);
+            cbx_MngKFMessages.Name = "cbx_MngKFMessages";
+            cbx_MngKFMessages.Size = new System.Drawing.Size(55, 21);
+            cbx_MngKFMessages.TabIndex = 25;
+            cbx_MngKFMessages.Text = "Msgs";
+            cbx_MngKFMessages.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(cbx_MngKFMessages, "Uncheck to reduce Manage Keyframes messages");
+            // 
             // btn_ManageKeyframeCommandGo
             // 
             btn_ManageKeyframeCommandGo.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_ManageKeyframeCommandGo.Location = new System.Drawing.Point(147, 91);
+            btn_ManageKeyframeCommandGo.Location = new System.Drawing.Point(147, 92);
             btn_ManageKeyframeCommandGo.Margin = new System.Windows.Forms.Padding(4);
             btn_ManageKeyframeCommandGo.Name = "btn_ManageKeyframeCommandGo";
-            btn_ManageKeyframeCommandGo.Size = new System.Drawing.Size(35, 26);
+            btn_ManageKeyframeCommandGo.Size = new System.Drawing.Size(35, 23);
             btn_ManageKeyframeCommandGo.TabIndex = 24;
             btn_ManageKeyframeCommandGo.Text = "Go";
             btn_ManageKeyframeCommandGo.ThemeName = "HighContrastTheme";
@@ -1547,12 +1564,12 @@ namespace MB3D_Animation_Copilot
             btn_DeleteKeyframe.Location = new System.Drawing.Point(8, 23);
             btn_DeleteKeyframe.Margin = new System.Windows.Forms.Padding(4);
             btn_DeleteKeyframe.Name = "btn_DeleteKeyframe";
-            btn_DeleteKeyframe.Size = new System.Drawing.Size(174, 26);
+            btn_DeleteKeyframe.Size = new System.Drawing.Size(109, 26);
             btn_DeleteKeyframe.Style.ForeColor = System.Drawing.Color.Red;
             btn_DeleteKeyframe.TabIndex = 14;
-            btn_DeleteKeyframe.Text = "Delete Seleted Keyframe";
+            btn_DeleteKeyframe.Text = "Delete Keyframe";
             btn_DeleteKeyframe.ThemeName = "HighContrastTheme";
-            toolTip1.SetToolTip(btn_DeleteKeyframe, "Delete selected keyframe");
+            toolTip1.SetToolTip(btn_DeleteKeyframe, "Delete the keyframe selected in the Keyframe Stack");
             btn_DeleteKeyframe.UseVisualStyleBackColor = true;
             btn_DeleteKeyframe.Click += btn_DeleteKeyframe_Click;
             // 
@@ -3130,6 +3147,7 @@ namespace MB3D_Animation_Copilot
             panel12.ResumeLayout(false);
             grpManageKeyframes.ResumeLayout(false);
             grpManageKeyframes.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)cbx_MngKFMessages).EndInit();
             ((System.ComponentModel.ISupportInitialize)drpKeyframeCommands).EndInit();
             ((System.ComponentModel.ISupportInitialize)num_EndDeleteKeyframe).EndInit();
             ((System.ComponentModel.ISupportInitialize)num_StartDeleteKeyframe).EndInit();
@@ -3404,6 +3422,7 @@ namespace MB3D_Animation_Copilot
         private System.Windows.Forms.RichTextBox rtbx_LicenseRTF;
         private Syncfusion.Windows.Forms.SfToolTip sfToolTip1;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel27;
+        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv cbx_MngKFMessages;
     }
 }
 

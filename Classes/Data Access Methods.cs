@@ -523,20 +523,7 @@ namespace MB3D_Animation_Copilot.Classes
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    int MaxKeyframeNumber = argEndKeyFrame;
-
-                    //Note: If argEndKeyFrame comes in as -1, let the query determine the highest keyframe number
-                    if (MaxKeyframeNumber == -1)
-                    {
-                        //Get the highest Keyframe number for the project ID argument
-                        MaxKeyframeNumber = cnn.ExecuteScalar<int>("SELECT MAX(KeyframeNum)" +
-                                                              " FROM Keyframes" +
-                                                              " WHERE ProjectID_Ref = @ProjectID",
-                        param: new
-                        {
-                            @ProjectID = argProjectID,
-                        });
-                    }
+                    int MaxKeyframeNumber = GetHighestKeyframeNumberByProjectID(argProjectID);
 
                     //Delete Keyframe actions
                     cnn.Execute("DELETE FROM Keyframe_Actions WHERE ID IN (" +
@@ -567,6 +554,35 @@ namespace MB3D_Animation_Copilot.Classes
             {
                 Program._MainForm.LogException("DAM DeleteRangeOfKeyframeAndKeyframeActions", ex); //Log this error
                 MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteRangeOfKeyframeAndKeyframeActions. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static int GetHighestKeyframeNumberByProjectID(int argProjectID)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    int MaxKeyframeNumber = 0;
+
+                    //Get the highest Keyframe number for the project ID argument
+                    MaxKeyframeNumber = cnn.ExecuteScalar<int>("SELECT MAX(KeyframeNum)" +
+                                                            " FROM Keyframes" +
+                                                            " WHERE ProjectID_Ref = @ProjectID",
+                    param: new
+                    {
+                        @ProjectID = argProjectID,
+                    });
+
+                    return MaxKeyframeNumber;
+
+                }
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM GetHighestKeyframeNumberByProjectID", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetHighestKeyframeNumberByProjectID. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return -1;
             }
         }
 

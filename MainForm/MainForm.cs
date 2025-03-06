@@ -683,10 +683,9 @@ namespace MB3D_Animation_Copilot
                 PopulateKeframeActionsList((int)cellValue_ID);
 
                 //Update the StartKeyframeRange and num_EndDeleteKeyframe numeric entries
-                //This is done reduce accidental keyframe range deletions
                 var cellValue = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNum"); //Get the Keyframe # column value
                 num_StartDeleteKeyframe.Value = (int)cellValue;
-                num_EndDeleteKeyframe.Value = (int)cellValue;
+                num_EndDeleteKeyframe.Value = (int)Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
             }
             catch
             {
@@ -1141,7 +1140,10 @@ namespace MB3D_Animation_Copilot
                     //Select the top (latest keyframe number) keyframe row
                     dgv_Keyframes_sf.SelectedIndex = 0;
 
-                    MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' and its Move Actions were deleted? Keyframe numbers have been renumbered to reflect the deleted keyframe."), "Please Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    if (cbx_MngKFMessages.Checked)
+                    {
+                        MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' and its Move Actions were deleted? Keyframe numbers have been renumbered to reflect the deleted keyframe."), "Please Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
 
                     LoadFooterMessage("Keyframe deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
                 }
@@ -1211,7 +1213,11 @@ namespace MB3D_Animation_Copilot
             try
             {
                 int intStartKeyframeNum = (int)num_StartDeleteKeyframe.Value;
+
                 int intEndKeyframeNum = (int)num_EndDeleteKeyframe.Value;
+                int intHighestKFNumber = Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
+                //If the user's End Keyframe number is higher that the last keyframe of the project, overwride the user's value
+                if (intEndKeyframeNum > intHighestKFNumber) { intEndKeyframeNum = intHighestKFNumber; }
 
                 if (intStartKeyframeNum == intEndKeyframeNum)
                 {
@@ -1270,6 +1276,9 @@ namespace MB3D_Animation_Copilot
 
                 int intFromKeyframe = (int)num_StartDeleteKeyframe.Value;
                 int intToKeyframe = (int)num_EndDeleteKeyframe.Value;
+                int intHighestKFNumber = Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
+                //If the user's End Keyframe number is higher that the last keyframe of the project, overwride the user's value
+                if (intToKeyframe > intHighestKFNumber) { intToKeyframe = intHighestKFNumber; }
 
                 //Verify the entries
                 if (intToKeyframe < intFromKeyframe) //Example: To:15  From:22
@@ -1449,6 +1458,9 @@ namespace MB3D_Animation_Copilot
             {
                 int intStartKeyframeNum = (int)num_StartDeleteKeyframe.Value;
                 int intEndKeyframeNum = (int)num_EndDeleteKeyframe.Value;
+                int intHighestKFNumber = Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
+                //If the user's End Keyframe number is higher that the last keyframe of the project, overwride the user's value
+                if (intEndKeyframeNum > intHighestKFNumber) { intEndKeyframeNum = intHighestKFNumber; }
 
                 //Note: Here the start and end keyframe numbers can be the same value
 
@@ -1495,6 +1507,9 @@ namespace MB3D_Animation_Copilot
                 int intFarPlane = (int)mtbx_FarPlane.Value;
                 int intStartKeyframeNum = (int)num_StartDeleteKeyframe.Value;
                 int intEndKeyframeNum = (int)num_EndDeleteKeyframe.Value;
+                int intHighestKFNumber = Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
+                //If the user's End Keyframe number is higher that the last keyframe of the project, overwride the user's value
+                if (intEndKeyframeNum > intHighestKFNumber) { intEndKeyframeNum = intHighestKFNumber; }
 
                 //Note: Here the start and end keyframe numbers can be the same value
 
@@ -1528,6 +1543,9 @@ namespace MB3D_Animation_Copilot
                 int intFramesBetween = (int)mtbx_FramesBetween.Value;
                 int intStartKeyframeNum = (int)num_StartDeleteKeyframe.Value;
                 int intEndKeyframeNum = (int)num_EndDeleteKeyframe.Value;
+                int intHighestKFNumber = Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
+                //If the user's End Keyframe number is higher that the last keyframe of the project, overwride the user's value
+                if (intEndKeyframeNum > intHighestKFNumber) { intEndKeyframeNum = intHighestKFNumber; }
 
                 //Note: Here the start and end keyframe numbers can be the same value
 
@@ -1572,6 +1590,9 @@ namespace MB3D_Animation_Copilot
                 //Collect the keyframe range data
                 int intFromKeyframe = (int)num_StartDeleteKeyframe.Value;
                 int intToKeyframe = (int)num_EndDeleteKeyframe.Value;
+                int intHighestKFNumber = Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
+                //If the user's End Keyframe number is higher that the last keyframe of the project, overwride the user's value
+                if (intToKeyframe > intHighestKFNumber) { intToKeyframe = intHighestKFNumber; }
 
                 //Verify the entries
                 if (intToKeyframe == intFromKeyframe) //Example: To:1  From:1
@@ -1752,7 +1773,12 @@ namespace MB3D_Animation_Copilot
                 tabControl1.SelectedIndex = 0;
             }
 
-            //Various variables
+            if (!m_EnableCapture == false & m_HaveMovesToProcess == true)
+            {
+                var NL = Environment.NewLine;
+                MessageBoxAdv.Show(string.Concat("You disabled capture after you had made moves that were't made into a Mandelbulb3D keyframe.", NL, NL, "To correct this you should pull the most recent Mandlebulb3D keyframe into the Mandelbulb3D Navigator."), "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+            }
+
             m_HaveMovesToProcess = false; //Set to false any time the Capture state changes
         }
 
@@ -2851,10 +2877,14 @@ namespace MB3D_Animation_Copilot
                 m_AutoSaveCount += 1;
                 if (m_AutoSaveCount >= num_AutoSaveTrigger.Value)
                 {
-                    SaveAnimationProject(false, false);  //Not a new project record, no beep
+                    //Update database. Not a new project record so no beep
+                    SaveAnimationProject(false, false);
+
+                    //Footer Message
+                    LoadFooterMessage(string.Concat("Reminder: Save your Mandelbulb3D project!"), true, false);
+
                     m_AutoSaveCount = 0;
                 }
-
             }
             catch (Exception ex)
             {
