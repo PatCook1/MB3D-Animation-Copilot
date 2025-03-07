@@ -1776,7 +1776,7 @@ namespace MB3D_Animation_Copilot
             if (!m_EnableCapture == false & m_HaveMovesToProcess == true)
             {
                 var NL = Environment.NewLine;
-                MessageBoxAdv.Show(string.Concat("You disabled capture after you had made moves that were't made into a Mandelbulb3D keyframe.", NL, NL, "To correct this you should pull the most recent Mandlebulb3D keyframe into the Mandelbulb3D Navigator."), "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show(string.Concat("You disabled capture after you had made moves that did not become a Mandelbulb3D keyframe.", NL, NL, "To correct this you should pull the most recent Mandlebulb3D keyframe into the Mandelbulb3D Navigator."), "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
 
             m_HaveMovesToProcess = false; //Set to false any time the Capture state changes
@@ -2248,7 +2248,7 @@ namespace MB3D_Animation_Copilot
 
             if (m_HaveMovesToProcess)
             {
-                LoadFooterMessage("Can't do that - you have moves pending.", true, true);
+                LoadFooterMessage("Can't do that - you have moves pending.", false, true);
                 return; //Bail
             }
 
@@ -2670,7 +2670,7 @@ namespace MB3D_Animation_Copilot
 
             try
             {
-                //Bail this keyevent if there are no moves to process
+                //Bail this key event if there are no moves to process
                 if (m_HaveMovesToProcess == false) { return; }
 
                 if (bolBypassBusyIndicator == false)
@@ -2815,13 +2815,6 @@ namespace MB3D_Animation_Copilot
                     //Insert no-move action data into the DB
                     Data_Access_Methods.InsertKeyframeActionData(intKeyframeID, KeyframeAction_Out);
 
-                }
-
-                //If this was a no-move keyframe...
-                if (bolIsNoActionMove)
-                {
-                    //Display a footer message
-                    LoadFooterMessage("No-move keyframe created. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
                 }
 
                 PopulateKeyframesDatagrid(true);  //Populate the Keyframes list and select the first datagrid row
@@ -3009,7 +3002,7 @@ namespace MB3D_Animation_Copilot
 
             if (m_HaveMovesToProcess)
             {
-                LoadFooterMessage("Can't do that - you have moves pending.", true, true);
+                LoadFooterMessage("Can't do that - you have moves pending.", false, true);
                 return;
             }
 

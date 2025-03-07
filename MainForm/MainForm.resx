@@ -120,6 +120,9 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>409, 27</value>
   </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>409, 27</value>
+  </metadata>
   <data name="autoLabel17.Text" xml:space="preserve">
     <value>Note: When you perform a move step update or add, the walking and sliding move steps (WF, WR, SR, SL, SU and SD) will use the 'Sliding/Walking Step Count' value of the top panel of this application. Looking and rolling move steps (LR, LL, LU, LD, RC and RCC) will use the 'Looking/Rolling Step Angle' value of the top panel of this application.</value>
   </data>
@@ -140,6 +143,9 @@
   </metadata>
   <metadata name="folderBrowserDialog_DBBackupFolder.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>21, 68</value>
+  </metadata>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>409, 27</value>
   </metadata>
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>403, 70</value>

@@ -242,6 +242,7 @@ namespace MB3D_Animation_Copilot
             openFileDialog_M3AFileLoc = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             sfToolTip1 = new Syncfusion.Windows.Forms.SfToolTip(components);
+            autoLabel28 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             pnl_Bottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)num_AutoSaveTrigger).BeginInit();
             grp_FooterMessageArea.SuspendLayout();
@@ -620,6 +621,7 @@ namespace MB3D_Animation_Copilot
             // pnl_Top
             // 
             pnl_Top.BackColor = System.Drawing.Color.Black;
+            pnl_Top.Controls.Add(autoLabel28);
             pnl_Top.Controls.Add(ll_GithubRespository);
             pnl_Top.Controls.Add(ll_PCGithubURL);
             pnl_Top.Controls.Add(btn_FindM3AFile);
@@ -1141,14 +1143,14 @@ namespace MB3D_Animation_Copilot
             // label48
             // 
             label48.BackColor = System.Drawing.Color.Transparent;
-            label48.Font = new System.Drawing.Font("Segoe UI", 8F);
+            label48.Font = new System.Drawing.Font("Segoe UI", 7F);
             label48.ForeColor = System.Drawing.Color.White;
-            label48.Location = new System.Drawing.Point(1215, 53);
+            label48.Location = new System.Drawing.Point(1179, 53);
             label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label48.Name = "label48";
-            label48.Size = new System.Drawing.Size(57, 13);
+            label48.Size = new System.Drawing.Size(43, 12);
             label48.TabIndex = 40;
-            label48.Text = "2/24/2025";
+            label48.Text = "3/7/2025";
             label48.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbl_ApplicationMainTitle
@@ -1157,7 +1159,7 @@ namespace MB3D_Animation_Copilot
             lbl_ApplicationMainTitle.BackColor = System.Drawing.Color.Transparent;
             lbl_ApplicationMainTitle.Font = new System.Drawing.Font("Times New Roman", 29F, System.Drawing.FontStyle.Bold);
             lbl_ApplicationMainTitle.ForeColor = System.Drawing.Color.White;
-            lbl_ApplicationMainTitle.Location = new System.Drawing.Point(697, 8);
+            lbl_ApplicationMainTitle.Location = new System.Drawing.Point(698, 8);
             lbl_ApplicationMainTitle.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lbl_ApplicationMainTitle.Name = "lbl_ApplicationMainTitle";
             lbl_ApplicationMainTitle.Size = new System.Drawing.Size(582, 44);
@@ -3091,6 +3093,17 @@ namespace MB3D_Animation_Copilot
             openFileDialog_M3AFileLoc.FileName = "Mandelbulb3D Animation File";
             openFileDialog_M3AFileLoc.Filter = "Mandelbulb3D Files|*.m3a|All Files|*.*";
             // 
+            // autoLabel28
+            // 
+            autoLabel28.BackColor = System.Drawing.Color.Transparent;
+            autoLabel28.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            autoLabel28.ForeColor = System.Drawing.Color.Red;
+            autoLabel28.Location = new System.Drawing.Point(1225, 46);
+            autoLabel28.Name = "autoLabel28";
+            autoLabel28.Size = new System.Drawing.Size(48, 21);
+            autoLabel28.TabIndex = 86;
+            autoLabel28.Text = "BETA";
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3423,6 +3436,7 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.SfToolTip sfToolTip1;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel27;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv cbx_MngKFMessages;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel28;
     }
 }
 
