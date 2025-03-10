@@ -254,6 +254,8 @@ namespace MB3D_Animation_Copilot
             InitializeComponent();
             SetStylesAndThemes();
             LoadAndInitMainForm();
+
+            LoadFooterMessage("Welcome to the Mandelbulb3D Animation Copilot!", true, false);
         }
 
         private void SetStylesAndThemes()
@@ -316,8 +318,6 @@ namespace MB3D_Animation_Copilot
             PopulateManageKeyframeCommandList();
             InitializeTimers();
             UpdateKeyframeStackLineCharsLegend();
-            LoadFooterMessage("Welcome to the Mandelbulb3D Animation Copilot!", true, false);
-
             BuildManageSeqDatagrid(); //Build the Move Sequence datagrid on the Move Designer tab
 
             string mainModuleName = Process.GetCurrentProcess().MainModule.ModuleName;
@@ -326,10 +326,16 @@ namespace MB3D_Animation_Copilot
             m_UnsavedChanges = false; //Turn off the UnsavedChanges flag once the UI settles down
 
             //Links to external resources
+
+            ll_GithubRespository.Links.Clear();
             ll_GithubRespository.Links.Add(23, 10, ConfigurationManager.AppSettings["GithubProjectURL"]);
+            ll_GithubRespository_About.Links.Clear();
             ll_GithubRespository_About.Links.Add(34, 10, ConfigurationManager.AppSettings["GithubProjectURL"]);
+            ll_PCGithubURL.Links.Clear();
             ll_PCGithubURL.Links.Add(16, 18, ConfigurationManager.AppSettings["PatCook1GithubURL"]);
+            ll_PCGithubURL_About.Links.Clear();
             ll_PCGithubURL_About.Links.Add(39, 18, ConfigurationManager.AppSettings["PatCook1GithubURL"]);
+            ll_JoyToKey_About.Links.Clear();
             ll_JoyToKey_About.Links.Add(0, 19, ConfigurationManager.AppSettings["JoyToKeyURL"]);
 
             drp_ProjectList.Focus(); //Set focus on the project dropdown
@@ -337,12 +343,12 @@ namespace MB3D_Animation_Copilot
 
             ValidateMandelbulb3DRunning(); //validate if Mandelbulb3D application is running
             ValidateJoyToKeyRunning(); //validate if JoyToKey application is running
-
-            //GetMousePos(); // for development purposes
         }
 
         private void PopulateManageKeyframeCommandList()
         {
+            drpKeyframeCommands.DataSource = null; //be sure no bindings
+
             List<string> items = new List<string>();
             items.Add(cManageKFCmd_Select);
             items.Add(cManageKFCmd_DeleteRange);
@@ -360,16 +366,6 @@ namespace MB3D_Animation_Copilot
         {
             //Switch the tab control to the About page
             tabControl1.SelectedTab = page_About;
-        }
-
-        //GetMousePos() for development purposes
-        private void GetMousePos()
-        {
-            bool bolDo = true;
-            do
-            {
-              Console.WriteLine("x: " + System.Windows.Forms.Control.MousePosition.X + " y: " + System.Windows.Forms.Control.MousePosition.Y);
-            } while (bolDo);
         }
 
         private void UpdateKeyframeStackLineCharsLegend()
@@ -454,6 +450,8 @@ namespace MB3D_Animation_Copilot
 
         private void PopulateUseSequenceList()
         {
+            drp_UseSequenceList.DataSource = null; //Be sure no bindings
+
             drp_UseSequenceList.DataSource = Data_Access_Methods.LoadMoveSeqencesList();
             drp_UseSequenceList.DisplayMember = "SequenceName";
             drp_UseSequenceList.ValueMember = "ID";
@@ -463,6 +461,8 @@ namespace MB3D_Animation_Copilot
 
         private void PopulateAutoLastMoveDropdown()
         {
+            drp_AutoLastMove.DataSource = null; //Be sure no bindings
+
             BindingSource binding1 = new BindingSource();
 
             var source = new Dictionary<string, string>();
@@ -586,6 +586,9 @@ namespace MB3D_Animation_Copilot
 
         private void BuildKeyframesDatagrid()
         {
+
+            dgv_Keyframes_sf.Columns.Clear(); //Be sure no columns defined
+
             //Datagrid configuation
             dgv_Keyframes_sf.AutoGenerateColumns = false;
             dgv_Keyframes_sf.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.AllCells;
@@ -3848,6 +3851,8 @@ namespace MB3D_Animation_Copilot
 
         private void PopulateManageSeqStepNameList()
         {
+            drp_ManageSeqStepNameList.DataSource = null; //Be sure no bindings
+
             List<StepNameListModel> StepNameList = new List<StepNameListModel>();
 
             StepNameList.Add(new StepNameListModel() { Step_Name = "--", Step_SendKey = "" });
@@ -3922,6 +3927,8 @@ namespace MB3D_Animation_Copilot
 
         private void BuildManageSeqDatagrid()
         {
+            dgv_ManageMoveSequence.Columns.Clear(); //Be sure no columns
+
             //Datagrid configuation
             dgv_ManageMoveSequence.AutoGenerateColumns = false;
             dgv_ManageMoveSequence.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.AllCells;
@@ -4256,6 +4263,12 @@ namespace MB3D_Animation_Copilot
             }
         }
 
+        private void btn_AdminDBBackup_Help_Click(object sender, EventArgs e)
+        {
+            var NL = Environment.NewLine;
+            MessageBoxAdv.Show(String.Concat("To backup your project database:", NL, "1. Enter a name for your backup file (without an extension). Example: 'MyDatabase_01-01-2025'", NL, "2. Click 'Select a Folder for the Database Backup File' to choose a location for the backup file.", NL, "3. Click 'Backup Database'"), "Backup Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
         private void btn_DBAdmin_Backup_Click(object sender, EventArgs e)
         {
             try
@@ -4312,6 +4325,13 @@ namespace MB3D_Animation_Copilot
 
                 tbx_DBAdmin_Restore_DBFolder.Text = openFileDialog_BackupFindFile.FileName;
             }
+        }
+
+        private void btn_AdminDBRestore_Help_Click(object sender, EventArgs e)
+        {
+            var NL = Environment.NewLine;
+            string DefaultDbName = ConfigurationManager.AppSettings["dbFileName"];
+            MessageBoxAdv.Show(String.Concat("To restore your project database from a previous backup:", NL, "1. Click 'Select Database File to Restore' to select the backup database file to restore.", NL, "2. Click 'Restore Database'", NL, NL, "Note: the restored database will be renamed '", DefaultDbName, "'."), "Restore Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btn_DBAdmin_Restore_Click(object sender, EventArgs e)
@@ -4781,7 +4801,7 @@ namespace MB3D_Animation_Copilot
 
                     ex = ex.InnerException;
                 }
-                writer.WriteLine("============================================================================");
+                writer.WriteLine("=========================================================================");
 
                 if (ExistingErrorText.Length > 0)
                 {
