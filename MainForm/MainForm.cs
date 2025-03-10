@@ -60,6 +60,8 @@ using Microsoft.VisualBasic.Logging;
 using static Microsoft.DotNet.DesignTools.Protocol.Endpoints.Response;
 using System.Windows.Shapes;
 using Windows.Media.Protection.PlayReady;
+using static System.Net.WebRequestMethods;
+using File = System.IO.File;
 
 #endregion
 
@@ -215,6 +217,7 @@ namespace MB3D_Animation_Copilot
         private frm_MakeMoveSequence frmMakeMoveSequence = null;
         private frm_Update_Keyframes_FarPlane frmUpdateKeyframesFarPlane = null;
         private frm_Update_Keyframes_LookLeft frmUpdateKeyframesLookLeft = null;
+        private frm_Update_Keyframes_Parameter frmUpdateKeyframesParameter = null;
         private frm_ShowMoveSequenceInfo frmShowMoveSequenceInfo = null;
 
         #endregion
@@ -295,6 +298,12 @@ namespace MB3D_Animation_Copilot
             mtbx_FramesBetween.Value = cFramesBetweenDefault;
             mtbx_KeyDelay.Value = cKeyDelayDefault;
 
+            //Expose the Keyframe Modifier Utilities group if Developer is true
+            if (ConfigurationManager.AppSettings["Developer"] == "true")
+            {
+                grp_KeyframeModifierUtilities.Visible = true;
+            }
+
             PopulateProjectList(-1);
 
             BuildKeyframesDatagrid(); //Build the keyframes datagrid before populating it below
@@ -359,7 +368,7 @@ namespace MB3D_Animation_Copilot
             bool bolDo = true;
             do
             {
-                //Console.WriteLine("x: " + System.Windows.Forms.Control.MousePosition.X + " y: " + System.Windows.Forms.Control.MousePosition.Y);
+              Console.WriteLine("x: " + System.Windows.Forms.Control.MousePosition.X + " y: " + System.Windows.Forms.Control.MousePosition.Y);
             } while (bolDo);
         }
 
@@ -2020,7 +2029,7 @@ namespace MB3D_Animation_Copilot
         {
             if (tbx_AnimationName.Text.Length == 0)
             {
-                DialogResult result = MessageBoxAdv.Show("Would you like to name this animation before saving?", "Name Animation?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                DialogResult result = MessageBoxAdv.Show("Would you like to name this animation project before saving?", "Name Project?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
                     return; //Bail
@@ -2028,6 +2037,13 @@ namespace MB3D_Animation_Copilot
             }
             try
             {
+                bool SortAscending = false;
+                DialogResult result = MessageBoxAdv.Show("Would you like the keyframe list to be sorted in ascending order, i.e., lowest to highest keyframe number?", "Sort Descending?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    SortAscending = true;
+                }
+
                 System.Windows.Forms.SaveFileDialog saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
                 saveFileDialog1.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 saveFileDialog1.FilterIndex = 1;
@@ -2044,9 +2060,12 @@ namespace MB3D_Animation_Copilot
 
                     file.WriteLine("");
 
-                    file.WriteLine("Project Namen/Notes:");
-                    file.WriteLine(string.Concat("   ", tbx_AnimationName.Text));
-                    file.WriteLine(string.Concat("   ", tbx_ProjectNotes.Text));
+                    file.WriteLine("Project Info:");
+                    file.WriteLine(string.Concat("   Name:", tbx_AnimationName.Text));
+                    file.WriteLine(string.Concat("   Notes:", tbx_ProjectNotes.Text));
+                    file.WriteLine(string.Concat("   M3P/I File::", tbx_M3PI_FileLocation.Text));
+                    file.WriteLine(string.Concat("   M3A File::", tbx_M3A_FileLocation.Text));
+                    file.WriteLine(string.Concat("   ", lbl_ProjectAsOfDateTime.Text)); //Last saved (includes prefix text)
 
                     file.WriteLine("");
 
@@ -2056,6 +2075,8 @@ namespace MB3D_Animation_Copilot
                     file.WriteLine(string.Concat("   Default Looking/Rolling Angle:", mtbx_LookingRollingAngle.Value.ToString()));
                     file.WriteLine(string.Concat("   Default Frames Between:", mtbx_FramesBetween.Value.ToString()));
                     file.WriteLine(string.Concat("   Total Frames Count:", mtbx_FrameCount.Value.ToString()));
+                    file.WriteLine(string.Concat("   Estimated Length @ 30FPS:", lbl_30FPSTimeCalc.Text));
+                    file.WriteLine(string.Concat("   Estimated Length @ 60FPS::", lbl_60FPSTimeCalc.Text));
                     file.WriteLine(string.Concat("   Far Plane:", mtbx_FarPlane.Value.ToString()));
 
                     file.WriteLine("");
@@ -2065,11 +2086,11 @@ namespace MB3D_Animation_Copilot
                     string strKeyframeTypes = (String.Concat("   Types: Manual='", cKeyStackLineChar_Manual, "' Repeat='", cKeyStackLineChar_Repeat, "' Move Seq='", cKeyStackLineChar_Sequence, "' Relicate Seq='", cKeyStackLineChar_Replicate, "'"));
                     file.WriteLine(strKeyframeTypes);
 
-                    string strKeyframeLegend = (String.Concat("   Number,Type,Moves,Frames Between,Frame Count,Far Plane,Approved")); //The legend
+                    string strKeyframeLegend = (String.Concat("   Number,Type,Moves,Frames Between,Frame Count,Far Plane,Approved,Note")); //The legend
                     file.WriteLine(strKeyframeLegend);
 
                     List<KeyframeModel> lstKeyframes = new List<KeyframeModel>();
-                    lstKeyframes = Data_Access_Methods.LoadKeyframes(m_SelectedProjectID, true);
+                    lstKeyframes = Data_Access_Methods.LoadKeyframes(m_SelectedProjectID, SortAscending);
 
                     string strKeyframe;
                     foreach (KeyframeModel item in lstKeyframes)
@@ -2079,9 +2100,9 @@ namespace MB3D_Animation_Copilot
                                                     item.KeyframeDisplay.TrimEnd(), ",",
                                                     item.FramesBetween.ToString().TrimEnd(), ",",
                                                     item.FrameCount.ToString().TrimEnd(), ",",
-                                                    item.FarPlane.ToString().TrimEnd());
-                        item.KeyframeApproved.ToString();
-                        item.KeyframeNote.ToString();
+                                                    item.FarPlane.ToString().TrimEnd(), ",",
+                                                    (item.KeyframeApproved) ? "Y" : "N", ",",
+                                                    item.KeyframeNote.ToString());
 
                         strKeyframe = strKeyframe.Replace(" ", ""); //Replace spaces
                         strKeyframe = strKeyframe.Replace(System.Environment.NewLine, ""); //Replace line terminations if any
@@ -4173,6 +4194,26 @@ namespace MB3D_Animation_Copilot
             else
             {
                 frmUpdateKeyframesLookLeft.Focus();
+            }
+        }
+
+        private void btn_ParameterUpdater_Click(object sender, EventArgs e)
+        {
+            //Open the frm_Update_Keyframes_Parameter form
+            frmUpdateKeyframesParameter = new frm_Update_Keyframes_Parameter();
+
+            //Check if the child form is already open
+            if (System.Windows.Forms.Application.OpenForms.OfType<frm_Update_Keyframes_Parameter>().Count() == 0)
+            {
+                //Set the parent form of this child window
+                frmUpdateKeyframesParameter.Owner = this;
+
+                //Display the form as dialog
+                frmUpdateKeyframesParameter.ShowDialog();
+            }
+            else
+            {
+                frmUpdateKeyframesParameter.Focus();
             }
         }
 

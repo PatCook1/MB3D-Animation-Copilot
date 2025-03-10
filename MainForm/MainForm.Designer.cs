@@ -56,6 +56,7 @@ namespace MB3D_Animation_Copilot
             btn_SetRestorePoint = new Syncfusion.WinForms.Controls.SfButton();
             lbl_LastKeyEvent = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             pnl_Top = new System.Windows.Forms.Panel();
+            autoLabel28 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             ll_GithubRespository = new System.Windows.Forms.LinkLabel();
             ll_PCGithubURL = new System.Windows.Forms.LinkLabel();
             btn_FindM3AFile = new Syncfusion.WinForms.Controls.SfButton();
@@ -178,12 +179,15 @@ namespace MB3D_Animation_Copilot
             label24 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             page_Utilities = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel_UtilitiesPage = new System.Windows.Forms.Panel();
+            grp_KeyframeModifierUtilities = new System.Windows.Forms.GroupBox();
+            autoLabel29 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            btn_FarPlaneUpdater = new Syncfusion.WinForms.Controls.SfButton();
+            btn_ParameterUpdater = new Syncfusion.WinForms.Controls.SfButton();
+            btn_LookLeftUpdater = new Syncfusion.WinForms.Controls.SfButton();
             groupBox2 = new System.Windows.Forms.GroupBox();
             btn_CreateSampleProject = new Syncfusion.WinForms.Controls.SfButton();
             autoLabel35 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            btn_FarPlaneUpdater = new Syncfusion.WinForms.Controls.SfButton();
             autoLabel20 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            btn_LookLeftUpdater = new Syncfusion.WinForms.Controls.SfButton();
             page_Library = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel10 = new System.Windows.Forms.Panel();
             autoLabel23 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -242,7 +246,6 @@ namespace MB3D_Animation_Copilot
             openFileDialog_M3AFileLoc = new System.Windows.Forms.OpenFileDialog();
             saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             sfToolTip1 = new Syncfusion.Windows.Forms.SfToolTip(components);
-            autoLabel28 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             pnl_Bottom.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)num_AutoSaveTrigger).BeginInit();
             grp_FooterMessageArea.SuspendLayout();
@@ -301,6 +304,7 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)drp_ManageSeqMoveSequences).BeginInit();
             page_Utilities.SuspendLayout();
             panel_UtilitiesPage.SuspendLayout();
+            grp_KeyframeModifierUtilities.SuspendLayout();
             groupBox2.SuspendLayout();
             page_Library.SuspendLayout();
             panel10.SuspendLayout();
@@ -666,6 +670,17 @@ namespace MB3D_Animation_Copilot
             pnl_Top.Name = "pnl_Top";
             pnl_Top.Size = new System.Drawing.Size(1290, 184);
             pnl_Top.TabIndex = 31;
+            // 
+            // autoLabel28
+            // 
+            autoLabel28.BackColor = System.Drawing.Color.Transparent;
+            autoLabel28.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
+            autoLabel28.ForeColor = System.Drawing.Color.Red;
+            autoLabel28.Location = new System.Drawing.Point(1225, 46);
+            autoLabel28.Name = "autoLabel28";
+            autoLabel28.Size = new System.Drawing.Size(48, 21);
+            autoLabel28.TabIndex = 86;
+            autoLabel28.Text = "BETA";
             // 
             // ll_GithubRespository
             // 
@@ -1148,9 +1163,9 @@ namespace MB3D_Animation_Copilot
             label48.Location = new System.Drawing.Point(1179, 53);
             label48.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label48.Name = "label48";
-            label48.Size = new System.Drawing.Size(43, 12);
+            label48.Size = new System.Drawing.Size(48, 12);
             label48.TabIndex = 40;
-            label48.Text = "3/7/2025";
+            label48.Text = "3/10/2025";
             label48.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lbl_ApplicationMainTitle
@@ -2356,22 +2371,81 @@ namespace MB3D_Animation_Copilot
             // 
             // panel_UtilitiesPage
             // 
+            panel_UtilitiesPage.Controls.Add(grp_KeyframeModifierUtilities);
             panel_UtilitiesPage.Controls.Add(groupBox2);
-            panel_UtilitiesPage.Controls.Add(btn_FarPlaneUpdater);
             panel_UtilitiesPage.Controls.Add(autoLabel20);
-            panel_UtilitiesPage.Controls.Add(btn_LookLeftUpdater);
             panel_UtilitiesPage.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_UtilitiesPage.Location = new System.Drawing.Point(0, 0);
             panel_UtilitiesPage.Name = "panel_UtilitiesPage";
             panel_UtilitiesPage.Size = new System.Drawing.Size(1284, 540);
             panel_UtilitiesPage.TabIndex = 11;
             // 
+            // grp_KeyframeModifierUtilities
+            // 
+            grp_KeyframeModifierUtilities.Controls.Add(autoLabel29);
+            grp_KeyframeModifierUtilities.Controls.Add(btn_FarPlaneUpdater);
+            grp_KeyframeModifierUtilities.Controls.Add(btn_ParameterUpdater);
+            grp_KeyframeModifierUtilities.Controls.Add(btn_LookLeftUpdater);
+            grp_KeyframeModifierUtilities.ForeColor = System.Drawing.Color.White;
+            grp_KeyframeModifierUtilities.Location = new System.Drawing.Point(970, 33);
+            grp_KeyframeModifierUtilities.Name = "grp_KeyframeModifierUtilities";
+            grp_KeyframeModifierUtilities.Size = new System.Drawing.Size(295, 248);
+            grp_KeyframeModifierUtilities.TabIndex = 17;
+            grp_KeyframeModifierUtilities.TabStop = false;
+            grp_KeyframeModifierUtilities.Text = "Keyframe Modifier Utilities";
+            grp_KeyframeModifierUtilities.Visible = false;
+            // 
+            // autoLabel29
+            // 
+            autoLabel29.AutoSize = false;
+            autoLabel29.Location = new System.Drawing.Point(23, 30);
+            autoLabel29.Name = "autoLabel29";
+            autoLabel29.Size = new System.Drawing.Size(254, 50);
+            autoLabel29.TabIndex = 17;
+            autoLabel29.Text = "These Keyframe Modifier Utilities are available only to developers of this application because they may require code-level changes to function properly.";
+            // 
+            // btn_FarPlaneUpdater
+            // 
+            btn_FarPlaneUpdater.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            btn_FarPlaneUpdater.Location = new System.Drawing.Point(25, 85);
+            btn_FarPlaneUpdater.Name = "btn_FarPlaneUpdater";
+            btn_FarPlaneUpdater.Size = new System.Drawing.Size(245, 28);
+            btn_FarPlaneUpdater.TabIndex = 8;
+            btn_FarPlaneUpdater.Text = "Far Plane Keyframe Updater";
+            btn_FarPlaneUpdater.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_FarPlaneUpdater, "A utility that updates the Far Plane value of each keyframe of a Mandelbulb3D animation ");
+            btn_FarPlaneUpdater.Click += btn_FarPlaneUpdater_Click;
+            // 
+            // btn_ParameterUpdater
+            // 
+            btn_ParameterUpdater.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            btn_ParameterUpdater.Location = new System.Drawing.Point(25, 200);
+            btn_ParameterUpdater.Name = "btn_ParameterUpdater";
+            btn_ParameterUpdater.Size = new System.Drawing.Size(245, 28);
+            btn_ParameterUpdater.TabIndex = 16;
+            btn_ParameterUpdater.Text = "Parameter Keyframe Updater";
+            btn_ParameterUpdater.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_ParameterUpdater, "A utility that updates parameter value of each keyframe of a Mandelbulb3D animation ");
+            btn_ParameterUpdater.Click += btn_ParameterUpdater_Click;
+            // 
+            // btn_LookLeftUpdater
+            // 
+            btn_LookLeftUpdater.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
+            btn_LookLeftUpdater.Location = new System.Drawing.Point(25, 143);
+            btn_LookLeftUpdater.Name = "btn_LookLeftUpdater";
+            btn_LookLeftUpdater.Size = new System.Drawing.Size(245, 28);
+            btn_LookLeftUpdater.TabIndex = 9;
+            btn_LookLeftUpdater.Text = "Look Left Keyframe Updater";
+            btn_LookLeftUpdater.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_LookLeftUpdater, "A utility that updates the look orientation of each keyframe of a Mandelbulb3D animation ");
+            btn_LookLeftUpdater.Click += btn_LookLeftUpdater_Click;
+            // 
             // groupBox2
             // 
             groupBox2.Controls.Add(btn_CreateSampleProject);
             groupBox2.Controls.Add(autoLabel35);
             groupBox2.ForeColor = System.Drawing.Color.White;
-            groupBox2.Location = new System.Drawing.Point(746, 23);
+            groupBox2.Location = new System.Drawing.Point(16, 33);
             groupBox2.Name = "groupBox2";
             groupBox2.Size = new System.Drawing.Size(514, 248);
             groupBox2.TabIndex = 15;
@@ -2406,18 +2480,6 @@ namespace MB3D_Animation_Copilot
             autoLabel35.ThemeStyle.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             autoLabel35.ThemeStyle.ForeColor = System.Drawing.Color.White;
             // 
-            // btn_FarPlaneUpdater
-            // 
-            btn_FarPlaneUpdater.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_FarPlaneUpdater.Location = new System.Drawing.Point(20, 51);
-            btn_FarPlaneUpdater.Name = "btn_FarPlaneUpdater";
-            btn_FarPlaneUpdater.Size = new System.Drawing.Size(245, 28);
-            btn_FarPlaneUpdater.TabIndex = 8;
-            btn_FarPlaneUpdater.Text = "Far Plane Keyframe Updater";
-            btn_FarPlaneUpdater.ThemeName = "HighContrastTheme";
-            toolTip1.SetToolTip(btn_FarPlaneUpdater, "A utility that updates the Far Plane value of each keyframe of a Mandelbulb3D animation ");
-            btn_FarPlaneUpdater.Click += btn_FarPlaneUpdater_Click;
-            // 
             // autoLabel20
             // 
             autoLabel20.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
@@ -2427,18 +2489,6 @@ namespace MB3D_Animation_Copilot
             autoLabel20.Size = new System.Drawing.Size(70, 21);
             autoLabel20.TabIndex = 10;
             autoLabel20.Text = "Utilities";
-            // 
-            // btn_LookLeftUpdater
-            // 
-            btn_LookLeftUpdater.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_LookLeftUpdater.Location = new System.Drawing.Point(20, 100);
-            btn_LookLeftUpdater.Name = "btn_LookLeftUpdater";
-            btn_LookLeftUpdater.Size = new System.Drawing.Size(245, 28);
-            btn_LookLeftUpdater.TabIndex = 9;
-            btn_LookLeftUpdater.Text = "Look Left Keyframe Updater";
-            btn_LookLeftUpdater.ThemeName = "HighContrastTheme";
-            toolTip1.SetToolTip(btn_LookLeftUpdater, "A utility that updates the look orientation of each keyframe of a Mandelbulb3D animation ");
-            btn_LookLeftUpdater.Click += btn_LookLeftUpdater_Click;
             // 
             // page_Library
             // 
@@ -3093,17 +3143,6 @@ namespace MB3D_Animation_Copilot
             openFileDialog_M3AFileLoc.FileName = "Mandelbulb3D Animation File";
             openFileDialog_M3AFileLoc.Filter = "Mandelbulb3D Files|*.m3a|All Files|*.*";
             // 
-            // autoLabel28
-            // 
-            autoLabel28.BackColor = System.Drawing.Color.Transparent;
-            autoLabel28.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold);
-            autoLabel28.ForeColor = System.Drawing.Color.Red;
-            autoLabel28.Location = new System.Drawing.Point(1225, 46);
-            autoLabel28.Name = "autoLabel28";
-            autoLabel28.Size = new System.Drawing.Size(48, 21);
-            autoLabel28.TabIndex = 86;
-            autoLabel28.Text = "BETA";
-            // 
             // MainForm
             // 
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -3112,6 +3151,7 @@ namespace MB3D_Animation_Copilot
             ClientSize = new System.Drawing.Size(1294, 761);
             Controls.Add(tabControl1);
             Controls.Add(pnl_Top);
+            Icon = (System.Drawing.Icon)resources.GetObject("$this.Icon");
             IsMdiContainer = true;
             Margin = new System.Windows.Forms.Padding(4);
             MinimumSize = new System.Drawing.Size(1310, 800);
@@ -3197,6 +3237,7 @@ namespace MB3D_Animation_Copilot
             page_Utilities.ResumeLayout(false);
             panel_UtilitiesPage.ResumeLayout(false);
             panel_UtilitiesPage.PerformLayout();
+            grp_KeyframeModifierUtilities.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
             page_Library.ResumeLayout(false);
             panel10.ResumeLayout(false);
@@ -3437,6 +3478,9 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel27;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv cbx_MngKFMessages;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel28;
+        private Syncfusion.WinForms.Controls.SfButton btn_ParameterUpdater;
+        private System.Windows.Forms.GroupBox grp_KeyframeModifierUtilities;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel29;
     }
 }
 

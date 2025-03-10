@@ -39,7 +39,7 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
-    <ApplicationIcon>Images\Code_Component.ico</ApplicationIcon>
+    <ApplicationIcon>Images\MB3D Copilot 16x16.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutputPath>bin\x64\Debug\</OutputPath>
@@ -52,7 +52,7 @@
     <None Remove="MB3DKeyframeStore.db" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Code_Component.ico" />
+    <Content Include="Images\MB3D Copilot 16x16.ico" />
     <Content Include="Images\For App 084798861-desktop-keyboard.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -100,6 +100,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Child Forms\frm_Update_Keyframes_Parameter.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>

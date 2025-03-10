@@ -1,29 +1,36 @@
 ﻿/*========================================================================================
-File: MB3D_Animation_Copilot.Child_Forms.frm_Update_Keyframes_FarPlane
+File: MB3D_Animation_Copilot.Child_Forms.frm_Update_Keyframes_Parameter
 Description: A child form of parent MainForm to perform the functions relating to updating
-             of keyframes at the Mandelbulb application so as to modify the far plane
+             of keyframes at the Mandelbulb application so as to modify a parameter
              value of each keyframe of the Mandelbulb Animation window.
 Original Author: Patrick C. Cook
 Copyright: Patrick C. Cook 2025
 License: GNU GENERAL PUBLIC LICENSE Version 3
 ========================================================================================*/
 
+using Microsoft.DotNet.DesignTools.Protocol.Values;
 using Syncfusion.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics.Contracts;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.ConstrainedExecution;
 using System.Runtime.InteropServices;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Automation;
 using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MB3D_Animation_Copilot.Child_Forms
 {
 
-    public partial class frm_Update_Keyframes_FarPlane : Form
+    public partial class frm_Update_Keyframes_Parameter : Form
     {
 
         #region Public Constants ==========================================
@@ -35,6 +42,13 @@ namespace MB3D_Animation_Copilot.Child_Forms
         public const string cMB3DMainClassName = "TMand3DForm";
         public const string cMB3DNavigatorClassName = "TFNavigator";
         public const string cMB3DAnimatorClassName = "TAnimationForm";
+        public const string cMB3DFormulaClassName = "TFormulaGUIForm";
+        public const string cMB3DFormulaTabControlClassName = "TTabControl";
+
+
+        //public const nint MB3DMainEditor_ParamEntry_Handle = (nint)00080E8C;
+        public const string cMB3DMainEditor_ParamEntry_Caption = "0.9978515625";
+        public const string cMB3DMainEditor_ParamEntry_Class = "TEdit";
 
         public static bool m_ProcessStop = false;
 
@@ -44,6 +58,12 @@ namespace MB3D_Animation_Copilot.Child_Forms
 
         [DllImport("user32.dll", SetLastError = true, CharSet = CharSet.Auto)]
         public static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("USER32.DLL")]
+        public static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [System.Runtime.InteropServices.DllImport("User32.dll")]
+        public static extern bool ShowWindow(IntPtr handle, int nCmdShow);
 
         #endregion
 
@@ -224,6 +244,9 @@ namespace MB3D_Animation_Copilot.Child_Forms
         [DllImport("user32.dll", SetLastError = true)]
         private static extern uint SendInput(uint nInputs, Input[] pInputs, int cbSize);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern uint SendKeyInput(uint nInputs, Input[] pInputs, int cbSize);
+
         [DllImport("user32.dll")]
         private static extern IntPtr GetMessageExtraInfo();
 
@@ -234,9 +257,21 @@ namespace MB3D_Animation_Copilot.Child_Forms
 
         #region Main Program Code =================================================
 
-        public frm_Update_Keyframes_FarPlane()
+        public frm_Update_Keyframes_Parameter()
         {
             InitializeComponent();
+
+            //GetMousePos(); // for development purposes
+        }
+
+        //GetMousePos() for development purposes
+        private void GetMousePos()
+        {
+            bool bolDo = true;
+            do
+            {
+                Console.WriteLine("x: " + System.Windows.Forms.Control.MousePosition.X + " y: " + System.Windows.Forms.Control.MousePosition.Y);
+            } while (bolDo);
         }
 
         private void BringFocusToThisApplication()
@@ -244,8 +279,15 @@ namespace MB3D_Animation_Copilot.Child_Forms
             this.Focus(); //Set focus to this application
         }
 
-        private void btn_FixFarPlane_Click(object sender, EventArgs e)
+        private void btn_UpdateParameter_Click(object sender, EventArgs e)
         {
+            
+            if (Convert.ToInt32(mtbx_NumberKeyframesCount.Text)==0)
+            {
+                MessageBoxAdv.Show("Specify the number of keyframes to update.", "Need Input", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
+            
             var NL = Environment.NewLine;
 
             StringBuilder sb = new StringBuilder();
@@ -255,49 +297,56 @@ namespace MB3D_Animation_Copilot.Child_Forms
             sb.Append("2. Be sure the starting keyframe is selected.");
             sb.Append(NL);
             sb.Append(NL);
-            sb.Append("3. Be sure that the Navigator window is open and it panel is expanded that contains the Far Plane entryfield and has the desired value.");
+            sb.Append("3. Be sure that the Main Editor window is open and its Formula panel is expanded that contains the parameter entryfield to be modified.");
             sb.Append(NL);
             sb.Append(NL);
-            sb.Append("4. Be sure that the Animation and Navigator windows are not covered.");
+            sb.Append("4. Be sure that the Animation windows is not covered.");
             sb.Append(NL);
             sb.Append(NL);
             sb.Append("5. Do not use the mouse until this process completes.");
             sb.Append(NL);
             sb.Append(NL);
-            sb.Append("Proceed with the Far Plane update?");
+            sb.Append("THIS UTILITY WILL NOT FUNCTION PROPERLY UNLESS YOUR DISPLAY IS SCALED AT 100%.");
+            sb.Append(NL);
+            sb.Append(NL);
+            sb.Append("Proceed with the Parameter update?");
 
             //Confirm that the Mandelbulb3D application is running
             DialogResult result = MessageBoxAdv.Show(sb.ToString(), "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result == DialogResult.Yes)
             {
-                UpdateKeyframes_FarPlaneUpdate();
+                UpdateKeyframes_Parameter();
             }
         }
 
-        private void UpdateKeyframes_FarPlaneUpdate()
+        private void UpdateKeyframes_Parameter()
         {
             //Provide entries
             //1. Number of keyframe to update the far plane
-            //2. The target far plane value
+            //2. The target param values
 
             //The steps:
             //1. Set focus on the animation window
             //2. Position mouse at X/Y position, which is the Send to Main arrow button
-            //3. Left click the mouse - this pushes the keyframe to the Navigator window
-            //4. Set focus on the navigator window
-            //5. Position mouse at X position - the "Parameter" button (no window handle for this button)
-            //6. Set focus on the Far Plane entryfield (Handle:00981046, Caption:2288.0, Class:TEdit)
-            //7. Write the target Far Plane value into the entryfield (Handle:00981046, Caption:2288.0, Class:TEdit)
-            //8. Send Key "F" to update the keyframe (no window handle for the Send Anim button)
-            //      This will advance the keyfarame in the Anaimation Window IF "Go to Next Keyframe" is check
-            //9. Repeat steps 1-8 for all keyframes up to the number of keyframes entered
+            //3. Left click the mouse - this pushes the keyframe to the Main Window
+            //4. Find the target formula entryfield on the Main Editor
+            //5. Enter the new formula value
+            //6. Set focus on the animation window
+            //7. Position mouse at X/Y position, which is the "Insert actual parameter in this keyframe"
+            //   The Animation Window keyframe selection automatically moves to the next keyframe   
+            //8. Repeat steps 1-8 for all keyframes up to the number of keyframes entered
 
             BringFocusToThisApplication(); //Bring focus back to this application; //Bring focus to this application
 
             //Collect the needed data
-            int intKeyframeQuantity = Convert.ToInt32(mtbx_NumberKeyframes_UpdateFarPlane.Text);
-            string strFarPlaneValue = mtbx_TargetValue_UpdateFarPlane.Text;
-            char[] charsFarPlane = strFarPlaneValue.ToCharArray();
+            int intKeyframeQuantity = Convert.ToInt32(mtbx_NumberKeyframesCount.Text);
+            tbx_ParamValuesList.Text = string.Empty;
+
+            double dblForumlaValue_Base = Convert.ToDouble(dtbx_ParameterStartValue.Text);
+            double dblParamChangeValue = Convert.ToDouble(dtbx_ParameterChangeValue.Text);
+            double intForumlaValue = dblForumlaValue_Base;
+
+            int SleepTimeMS = (int)num_SleepTime.Value;
 
             lbl_EscapeIndicator_UpdateFarPlane.Visible = true;
             bool bolEndThisLoop = false;
@@ -308,14 +357,30 @@ namespace MB3D_Animation_Copilot.Child_Forms
 
                 lbl_WorkingOnKeyframeNum.Text = i.ToString();
 
-                if (PerformAnimationActions_FarPlaneUpdate())
+                if (PerformAnimationActions_GetKeyframe())
                 {
-                    System.Threading.Thread.Sleep(2000); //Time to breath
-                    if (PerformNavigatorActions_FarPlaneUpdate(charsFarPlane))
+                    System.Threading.Thread.Sleep(SleepTimeMS); //Time to breath
+                    if (PerformMainEditorActions_Parameter(intForumlaValue.ToString()))
                     {
+                        tbx_ParamValuesList.Text = string.Concat(i.ToString("D3"), ">", intForumlaValue.ToString(), Environment.NewLine, tbx_ParamValuesList.Text); ;
+                        this.Refresh();
+
                         if (m_ProcessStop) { bolEndThisLoop = true; } //Check if user has requested stop
-                        System.Threading.Thread.Sleep(4000); //Hold on Nelly!
+                        System.Threading.Thread.Sleep(SleepTimeMS); //Hold on Nelly!
                     }
+
+                    PerformAnimationWindow_InsertKeyframe();
+
+                }
+                System.Threading.Thread.Sleep(SleepTimeMS); //Take a breath
+
+                if (rb_AddParamValue.Checked)
+                {
+                    intForumlaValue = (intForumlaValue + dblParamChangeValue);
+                }
+                else
+                {
+                    intForumlaValue = (intForumlaValue - dblParamChangeValue);
                 }
             }
 
@@ -324,11 +389,11 @@ namespace MB3D_Animation_Copilot.Child_Forms
             System.Threading.Thread.Sleep(2000); //Let the last far Plane fix settle down
             if (m_ProcessStop == false)
             {
-                MessageBoxAdv.Show(String.Concat("Updating of the Far Plane has completed for ", intKeyframeQuantity.ToString(), " keyframes. Be sure to save the Animation."), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxAdv.Show(String.Concat("Updating of the Parameter has completed for ", intKeyframeQuantity.ToString(), " keyframes. Be sure to save the Animation."), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             else
             {
-                MessageBoxAdv.Show(String.Concat("Updating of the Far Plane has been halted."), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxAdv.Show(String.Concat("Updating of the Parameter has been halted."), "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
 
             lbl_WorkingOnKeyframeNum.Text = "0";
@@ -336,7 +401,7 @@ namespace MB3D_Animation_Copilot.Child_Forms
             m_ProcessStop = false;
         }
 
-        private bool PerformAnimationActions_FarPlaneUpdate()
+        private bool PerformAnimationActions_GetKeyframe()
         {
             try
             {
@@ -351,7 +416,7 @@ namespace MB3D_Animation_Copilot.Child_Forms
                 int NewX = rct.Left + 427;
                 int NewY = rct.Top + 41;
 
-                //Ge the calculated mouse cooridinates into a Point object
+                //Get the calculated mouse cooridinates into a Point object
                 Point NewPoint = new Point();
                 NewPoint.X = NewX;
                 NewPoint.Y = NewY;
@@ -368,70 +433,93 @@ namespace MB3D_Animation_Copilot.Child_Forms
             catch (Exception ex)
             {
                 //string error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ PerformAnimationActions_FarPlaneUpdate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show(ex.Message, "Error @ PerformAnimationActions_Parameter", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
         }
 
-        private bool PerformNavigatorActions_FarPlaneUpdate(char[] charsFarPlane)
+        private bool PerformMainEditorActions_Parameter(string strForumlaString)
         {
+
             try
             {
-                //Get the handle of the Mandelbulb3D Navigator window
-                IntPtr hWnd = FindWindow(cMB3DNavigatorClassName, null);
+                //Get MB3D Main Editor window
+                AutomationElement element = AutomationElement.FromHandle(FindWindow(cMB3DFormulaClassName, null));
 
-                //Get the Top/Left position of the window
-                RECT rct = new RECT();
-                GetWindowRect(hWnd, ref rct);
-
-                //Calculate the mouse position to place the mouse cursor over the "Parameter" button
-                int NewX = rct.Left + 607;
-                int NewY = rct.Top + 538;
-
-                //Set the cursor position
-                SetCursorPos(NewX, NewY);
-
-                //Call the SendMouseEvent sub
-                //This clicks the "Parameters" button to get the selected Keyframe into the Navigator
-                SendMouseEvent();
-
-                //Calculate the mouse position to place the mouse cursor over the "Far Plane" entryfield
-                NewX = rct.Left + 77;
-                NewY = rct.Top + 659;
-
-                //Set the cursor position
-                SetCursorPos(NewX, NewY);
-
-                //Send the mouse Left click twice to simulate a double-click
-                SendMouseEvent();
-                SendMouseEvent();
-
-                //Write the target Far Plane value into the entryfield
-                foreach (char chr in charsFarPlane)
+                //Get all descendants
+                AutomationElementCollection elements = element.FindAll(TreeScope.Descendants, Condition.TrueCondition);
+                
+                //Loop through descendants
+                foreach (AutomationElement elementNode in elements)
                 {
-                    SendKeys.SendWait(string.Concat("{", chr, "}"));
+
+                    IntPtr hwndParent = new IntPtr(0x000080E8C); //<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+                    //if descendant is entry
+                    if (elementNode.Current.NativeWindowHandle != 0 && elementNode.Current.NativeWindowHandle == hwndParent)
+                    {
+
+                        elementNode.SetFocus();
+
+                        // Pause before sending keyboard input.
+                        Thread.Sleep(100);
+
+                        // Delete existing content in the control and insert new content.
+                        SendKeys.SendWait("^{HOME}");   // Move to start of control
+                        SendKeys.SendWait("^+{END}");   // Select everything
+                        SendKeys.SendWait("{DEL}");     // Delete selection
+                        SendKeys.SendWait(strForumlaString);
+
+                    }
                 }
-
-                //Calculate the mouse position to place the mouse cursor over the Ani Key" button
-                NewX = rct.Left + 35;
-                NewY = rct.Top + 575;
-
-                //Set the cursor position
-                SetCursorPos(NewX, NewY);
-
-                //Send the mouse Left click 
-                SendMouseEvent();
 
                 return true;
             }
             catch (Exception ex)
             {
                 //string error = ex.Message;
-                MessageBoxAdv.Show(ex.Message, "Error @ PerformNavigatorActions_FarPlaneUpdate", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                MessageBoxAdv.Show(ex.Message, "Error @ PerformMainEditorActions_Parameter", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 return false;
             }
         }
 
+        private bool PerformAnimationWindow_InsertKeyframe()
+        {
+            try
+            {
+                //Get the handle of the Mandelbulb3D Animator window
+                IntPtr hWnd = FindWindow(cMB3DAnimatorClassName, null);
+
+                //Get the Top/Left position of the window
+                RECT rct = new RECT();
+                GetWindowRect(hWnd, ref rct);
+
+                //Calculate the mouse position to place the mouse cursor over the keyframe "Insert actual parameter to this keyframe"
+                int NewX = rct.Left + 399;
+                int NewY = rct.Top + 185;
+
+                //Get the calculated mouse cooridinates into a Point object
+                Point NewPoint = new Point();
+                NewPoint.X = NewX;
+                NewPoint.Y = NewY;
+
+                //Set the cursor position
+                SetCursorPos(NewX, NewY);
+
+                //Call the SendMouseEvent sub
+                //This clicks the arrow button to get the selected Keyframe into the Main Editor
+                SendMouseEvent();
+
+                return true;
+
+            }
+            catch (Exception ex)
+            {
+                //string error = ex.Message;
+                MessageBoxAdv.Show(ex.Message, "Error @ PerformAnimationWindow_InsertKeyframe", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return false;
+            }
+        }
     }
 
     #endregion

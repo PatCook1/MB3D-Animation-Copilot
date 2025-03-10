@@ -120,9 +120,6 @@
   <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>409, 27</value>
   </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>409, 27</value>
-  </metadata>
   <data name="autoLabel17.Text" xml:space="preserve">
     <value>Note: When you perform a move step update or add, the walking and sliding move steps (WF, WR, SR, SL, SU and SD) will use the 'Sliding/Walking Step Count' value of the top panel of this application. Looking and rolling move steps (LR, LL, LU, LD, RC and RCC) will use the 'Looking/Rolling Step Angle' value of the top panel of this application.</value>
   </data>
@@ -143,9 +140,6 @@
   </metadata>
   <metadata name="folderBrowserDialog_DBBackupFolder.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>21, 68</value>
-  </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>409, 27</value>
   </metadata>
   <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>403, 70</value>
@@ -168,4 +162,64 @@
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>70</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAEAGACoDAAAFgAAACgAAAAgAAAAQAAAAAEAGAAAAAAAAAAAAEgAAABIAAAAAAAAAAAA
+        AACHAIqLAIaPAIGTAH2XAHmbAHWfAHCjAGynAGerAGSvAF+yAFu2AFe5AFO+AE/BAEvFAEfIAEPMAD/P
+        ADvSADfWADTZADDcAC3fACniACblACPoACDqAB3tABrwABfyABSEAI6IAIqMAIaPAIKUAH2XAHmbAHSf
+        AHCjAGynAGerAGOvAF+yAFu2AFe6AFO9AE7BAErFAEbIAELMAD/PADvTADfWADTZADDcAC3fACniACbl
+        ACPoACDqABztABrwABeAAJOEAI6HAIqLAIaQAIGTAH2XAHmbAHSfAHCjAGynAGerAGOuAF+yAFu2AFe6
+        AFO9AE7BAErFAEbIAEPMAD/PADvSADfWADPZADDcAC3fACniACblACPoACDqAB3tABp8AJeAAJOEAI6I
+        AIqMAIaPAIGUAH2YAHmbAHSfAHCjAGynAGirAGOvAF+yAFu2AFe6AFK9AE7BAErFAEfIAELMAD/PADvT
+        ADfWADPZADDcAC3fACniACblACPoAB/rAB15AJp9AJaBAJKEAI6IAImMAIWQAICUAHyYAHicAHOgAG+k
+        AGuoAGasAGKvAF6zAFq3AFa6AFK+AE7CAErGAEbJAELNAD7QADrTADfWADPaAC/cACzgACjjACXmACLp
+        AB91AJ95AJp9AJaBAJKFAI2HAIiEAHyGAHaKAHONAG+RAGqVAGegAGioAGasAGKvAF6xAFmjAE2rAEq9
+        AE3CAEnGAEbIAEHBADrAADXEADLGAC/JACvNACjYACfjACXmACJxAKN1AJ95AJp9AJaBAJJ8AIRUAFVO
+        AEpQAEdTAEVVAEJaAEKJAF+kAGuoAGalAV+KFVNnADRyADWoAEq+AE3CAEq9AEODACtyACJzACB1AB53
+        ABx7ABuyACPfACjjACVuAKdxAKN1AJ55AJqZdqDEucXAucC/ub+/ub/Aub+Pe4tMADyAAF6gAG+dAWax
+        hKDl4uNfJENYACxzADWqAEqqYH/Kub/Eub3CubzCubzCubyjk5doABimACTcACzgAClqAKtuAKdyAKN1
+        AJ/Essn///////////////////+5r7hKAD17AGCVAm+6kq7////////i4OFfIEFXACx1ADa2i57/////
+        ///////////////Rz9BmABqhACbZAC/dACxmAK9qAKtuAKdxAKPKv87///////////////////+9tLxH
+        AD9sBFq7mrT////////////////g2t1eHD9YACywl6P////////////////////V1dVkABycACjVADLa
+        AC9jALNmAK9qAKtuAKfOyND////////////////////AusBEB0C2qLT////////////////////////d
+        2NpbGTyzoKr////////////////////g4OBgAR2WACrRADbWADNfALdiALNmAK9pAKrT09T/////////
+        ///////+/v7QzdC6sLr////////////////////+/v7+/v7+/v7W0NPCur/+/v7////////////////p
+        6elcAR+RACvOADnTADZcALtfALdjALNhAKfk5OT////9/f3q6urJydC2tsC0tLy7u7vOzs7r6+v9/f38
+        /P/g4Ou0tL+xsbyzs76zs76zs764uLnDw8PY2Njw8PD+/v7x8fFXAh+LAC3KAD3QADpYAL9bALtfALdZ
+        AKLv7+/x8f6Xl/SVlfGnp/etrfimpveMjOlgYLxra4fJycmlpf2xsf2trfisrPitrfmtrfmtrfmYmPKA
+        gN5YWLJ5eYjOzs729vZSAiCFAC7GAEDNAD1UAMNYAL9bALtRAJ34+PiXl//7+//k5P+dnfuenvuenvvJ
+        yf7+/v+Oju2Li5eenvj////x8f9aWtabm/iiov+mpv+iov/a2v/6+v+Hh+hjY3/i4uJRCCV+AC/BAEPJ
+        AEFRAMdVAMNYAL5QBp7+/v6vr/+jo/+lpf/Dw/uamtJ5ecqamvT///+/v/+/v92jo/3////u7v9fX6Tv
+        7+/////////+/v+kpP/y8v/+/v9fX7nMzMxcGDV4ADC8AEbGAEVOAMpRAMdUAMNZF6j////////l5em8
+        vMOMjPbFxf/y8v/+/v+kpP5aWrTn5+ekpP/////u7v9fX6Tu7u79/f39/f38/PzCwvnZ2f////+AgNnh
+        4eFiJUFxADG2AEnDAElKAM5OAMpRAMdgJqv///+cnP+kpPyMjO01NalTU7RKSuPl5f/6+v91ddDr6+uk
+        pP/////u7v9ISJubm7Gjo7mcnL+CgtKYmPT+/v/h4f+hoev8/PxrNU9qADGwAEy/AE1HANJKAM5OAMps
+        O7T////Fxf+np//o6P/i4v+/v//g4P/m5v+np//Gxvn+/v6kpP/////6+v++vv++vv++vv/Hx//p6f/g
+        4P+qqv+rq/39/f7///95SmNlADKqAE+7AFFEANVHANFLAM55Ubr////////z8/+5uf+mpv+iov+np/+7
+        u//z8//////////U1P+Liuiiov+iov+iov+iov+iov+trf/Cwv/29v////////////+BWW9gADKjAFC4
+        AFVBANhEANVHANGHZ8D///////////////////////////////////////////+nlq1nInru6+7/////
+        //////////////////////////////////+ObYBbADObAFK0AFk+ANxBANhEANWYgMb/////////////
+        ///////////////////////////Qy9JTCXJzAJmKTZv+/v7/////////////////////////////////
+        //+af5BWADSUAFOwAF07AN8+ANxBANiqm8z////////////////////////////////////4+PhXKnJk
+        AJdyAKJ0AJytjLb///////////////////////////////////+lkZ9TADWLAFOtAGE4AOI7AN8+ANy9
+        tdD///////////////////////////////////+ahqpTAIxqAKhvAKZyAKJxCpTf2OH/////////////
+        //////////////////+6qbVlAEWQAFypAGU1AOU4AOI5ANrLx9j/////////////////////////////
+        ///i3+ZcDKRiALBnAK5rAKpuAKZyAKKGRpz+/v7////////////////////////////Err+YAG6fAG2l
+        AGkzAOg1AOU4AOI9DcNEF7dGF7VIF7JLF7BNF61QF6pSF6hVF6VWD6hcALpgALZjALJnAK5rAKpvAKZw
+        AJ5tFotwF4dyF4R1F4F4F357F3p+F3eBF3SKC3SaAHedAHKhAG4wAOszAOg1AOU4AOI7AN8+ANxBANhE
+        ANVHANFLAM5OAMpSAMZVAMJYAL5cALpfALZjALJnAK5rAKpuAKZzAKF2AJ16AJl+AJWCAJCGAIyKAIiN
+        AIOSAH+VAHuaAHedAHIuAO4wAOszAOg2AOU4AOI7AN8+ANtBANhEANVIANFLAM1OAMpSAMZVAMJZAL5c
+        ALpgALZjALJnAK5rAKpvAKZzAKF2AJ16AJl+AJWCAJCGAIyKAIiOAIOSAH+WAHuaAHYrAPAtAO4wAOsz
+        AOg1AOU4AOI7AN8+ANxBANhFANVIANFLAM1OAMpRAMZVAMJYAL5cALpgALZkALJnAK5rAKpvAKVyAKF2
+        AJ16AJl+AJWCAJCGAIyKAIiOAIOSAH+WAHspAPMrAPAuAO4wAOszAOg2AOU4AOI7AN8+ANtCANhFANRH
+        ANFLAM1OAMpSAMZVAMJZAL5cALpgALZjALJoAK5rAKpvAKZyAKF2AJ16AJl+AJWCAJCGAIyKAIiOAIOS
+        AH8nAPUpAPMrAPAuAO4wAOszAOg1AOU4AOI7AN8+ANtBANhEANRIANFLAM1OAMlSAMZVAMJZAL5cALpg
+        ALZkALJnAK5rAKpvAKZzAKF2AJ16AJl+AJWDAJCGAIyKAIiOAIMlAPcnAPUpAPMrAPAuAO4wAOszAOg2
+        AOU4AOI7AN8+ANtCANhEANRIANFLAM1OAMlSAMZVAMJZAL5cALpgALZkALJoAK1rAKpvAKVzAKF3AJ16
+        AJl+AJSDAJCGAIyKAIcAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==
+</value>
+  </data>
 </root>
