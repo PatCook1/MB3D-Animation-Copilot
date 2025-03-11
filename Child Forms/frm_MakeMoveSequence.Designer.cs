@@ -275,7 +275,6 @@
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel5;
         private System.Windows.Forms.Panel panel_lower;
         private System.Windows.Forms.Panel panel_upper;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel_Main;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;

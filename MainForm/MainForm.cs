@@ -62,6 +62,9 @@ using System.Windows.Shapes;
 using Windows.Media.Protection.PlayReady;
 using static System.Net.WebRequestMethods;
 using File = System.IO.File;
+using Microsoft.VisualBasic.ApplicationServices;
+using Microsoft.DotNet.DesignTools.Protocol.Values;
+using System.Windows.Input;
 
 #endregion
 
@@ -252,6 +255,7 @@ namespace MB3D_Animation_Copilot
         public MainForm()
         {
             InitializeComponent();
+            DisplayAssemblyInfo();
             SetStylesAndThemes();
             LoadAndInitMainForm();
 
@@ -283,6 +287,11 @@ namespace MB3D_Animation_Copilot
             this.Style.TitleBar.CloseButtonPressedBackColor = Color.Gray;
             this.Style.TitleBar.MaximizeButtonPressedBackColor = Color.Gray;
             this.Style.TitleBar.MinimizeButtonPressedBackColor = Color.Gray;
+        }
+
+        private void DisplayAssemblyInfo()
+        {
+            lbl_AssemblyInfo.Text = string.Concat("The version of the currently executing assembly is: ", typeof(String).Assembly.GetName().Version);
         }
 
         private void LoadAndInitMainForm()
@@ -326,7 +335,21 @@ namespace MB3D_Animation_Copilot
             m_UnsavedChanges = false; //Turn off the UnsavedChanges flag once the UI settles down
 
             //Links to external resources
+            SetUpExternalLinks();
 
+            //Display the app version date from app.config
+            lbl_AppVersionDate.Text = ConfigurationManager.AppSettings["AppVersionDate"];
+
+            drp_ProjectList.Focus(); //Set focus on the project dropdown
+            drp_ProjectList.Select();
+
+            ValidateMandelbulb3DRunning(); //validate if Mandelbulb3D application is running
+            ValidateJoyToKeyRunning(); //validate if JoyToKey application is running
+        }
+
+        private void SetUpExternalLinks()
+        {
+            //Links to external resources
             ll_GithubRespository.Links.Clear();
             ll_GithubRespository.Links.Add(23, 10, ConfigurationManager.AppSettings["GithubProjectURL"]);
             ll_GithubRespository_About.Links.Clear();
@@ -335,14 +358,8 @@ namespace MB3D_Animation_Copilot
             ll_PCGithubURL.Links.Add(16, 18, ConfigurationManager.AppSettings["PatCook1GithubURL"]);
             ll_PCGithubURL_About.Links.Clear();
             ll_PCGithubURL_About.Links.Add(39, 18, ConfigurationManager.AppSettings["PatCook1GithubURL"]);
-            ll_JoyToKey_About.Links.Clear();
-            ll_JoyToKey_About.Links.Add(0, 19, ConfigurationManager.AppSettings["JoyToKeyURL"]);
-
-            drp_ProjectList.Focus(); //Set focus on the project dropdown
-            drp_ProjectList.Select();
-
-            ValidateMandelbulb3DRunning(); //validate if Mandelbulb3D application is running
-            ValidateJoyToKeyRunning(); //validate if JoyToKey application is running
+            ll_JoyToKey_Utilities.Links.Clear();
+            ll_JoyToKey_Utilities.Links.Add(0, 8, ConfigurationManager.AppSettings["JoyToKeyURL"]);
         }
 
         private void PopulateManageKeyframeCommandList()
@@ -2536,7 +2553,7 @@ namespace MB3D_Animation_Copilot
 
         }
 
-        private void mtbx_FrameCount_KeyUp(object sender, KeyEventArgs e)
+        private void mtbx_FrameCount_KeyUp(object sender, System.Windows.Forms.KeyEventArgs e)
         {
             ClearMoveList();
         }
@@ -4266,7 +4283,7 @@ namespace MB3D_Animation_Copilot
         private void btn_AdminDBBackup_Help_Click(object sender, EventArgs e)
         {
             var NL = Environment.NewLine;
-            MessageBoxAdv.Show(String.Concat("To backup your project database:", NL, "1. Enter a name for your backup file (without an extension). Example: 'MyDatabase_01-01-2025'", NL, "2. Click 'Select a Folder for the Database Backup File' to choose a location for the backup file.", NL, "3. Click 'Backup Database'"), "Backup Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBoxAdv.Show(String.Concat("To backup your project database to a file:", NL, NL, "1. Enter a name for your backup file (without an extension). Example: 'MyDatabase_01-01-2025'", NL, "2. Click 'Select a Folder for the Database Backup File' to choose a location for the backup file.", NL, "3. Click 'Backup Database'"), "Backup Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btn_DBAdmin_Backup_Click(object sender, EventArgs e)
@@ -4331,7 +4348,7 @@ namespace MB3D_Animation_Copilot
         {
             var NL = Environment.NewLine;
             string DefaultDbName = ConfigurationManager.AppSettings["dbFileName"];
-            MessageBoxAdv.Show(String.Concat("To restore your project database from a previous backup:", NL, "1. Click 'Select Database File to Restore' to select the backup database file to restore.", NL, "2. Click 'Restore Database'", NL, NL, "Note: the restored database will be renamed '", DefaultDbName, "'."), "Restore Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            MessageBoxAdv.Show(String.Concat("To restore your project database from a previous backup file:", NL, NL, "1. Click 'Select Database File to Restore' to select the backup database file to restore.", NL, "2. Click 'Restore Database'", NL, NL, "Note: the restored database will be renamed '", DefaultDbName, "'."), "Restore Help", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void btn_DBAdmin_Restore_Click(object sender, EventArgs e)
@@ -4564,7 +4581,7 @@ namespace MB3D_Animation_Copilot
             try
             {
                 // Change the color of the link text by setting LinkVisited to true.
-                ll_JoyToKey_About.LinkVisited = true;
+                ll_JoyToKey_Utilities.LinkVisited = true;
 
                 //Call the Process.Start method to open the default browser with a URL:
                 Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString()) { UseShellExecute = true });

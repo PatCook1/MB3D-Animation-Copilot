@@ -117,8 +117,8 @@ namespace MB3D_Animation_Copilot.Child_Forms
                 }
                 catch (Exception ex)
                 {
-                    //var message = ex;
-                    MessageBoxAdv.Show(this, string.Concat("There was a problem saving the new Move Sequence '", tbx_MoveSequenceName.Text, "' which was not saved. You may close this window."), "Failure?", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Program._MainForm.LogException("btn_SaveMoveSequence_Click", ex); //Log this error
+                    MessageBoxAdv.Show(this, string.Concat("There was a problem saving the new Move Sequence '", tbx_MoveSequenceName.Text, "' which was not saved. The error was logged. You may close this window."), "Failure?", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
                 return;
