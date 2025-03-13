@@ -36,6 +36,8 @@ namespace MB3D_Animation_Copilot.Classes
 {
     internal class Data_Access_Methods
     {
+        #region Load Connection String Methods ==========================================================================
+
         private static string LoadConnectionString()
         {
             try
@@ -55,6 +57,8 @@ namespace MB3D_Animation_Copilot.Classes
                 return null;
             }
         }
+
+        #endregion
 
         #region Project Data Access Methods ==========================================================================
 
@@ -221,7 +225,6 @@ namespace MB3D_Animation_Copilot.Classes
 
                     var NewRecordID = cnn.ExecuteScalar("SELECT MAX(ID) FROM Animation_Project");
                     return Convert.ToInt32(NewRecordID);
-
                 }
             }
             catch (Exception ex)
@@ -812,7 +815,7 @@ namespace MB3D_Animation_Copilot.Classes
                 {
                     //Query for a list of all keyframes for the project ID
                     //This list is based on the current keyframe number in ascending order
-                    var lstKeyframes = cnn.Query<KeyframeModel>("SELECT ID" +
+                    var lstKeyframes = cnn.Query<KeyframeModel>("SELECT ID,KeyframeNum" +
                                       " FROM Keyframes" +
                                       " WHERE ProjectID_Ref = @ProjectID" +
                                       " ORDER BY KeyframeNum ASC",
@@ -845,6 +848,54 @@ namespace MB3D_Animation_Copilot.Classes
             {
                 Program._MainForm.LogException("DAM RecalculateKeyframeNumberingAllRecords", ex); //Log this error
                 MessageBoxAdv.Show(ex.Message, "Error @ DAM RecalculateKeyframeNumberingAllRecords. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        public static void RecalculateKeyframeNumberingRange(int argProjectID, int argStartKeyframeNum)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    //Query for a list of all keyframes for the project ID
+                    //This list is based on the start keyframe number argument in ascending order
+                    var lstKeyframes = cnn.Query<KeyframeModel>("SELECT ID, KeyframeNum" +
+                                      " FROM Keyframes" +
+                                      " WHERE KeyframeNum > @StartKeyframeNum AND ProjectID_Ref = @ProjectID" +
+                                      " ORDER BY KeyframeNum ASC",
+                    param: new
+                    {
+                        @ProjectID = argProjectID,
+                        @StartKeyframeNum = argStartKeyframeNum
+
+                    });
+
+                    //Create a variable with an initial value of the start keyframe number plus two.
+                    //This renumbers the keyframes to allow the insertion of a new keyframe
+                    //Example: Assume total keyframes is 21. If argStartKeyframeNum=18 then keyframes are renumbered as follows: 18->19, 19->20, 20->21, 21->22
+                    int intRunningKeyframeNumber = argStartKeyframeNum+2;
+
+                    //Loop the above list to update each keyframe of the project ID to update the Keyframe number
+                    foreach (KeyframeModel kf in lstKeyframes)
+                    {
+                        cnn.Execute("UPDATE Keyframes" +
+                        " SET KeyframeNum=@RunningKeyframeNumber" +
+                        " WHERE ID=@KeyframeID AND ProjectID_Ref = @ProjectID",
+                        param: new
+                        {
+                            @ProjectID = argProjectID,
+                            @KeyframeID = kf.ID,
+                            @RunningKeyframeNumber = intRunningKeyframeNumber
+                        });
+
+                        intRunningKeyframeNumber += 1;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM RecalculateKeyframeNumberingRange", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM RecalculateKeyframeNumberingRange. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1753,5 +1804,4 @@ namespace MB3D_Animation_Copilot.Classes
     }
 
     #endregion
-
 }

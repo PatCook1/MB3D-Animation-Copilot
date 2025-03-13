@@ -119,7 +119,7 @@ namespace MB3D_Animation_Copilot
             dgv_Keyframes_sf = new SfDataGrid();
             panel12 = new System.Windows.Forms.Panel();
             grpManageKeyframes = new System.Windows.Forms.GroupBox();
-            cbx_MngKFMessages = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            btn_InsertKeyframe = new Syncfusion.WinForms.Controls.SfButton();
             btn_ManageKeyframeCommandGo = new Syncfusion.WinForms.Controls.SfButton();
             drpKeyframeCommands = new Syncfusion.WinForms.ListView.SfComboBox();
             btn_DeleteKeyframe = new Syncfusion.WinForms.Controls.SfButton();
@@ -143,6 +143,7 @@ namespace MB3D_Animation_Copilot
             page_AnimationCopilot = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel8 = new System.Windows.Forms.Panel();
             panel7 = new System.Windows.Forms.Panel();
+            lbl_RestorePointAvail = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             lbl_JTK_AppRun_Warn = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             btn_ShowMoveSequenceInfo = new Syncfusion.WinForms.Controls.SfButton();
             mtbx_NextKeyframeNumber = new Syncfusion.WinForms.Input.SfNumericTextBox();
@@ -280,7 +281,6 @@ namespace MB3D_Animation_Copilot
             ((System.ComponentModel.ISupportInitialize)dgv_Keyframes_sf).BeginInit();
             panel12.SuspendLayout();
             grpManageKeyframes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)cbx_MngKFMessages).BeginInit();
             ((System.ComponentModel.ISupportInitialize)drpKeyframeCommands).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_EndDeleteKeyframe).BeginInit();
             ((System.ComponentModel.ISupportInitialize)num_StartDeleteKeyframe).BeginInit();
@@ -552,7 +552,7 @@ namespace MB3D_Animation_Copilot
             lbl_ProjectSavingIndicator.BackColor = System.Drawing.Color.DarkGreen;
             lbl_ProjectSavingIndicator.Font = new System.Drawing.Font("Microsoft Sans Serif", 15F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             lbl_ProjectSavingIndicator.ForeColor = System.Drawing.Color.Yellow;
-            lbl_ProjectSavingIndicator.Location = new System.Drawing.Point(928, 21);
+            lbl_ProjectSavingIndicator.Location = new System.Drawing.Point(946, 21);
             lbl_ProjectSavingIndicator.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lbl_ProjectSavingIndicator.Name = "lbl_ProjectSavingIndicator";
             lbl_ProjectSavingIndicator.Padding = new System.Windows.Forms.Padding(6);
@@ -564,7 +564,7 @@ namespace MB3D_Animation_Copilot
             // btn_RestorePointInfo
             // 
             btn_RestorePointInfo.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_RestorePointInfo.Location = new System.Drawing.Point(1216, 9);
+            btn_RestorePointInfo.Location = new System.Drawing.Point(1060, 9);
             btn_RestorePointInfo.Margin = new System.Windows.Forms.Padding(4);
             btn_RestorePointInfo.Name = "btn_RestorePointInfo";
             btn_RestorePointInfo.Size = new System.Drawing.Size(24, 26);
@@ -577,7 +577,7 @@ namespace MB3D_Animation_Copilot
             // btn_ClearRestorePoint
             // 
             btn_ClearRestorePoint.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_ClearRestorePoint.Location = new System.Drawing.Point(1244, 9);
+            btn_ClearRestorePoint.Location = new System.Drawing.Point(1242, 9);
             btn_ClearRestorePoint.Margin = new System.Windows.Forms.Padding(4);
             btn_ClearRestorePoint.Name = "btn_ClearRestorePoint";
             btn_ClearRestorePoint.Size = new System.Drawing.Size(24, 26);
@@ -591,10 +591,10 @@ namespace MB3D_Animation_Copilot
             // btn_PerformRestorePoint
             // 
             btn_PerformRestorePoint.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_PerformRestorePoint.Location = new System.Drawing.Point(1074, 41);
+            btn_PerformRestorePoint.Location = new System.Drawing.Point(1099, 41);
             btn_PerformRestorePoint.Margin = new System.Windows.Forms.Padding(4);
             btn_PerformRestorePoint.Name = "btn_PerformRestorePoint";
-            btn_PerformRestorePoint.Size = new System.Drawing.Size(194, 26);
+            btn_PerformRestorePoint.Size = new System.Drawing.Size(167, 26);
             btn_PerformRestorePoint.TabIndex = 25;
             btn_PerformRestorePoint.Text = "Perform Restore Point";
             btn_PerformRestorePoint.ThemeName = "HighContrastTheme";
@@ -606,10 +606,10 @@ namespace MB3D_Animation_Copilot
             // 
             btn_SetRestorePoint.Font = new System.Drawing.Font("Segoe UI", 11F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             btn_SetRestorePoint.ForeColor = System.Drawing.Color.White;
-            btn_SetRestorePoint.Location = new System.Drawing.Point(1074, 9);
+            btn_SetRestorePoint.Location = new System.Drawing.Point(1091, 9);
             btn_SetRestorePoint.Margin = new System.Windows.Forms.Padding(4);
             btn_SetRestorePoint.Name = "btn_SetRestorePoint";
-            btn_SetRestorePoint.Size = new System.Drawing.Size(138, 26);
+            btn_SetRestorePoint.Size = new System.Drawing.Size(145, 26);
             btn_SetRestorePoint.Style.ForeColor = System.Drawing.Color.White;
             btn_SetRestorePoint.TabIndex = 24;
             btn_SetRestorePoint.Text = "Set Restore Point";
@@ -1273,7 +1273,7 @@ namespace MB3D_Animation_Copilot
             lbl_MB3D_AppRun_Warn.BackColor = System.Drawing.Color.Yellow;
             lbl_MB3D_AppRun_Warn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             lbl_MB3D_AppRun_Warn.ForeColor = System.Drawing.Color.Red;
-            lbl_MB3D_AppRun_Warn.Location = new System.Drawing.Point(681, 17);
+            lbl_MB3D_AppRun_Warn.Location = new System.Drawing.Point(683, 17);
             lbl_MB3D_AppRun_Warn.Name = "lbl_MB3D_AppRun_Warn";
             lbl_MB3D_AppRun_Warn.Size = new System.Drawing.Size(213, 19);
             lbl_MB3D_AppRun_Warn.TabIndex = 30;
@@ -1533,7 +1533,7 @@ namespace MB3D_Animation_Copilot
             grpManageKeyframes.AllowDrop = true;
             grpManageKeyframes.BackColor = System.Drawing.Color.Transparent;
             grpManageKeyframes.CausesValidation = false;
-            grpManageKeyframes.Controls.Add(cbx_MngKFMessages);
+            grpManageKeyframes.Controls.Add(btn_InsertKeyframe);
             grpManageKeyframes.Controls.Add(btn_ManageKeyframeCommandGo);
             grpManageKeyframes.Controls.Add(drpKeyframeCommands);
             grpManageKeyframes.Controls.Add(btn_DeleteKeyframe);
@@ -1552,19 +1552,21 @@ namespace MB3D_Animation_Copilot
             grpManageKeyframes.TabStop = false;
             grpManageKeyframes.Text = "Manage Keyframes";
             // 
-            // cbx_MngKFMessages
+            // btn_InsertKeyframe
             // 
-            cbx_MngKFMessages.AccessibilityEnabled = true;
-            cbx_MngKFMessages.BeforeTouchSize = new System.Drawing.Size(55, 21);
-            cbx_MngKFMessages.Checked = true;
-            cbx_MngKFMessages.CheckState = System.Windows.Forms.CheckState.Checked;
-            cbx_MngKFMessages.Location = new System.Drawing.Point(124, 25);
-            cbx_MngKFMessages.Name = "cbx_MngKFMessages";
-            cbx_MngKFMessages.Size = new System.Drawing.Size(55, 21);
-            cbx_MngKFMessages.TabIndex = 25;
-            cbx_MngKFMessages.Text = "Msgs";
-            cbx_MngKFMessages.ThemeName = "HighContrastTheme";
-            toolTip1.SetToolTip(cbx_MngKFMessages, "Uncheck to reduce Manage Keyframes messages");
+            btn_InsertKeyframe.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            btn_InsertKeyframe.ForeColor = System.Drawing.Color.White;
+            btn_InsertKeyframe.Location = new System.Drawing.Point(8, 24);
+            btn_InsertKeyframe.Margin = new System.Windows.Forms.Padding(4);
+            btn_InsertKeyframe.Name = "btn_InsertKeyframe";
+            btn_InsertKeyframe.Size = new System.Drawing.Size(78, 26);
+            btn_InsertKeyframe.Style.ForeColor = System.Drawing.Color.White;
+            btn_InsertKeyframe.TabIndex = 25;
+            btn_InsertKeyframe.Text = "Insert KF";
+            btn_InsertKeyframe.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_InsertKeyframe, "Insert a new keyframe into the Keyframe Stack");
+            btn_InsertKeyframe.UseVisualStyleBackColor = true;
+            btn_InsertKeyframe.Click += btn_InsertKeyframe_Click;
             // 
             // btn_ManageKeyframeCommandGo
             // 
@@ -1598,13 +1600,13 @@ namespace MB3D_Animation_Copilot
             // 
             btn_DeleteKeyframe.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             btn_DeleteKeyframe.ForeColor = System.Drawing.Color.Red;
-            btn_DeleteKeyframe.Location = new System.Drawing.Point(8, 23);
+            btn_DeleteKeyframe.Location = new System.Drawing.Point(104, 24);
             btn_DeleteKeyframe.Margin = new System.Windows.Forms.Padding(4);
             btn_DeleteKeyframe.Name = "btn_DeleteKeyframe";
-            btn_DeleteKeyframe.Size = new System.Drawing.Size(109, 26);
+            btn_DeleteKeyframe.Size = new System.Drawing.Size(78, 26);
             btn_DeleteKeyframe.Style.ForeColor = System.Drawing.Color.Red;
             btn_DeleteKeyframe.TabIndex = 14;
-            btn_DeleteKeyframe.Text = "Delete Keyframe";
+            btn_DeleteKeyframe.Text = "Delete KF";
             btn_DeleteKeyframe.ThemeName = "HighContrastTheme";
             toolTip1.SetToolTip(btn_DeleteKeyframe, "Delete the keyframe selected in the Keyframe Stack");
             btn_DeleteKeyframe.UseVisualStyleBackColor = true;
@@ -1888,6 +1890,10 @@ namespace MB3D_Animation_Copilot
             // 
             // panel7
             // 
+            panel7.Controls.Add(btn_SetRestorePoint);
+            panel7.Controls.Add(btn_RestorePointInfo);
+            panel7.Controls.Add(btn_PerformRestorePoint);
+            panel7.Controls.Add(lbl_RestorePointAvail);
             panel7.Controls.Add(lbl_JTK_AppRun_Warn);
             panel7.Controls.Add(btn_ShowMoveSequenceInfo);
             panel7.Controls.Add(mtbx_NextKeyframeNumber);
@@ -1896,12 +1902,9 @@ namespace MB3D_Animation_Copilot
             panel7.Controls.Add(lbl_ProjectSavingIndicator);
             panel7.Controls.Add(btn_StartOver);
             panel7.Controls.Add(label45);
-            panel7.Controls.Add(btn_RestorePointInfo);
             panel7.Controls.Add(lbl_BusyLabel);
             panel7.Controls.Add(btn_ClearRestorePoint);
-            panel7.Controls.Add(btn_PerformRestorePoint);
             panel7.Controls.Add(lbl_MoveSequenceDesc);
-            panel7.Controls.Add(btn_SetRestorePoint);
             panel7.Controls.Add(btn_UseImmediateSeq);
             panel7.Controls.Add(label22);
             panel7.Controls.Add(drp_UseSequenceList);
@@ -1913,13 +1916,27 @@ namespace MB3D_Animation_Copilot
             panel7.Size = new System.Drawing.Size(1276, 75);
             panel7.TabIndex = 33;
             // 
+            // lbl_RestorePointAvail
+            // 
+            lbl_RestorePointAvail.AutoSize = false;
+            lbl_RestorePointAvail.Font = new System.Drawing.Font("Segoe UI", 22F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            lbl_RestorePointAvail.ForeColor = System.Drawing.Color.PaleGreen;
+            lbl_RestorePointAvail.Location = new System.Drawing.Point(1049, 31);
+            lbl_RestorePointAvail.Name = "lbl_RestorePointAvail";
+            lbl_RestorePointAvail.Size = new System.Drawing.Size(59, 39);
+            lbl_RestorePointAvail.TabIndex = 45;
+            lbl_RestorePointAvail.Text = "RP";
+            lbl_RestorePointAvail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            toolTip1.SetToolTip(lbl_RestorePointAvail, "A Restore Point is set when visible");
+            lbl_RestorePointAvail.Visible = false;
+            // 
             // lbl_JTK_AppRun_Warn
             // 
             lbl_JTK_AppRun_Warn.AutoSize = false;
             lbl_JTK_AppRun_Warn.BackColor = System.Drawing.Color.Yellow;
             lbl_JTK_AppRun_Warn.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F);
             lbl_JTK_AppRun_Warn.ForeColor = System.Drawing.Color.Red;
-            lbl_JTK_AppRun_Warn.Location = new System.Drawing.Point(681, 41);
+            lbl_JTK_AppRun_Warn.Location = new System.Drawing.Point(683, 41);
             lbl_JTK_AppRun_Warn.Name = "lbl_JTK_AppRun_Warn";
             lbl_JTK_AppRun_Warn.Size = new System.Drawing.Size(213, 19);
             lbl_JTK_AppRun_Warn.TabIndex = 31;
@@ -1998,7 +2015,7 @@ namespace MB3D_Animation_Copilot
             lbl_BusyLabel.BackColor = System.Drawing.Color.Firebrick;
             lbl_BusyLabel.Font = new System.Drawing.Font("Blackoak Std", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             lbl_BusyLabel.ForeColor = System.Drawing.Color.Yellow;
-            lbl_BusyLabel.Location = new System.Drawing.Point(660, 14);
+            lbl_BusyLabel.Location = new System.Drawing.Point(662, 14);
             lbl_BusyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lbl_BusyLabel.Name = "lbl_BusyLabel";
             lbl_BusyLabel.Padding = new System.Windows.Forms.Padding(29, 8, 29, 5);
@@ -2666,7 +2683,7 @@ namespace MB3D_Animation_Copilot
             label10.BackColor = System.Drawing.Color.Transparent;
             label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             label10.ForeColor = System.Drawing.Color.White;
-            label10.Location = new System.Drawing.Point(145, 99);
+            label10.Location = new System.Drawing.Point(214, 99);
             label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label10.Name = "label10";
             label10.Size = new System.Drawing.Size(857, 39);
@@ -3298,7 +3315,6 @@ namespace MB3D_Animation_Copilot
             panel12.ResumeLayout(false);
             grpManageKeyframes.ResumeLayout(false);
             grpManageKeyframes.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)cbx_MngKFMessages).EndInit();
             ((System.ComponentModel.ISupportInitialize)drpKeyframeCommands).EndInit();
             ((System.ComponentModel.ISupportInitialize)num_EndDeleteKeyframe).EndInit();
             ((System.ComponentModel.ISupportInitialize)num_StartDeleteKeyframe).EndInit();
@@ -3566,7 +3582,6 @@ namespace MB3D_Animation_Copilot
         private System.Windows.Forms.RichTextBox rtbx_LicenseRTF;
         private Syncfusion.Windows.Forms.SfToolTip sfToolTip1;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel27;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv cbx_MngKFMessages;
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel28;
         private Syncfusion.WinForms.Controls.SfButton btn_ParameterUpdater;
         private System.Windows.Forms.GroupBox grp_KeyframeModifierUtilities;
@@ -3583,6 +3598,8 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_Admin_JoyToKey_Intro;
         private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_AssemblyInfo;
         private System.Windows.Forms.GroupBox groupBox3;
+        private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_RestorePointAvail;
+        private Syncfusion.WinForms.Controls.SfButton btn_InsertKeyframe;
     }
 }
 

@@ -65,6 +65,7 @@ using File = System.IO.File;
 using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.DotNet.DesignTools.Protocol.Values;
 using System.Windows.Input;
+using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
 
 #endregion
 
@@ -91,6 +92,8 @@ namespace MB3D_Animation_Copilot
         public static int ClearFooterMessageInterval = 10000; //10 seconds
         public static Timer ClearManageSeqMessageTmr = new Timer();
         public static int ClearManageSeqFooterMessageInterval = 10000; //10 seconds
+        public static Timer BlinkFooterMsgTmr = new Timer();
+        public static int BlinkFooterMsgTmrInterval = 500; //1/2 second
 
         //Move related variables
         public int m_WFCount = 0, m_WRCount = 0;
@@ -259,7 +262,7 @@ namespace MB3D_Animation_Copilot
             SetStylesAndThemes();
             LoadAndInitMainForm();
 
-            LoadFooterMessage("Welcome to the Mandelbulb3D Animation Copilot!", true, false);
+            LoadFooterMessage("Welcome to the Mandelbulb3D Animation Copilot!", true, false, false);
         }
 
         private void SetStylesAndThemes()
@@ -392,38 +395,47 @@ namespace MB3D_Animation_Copilot
 
         private void PopulateProjectList(int ProjectID)
         {
-            //If applicable, find the project list item that matches the Project ID
-            List<ProjectListModel> lstProjectList = null;
-            lstProjectList = Data_Access_Methods.LoadProjectsList();
-
-            drp_ProjectList.Text = string.Empty; //Clear any previous text
-            drp_ProjectList.DataSource = null; //Clear any previous binding
-
-            drp_ProjectList.DataSource = lstProjectList;
-            drp_ProjectList.DisplayMember = "Project_Name";
-            drp_ProjectList.ValueMember = "ID";
-
-            if (lstProjectList.Count == 0)
+            try
             {
-                return; //Bail - no project records
-            }
 
-            if (ProjectID > 0)
-            {
-                //Loop across the project list and try to find a matching project ID
+                //If applicable, find the project list item that matches the Project ID
+                List<ProjectListModel> lstProjectList = null;
+                lstProjectList = Data_Access_Methods.LoadProjectsList();
 
-                var idx = 0;
-                foreach (ProjectListModel item in lstProjectList)
+                drp_ProjectList.Text = string.Empty; //Clear any previous text
+                drp_ProjectList.DataSource = null; //Clear any previous binding
+
+                drp_ProjectList.DataSource = lstProjectList;
+                drp_ProjectList.DisplayMember = "Project_Name";
+                drp_ProjectList.ValueMember = "ID";
+
+                if (lstProjectList.Count == 0)
                 {
-                    if (item.ID == ProjectID)
-                    {
-                        break;
-                    }
-                    idx += 1;
+                    return; //Bail - no project records
                 }
 
-                //And set the dropdown to the found item
-                drp_ProjectList.SelectedIndex = idx;
+                if (ProjectID > 0)
+                {
+                    //Loop across the project list and try to find a matching project ID
+
+                    var idx = 0;
+                    foreach (ProjectListModel item in lstProjectList)
+                    {
+                        if (item.ID == ProjectID)
+                        {
+                            break;
+                        }
+                        idx += 1;
+                    }
+
+                    //And set the dropdown to the found item
+                    drp_ProjectList.SelectedIndex = idx;
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException("PopulateProjectList", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ PopulateProjectList. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -432,9 +444,11 @@ namespace MB3D_Animation_Copilot
             ClearFooterMessageTmr.Interval = ClearFooterMessageInterval;
             ClearFooterMessageTmr.Tick += new EventHandler(ClearFooterMessage_Tick);
             ClearManageSeqMessageTmr.Tick += new EventHandler(ClearManageSeqMessage_Tick);
+            BlinkFooterMsgTmr.Interval = BlinkFooterMsgTmrInterval;
+            BlinkFooterMsgTmr.Tick += new EventHandler(BlinkFooterMsgTmr_Tick);
         }
 
-        private void LoadFooterMessage(string strFooterMessage, bool bolLongDelay, bool ShowAsRed)
+        private void LoadFooterMessage(string strFooterMessage, bool bolLongDelay, bool ShowAsRed, bool BlinkIt)
         {
             lbl_FooterMessage.Text = strFooterMessage;
 
@@ -456,56 +470,92 @@ namespace MB3D_Animation_Copilot
                 ClearFooterMessageTmr.Interval = ClearFooterMessageInterval;
             }
 
+            if (BlinkIt)
+            {
+                BlinkFooterMsgTmr.Enabled = false;
+                BlinkFooterMsgTmr.Start();
+            }
+            else
+            {
+                BlinkFooterMsgTmr.Stop();
+                BlinkFooterMsgTmr.Enabled = false;
+            }
+
             ClearFooterMessageTmr.Start(); //Start or re-start the footer message timer
+        }
+
+        private void BlinkFooterMsgTmr_Tick(object sender, EventArgs e)
+        {
+            lbl_FooterMessage.Visible = !lbl_FooterMessage.Visible;
         }
 
         private void ClearFooterMessage_Tick(object sender, EventArgs e)
         {
+            BlinkFooterMsgTmr.Stop();
+            BlinkFooterMsgTmr.Enabled = false;
             lbl_FooterMessage.Text = string.Empty;
             lbl_FooterMessage.ForeColor = Color.White;
         }
 
         private void PopulateUseSequenceList()
         {
-            drp_UseSequenceList.DataSource = null; //Be sure no bindings
+            try
+            {
+                drp_UseSequenceList.DataSource = null; //Be sure no bindings
 
-            drp_UseSequenceList.DataSource = Data_Access_Methods.LoadMoveSeqencesList();
-            drp_UseSequenceList.DisplayMember = "SequenceName";
-            drp_UseSequenceList.ValueMember = "ID";
+                drp_UseSequenceList.DataSource = Data_Access_Methods.LoadMoveSeqencesList();
+                drp_UseSequenceList.DisplayMember = "SequenceName";
+                drp_UseSequenceList.ValueMember = "ID";
 
-            drp_UseSequenceList.SelectedItem = null; //Null so that nothing is selected
+                drp_UseSequenceList.SelectedItem = null; //Null so that nothing is selected
+
+            }
+            catch (Exception ex)
+            {
+                LogException("PopulateUseSequenceList", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ PopulateUseSequenceList. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void PopulateAutoLastMoveDropdown()
         {
-            drp_AutoLastMove.DataSource = null; //Be sure no bindings
+            try
+            {
+                drp_AutoLastMove.DataSource = null; //Be sure no bindings
 
-            BindingSource binding1 = new BindingSource();
+                BindingSource binding1 = new BindingSource();
 
-            var source = new Dictionary<string, string>();
-            //Walking
-            source.Add(cWFn, cWFk_);
-            source.Add(cWRn, cWRk_);
-            //Looking
-            source.Add(cLUn, cLUk_);
-            source.Add(cLDn, cLDk_);
-            source.Add(cLLn, cLLk_);
-            source.Add(cLRn, cLRk_);
-            //Sliding
-            source.Add(cSUn, cSUk_);
-            source.Add(cSDn, cSDk_);
-            source.Add(cSLn, cSLk_);
-            source.Add(cSRn, cSRk_);
-            //Rolling            
-            source.Add(cRCCn, cRCCk_);
-            source.Add(cRCWn, cRCWk_);
-            binding1.DataSource = source;
+                var source = new Dictionary<string, string>();
+                //Walking
+                source.Add(cWFn, cWFk_);
+                source.Add(cWRn, cWRk_);
+                //Looking
+                source.Add(cLUn, cLUk_);
+                source.Add(cLDn, cLDk_);
+                source.Add(cLLn, cLLk_);
+                source.Add(cLRn, cLRk_);
+                //Sliding
+                source.Add(cSUn, cSUk_);
+                source.Add(cSDn, cSDk_);
+                source.Add(cSLn, cSLk_);
+                source.Add(cSRn, cSRk_);
+                //Rolling            
+                source.Add(cRCCn, cRCCk_);
+                source.Add(cRCWn, cRCWk_);
+                binding1.DataSource = source;
 
-            drp_AutoLastMove.DataSource = binding1;
-            drp_AutoLastMove.DisplayMember = "Key";
-            drp_AutoLastMove.ValueMember = "Value";
+                drp_AutoLastMove.DataSource = binding1;
+                drp_AutoLastMove.DisplayMember = "Key";
+                drp_AutoLastMove.ValueMember = "Value";
 
-            drp_AutoLastMove.SelectedIndex = 0; //Set the drp_AutoLastMove to the first list item "None"
+                drp_AutoLastMove.SelectedIndex = 0; //Set the drp_AutoLastMove to the first list item "None"
+
+            }
+            catch (Exception ex)
+            {
+                LogException("PopulateAutoLastMoveDropdown", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ PopulateAutoLastMoveDropdown. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void drpProjectList_SelectedIndexChanged(object sender, EventArgs e)
@@ -603,98 +653,125 @@ namespace MB3D_Animation_Copilot
 
         private void BuildKeyframesDatagrid()
         {
+            try
+            {
 
-            dgv_Keyframes_sf.Columns.Clear(); //Be sure no columns defined
+                dgv_Keyframes_sf.Columns.Clear(); //Be sure no columns defined
 
-            //Datagrid configuation
-            dgv_Keyframes_sf.AutoGenerateColumns = false;
-            dgv_Keyframes_sf.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.AllCells;
-            dgv_Keyframes_sf.RowHeight = 32;
+                //Datagrid configuation
+                dgv_Keyframes_sf.AutoGenerateColumns = false;
+                dgv_Keyframes_sf.AutoSizeColumnsMode = Syncfusion.WinForms.DataGrid.Enums.AutoSizeColumnsMode.AllCells;
+                dgv_Keyframes_sf.RowHeight = 32;
 
-            //Column definitions
-            dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "ID", HeaderText = "ID", Width = 20, AllowEditing = false, Visible = false });
-            dgv_Keyframes_sf.Columns.Add(new GridTextColumn() { MappingName = "KeyframeType", HeaderText = "T", Width = 20, AllowEditing = false });
-            dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "KeyframeNum", HeaderText = "KF#", MinimumWidth = 8, Width = 38, AllowEditing = false, Format = "0.#####" });
-            dgv_Keyframes_sf.Columns.Add(new GridTextColumn() { MappingName = "KeyframeDisplay", HeaderText = "Keyframe Summary", Width = 350, AllowEditing = false });
-            dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "FramesBetween", HeaderText = "FB", MinimumWidth = 8, Width = 45, AllowEditing = false, Format = "0.#####" });
-            dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "FrameCount", HeaderText = "TF", MinimumWidth = 8, Width = 45, AllowEditing = false, Format = "0.#####" });
-            dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "FarPlane", HeaderText = "FP", MinimumWidth = 8, Width = 45, AllowEditing = false, Format = "0.#####" });
-            dgv_Keyframes_sf.Columns.Add(new GridCheckBoxColumn() { MappingName = "KeyframeApproved", HeaderText = "Apr", MinimumWidth = 8, Width = 35, AllowEditing = false });
-            dgv_Keyframes_sf.Columns.Add(new GridTextColumn() { MappingName = "KeyframeNote", HeaderText = "Keyframe Note", Width = 400, AllowEditing = true });
+                //Column definitions
+                dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "ID", HeaderText = "ID", Width = 20, AllowEditing = false, Visible = false });
+                dgv_Keyframes_sf.Columns.Add(new GridTextColumn() { MappingName = "KeyframeType", HeaderText = "T", Width = 20, AllowEditing = false });
+                dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "KeyframeNum", HeaderText = "KF#", MinimumWidth = 8, Width = 38, AllowEditing = false, Format = "0.#####" });
+                dgv_Keyframes_sf.Columns.Add(new GridTextColumn() { MappingName = "KeyframeDisplay", HeaderText = "Keyframe Summary", Width = 350, AllowEditing = false });
+                dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "FramesBetween", HeaderText = "FB", MinimumWidth = 8, Width = 45, AllowEditing = false, Format = "0.#####" });
+                dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "FrameCount", HeaderText = "TF", MinimumWidth = 8, Width = 45, AllowEditing = false, Format = "0.#####" });
+                dgv_Keyframes_sf.Columns.Add(new GridNumericColumn() { MappingName = "FarPlane", HeaderText = "FP", MinimumWidth = 8, Width = 45, AllowEditing = false, Format = "0.#####" });
+                dgv_Keyframes_sf.Columns.Add(new GridCheckBoxColumn() { MappingName = "KeyframeApproved", HeaderText = "Apr", MinimumWidth = 8, Width = 35, AllowEditing = false });
+                dgv_Keyframes_sf.Columns.Add(new GridTextColumn() { MappingName = "KeyframeNote", HeaderText = "Keyframe Note", Width = 400, AllowEditing = true });
 
-            //Column appearance
-            dgv_Keyframes_sf.Columns["KeyframeDisplay"].CellStyle.Font.Size = 12; //Make the font of the keyframe summary column larger
-            dgv_Keyframes_sf.Columns["KeyframeDisplay"].CellStyle.Font.Bold = true; //Make the keyframe summary column cells be bold
-            dgv_Keyframes_sf.Columns["KeyframeDisplay"].AllowResizing = true; //Allow the keyframe summary column to be resized
+                //Column appearance
+                dgv_Keyframes_sf.Columns["KeyframeDisplay"].CellStyle.Font.Size = 12; //Make the font of the keyframe summary column larger
+                dgv_Keyframes_sf.Columns["KeyframeDisplay"].CellStyle.Font.Bold = true; //Make the keyframe summary column cells be bold
+                dgv_Keyframes_sf.Columns["KeyframeDisplay"].AllowResizing = true; //Allow the keyframe summary column to be resized
 
-            //Frozen columns
-            dgv_Keyframes_sf.FrozenColumnCount = 3;
+                //Frozen columns
+                dgv_Keyframes_sf.FrozenColumnCount = 3;
 
-            //Various datagrid settings
-            dgv_Keyframes_sf.AllowEditing = true;
-            dgv_Keyframes_sf.Columns["KeyframeApproved"].AllowEditing = true;
-            dgv_Keyframes_sf.Columns["KeyframeNote"].AllowEditing = true;
-            dgv_Keyframes_sf.EditMode = EditMode.SingleClick;
-            dgv_Keyframes_sf.EditorSelectionBehavior = EditorSelectionBehavior.SelectAll;
+                //Various datagrid settings
+                dgv_Keyframes_sf.AllowEditing = true;
+                dgv_Keyframes_sf.Columns["KeyframeApproved"].AllowEditing = true;
+                dgv_Keyframes_sf.Columns["KeyframeNote"].AllowEditing = true;
+                dgv_Keyframes_sf.EditMode = EditMode.SingleClick;
+                dgv_Keyframes_sf.EditorSelectionBehavior = EditorSelectionBehavior.SelectAll;
 
-            //Datagrid Events
-            dgv_Keyframes_sf.CurrentCellEndEdit += sfDataGrid_CurrentCellEndEdit;
+                //Datagrid Events
+                dgv_Keyframes_sf.CurrentCellEndEdit += sfDataGrid_CurrentCellEndEdit;
 
+            }
+            catch (Exception ex)
+            {
+                LogException("BuildKeyframesDatagrid", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ BuildKeyframesDatagrid. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         void sfDataGrid_CurrentCellEndEdit(object sender, CurrentCellEndEditEventArgs e)
         {
-            if (e.DataColumn.ColumnIndex == 0)
+            try
             {
-                return;
+
+                if (e.DataColumn.ColumnIndex == 0)
+                {
+                    return;
+                }
+
+                var rowIndex = e.DataRow.RowIndex;
+                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
+
+                var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
+                var cellValue_KeyframeNote = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNote"); //Get the Note column value
+
+                //Update the database for this keyframe note edit
+                Data_Access_Methods.UpdateNoteByKeyframeID(cellValue_KeyframeNote.ToString(), m_SelectedProjectID, (int)cellValue_ID);
+
             }
-
-            var rowIndex = e.DataRow.RowIndex;
-            var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
-
-            var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
-            var cellValue_KeyframeNote = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNote"); //Get the Note column value
-
-            //Update the database for this keyframe note edit
-            Data_Access_Methods.UpdateNoteByKeyframeID(cellValue_KeyframeNote.ToString(), m_SelectedProjectID, (int)cellValue_ID);
+            catch (Exception ex)
+            {
+                LogException("sfDataGrid_CurrentCellEndEdit", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ sfDataGrid_CurrentCellEndEdit. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void PopulateKeyframesDatagrid(bool bolSetToFirstRow)
         {
-            List<KeyframeModel> lstKeyframes = new List<KeyframeModel>();
-            lstKeyframes = Data_Access_Methods.LoadKeyframes(m_SelectedProjectID, false);
-            if (lstKeyframes.Count > 0) //If we have records
+            try
             {
-                //If bolSetToFirstRow is false 
-                if (bolSetToFirstRow == false)
+                List<KeyframeModel> lstKeyframes = new List<KeyframeModel>();
+                lstKeyframes = Data_Access_Methods.LoadKeyframes(m_SelectedProjectID, false);
+                if (lstKeyframes.Count > 0) //If we have records
                 {
-                    //The idea here is to highlight (select) the same row that was selected before the re-bind
-                    m_CurrentRowIndex_Keyframes = (dgv_Keyframes_sf.SelectedIndex);
+                    //If bolSetToFirstRow is false 
+                    if (bolSetToFirstRow == false)
+                    {
+                        //The idea here is to highlight (select) the same row that was selected before the re-bind
+                        m_CurrentRowIndex_Keyframes = (dgv_Keyframes_sf.SelectedIndex);
 
-                    dgv_Keyframes_sf.DataSource = lstKeyframes; //Rebind the datagrid now
+                        dgv_Keyframes_sf.DataSource = lstKeyframes; //Rebind the datagrid now
 
-                    dgv_Keyframes_sf.ClearSelection();
-                    dgv_Keyframes_sf.SelectedIndex = m_CurrentRowIndex_Keyframes;
+                        dgv_Keyframes_sf.ClearSelection();
+                        dgv_Keyframes_sf.SelectedIndex = m_CurrentRowIndex_Keyframes;
+                    }
+                    else
+                    {
+                        dgv_Keyframes_sf.DataSource = lstKeyframes; //We rebind the datagrid
+                        dgv_Keyframes_sf.SelectedIndex = 0; //Select the top most row
+                    }
+                }
+                else //No records
+                {
+                    ClearKeyframeActionControls(); //Clear the Keyframe Move Actions UI control
+                    dgv_Keyframes_sf.DataSource = lstKeyframes; //We still rebind the datagrid
+                }
+                //Update the total frame count display
+                if (lstKeyframes.Count > 0) //If we have records
+                {
+                    mtbx_FrameCount.Value = lstKeyframes[0].FrameCount; //Display the total frame count
                 }
                 else
                 {
-                    dgv_Keyframes_sf.DataSource = lstKeyframes; //We rebind the datagrid
-                    dgv_Keyframes_sf.SelectedIndex = 0; //Select the top most row
+                    mtbx_FrameCount.Value = 0;
                 }
+
             }
-            else //No records
+            catch (Exception ex)
             {
-                ClearKeyframeActionControls(); //Clear the Keyframe Move Actions UI control
-                dgv_Keyframes_sf.DataSource = lstKeyframes; //We still rebind the datagrid
-            }
-            //Update the total frame count display
-            if (lstKeyframes.Count > 0) //If we have records
-            {
-                mtbx_FrameCount.Value = lstKeyframes[0].FrameCount; //Display the total frame count
-            }
-            else
-            {
-                mtbx_FrameCount.Value = 0;
+                LogException("PopulateKeyframesDatagrid", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ PopulateKeyframesDatagrid. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -724,43 +801,52 @@ namespace MB3D_Animation_Copilot
 
         private void PopulateKeframeActionsList(int intKeyframeID)
         {
-            List<KeyframeActionsModel> lstKeyframeActions = new List<KeyframeActionsModel>();
-            lstKeyframeActions = Data_Access_Methods.LoadKeyframeActionsList(intKeyframeID);
-
-            List<KeyframeActionsModel> lstKeyframeActions_Distinct = new List<KeyframeActionsModel>();
-            var DistinctItems = lstKeyframeActions.GroupBy(x => x.ActionName).Select(y => y.First());
-
-            //Replace the list's abreviated action names with the full action name
-            foreach (KeyframeActionsModel item in DistinctItems)
+            try
             {
-                item.ActionName = GetActionItemFullName(item.ActionName);
-                lstKeyframeActions_Distinct.Add(item);
-            }
 
-            //Try to databind the Keyframe Action dropdown even if no records - this has the effect of clearing the list
-            drp_KeyframeActions.DataSource = null; //Clear the datasource binding
-            drp_KeyframeActions.DataSource = lstKeyframeActions_Distinct; //Bind the distinct list
-            drp_KeyframeActions.DisplayMember = "ActionName";
-            drp_KeyframeActions.ValueMember = "ID";
+                List<KeyframeActionsModel> lstKeyframeActions = new List<KeyframeActionsModel>();
+                lstKeyframeActions = Data_Access_Methods.LoadKeyframeActionsList(intKeyframeID);
 
-            //Disable the Keyframe Move Actions groupbox if no action records (WF, LR, etc. for example)
-            if (lstKeyframeActions.Count > 0)
-            {
-                drp_KeyframeActions.SelectedItem = lstKeyframeActions[0];
+                List<KeyframeActionsModel> lstKeyframeActions_Distinct = new List<KeyframeActionsModel>();
+                var DistinctItems = lstKeyframeActions.GroupBy(x => x.ActionName).Select(y => y.First());
 
-                //If we are in Capture mode, don't change the grpKeyframeActions enabled state
-                if (!m_EnableCapture)
+                //Replace the list's abreviated action names with the full action name
+                foreach (KeyframeActionsModel item in DistinctItems)
                 {
-                    grpKeyframeActions.Enabled = true;
+                    item.ActionName = GetActionItemFullName(item.ActionName);
+                    lstKeyframeActions_Distinct.Add(item);
+                }
+
+                //Try to databind the Keyframe Action dropdown even if no records - this has the effect of clearing the list
+                drp_KeyframeActions.DataSource = null; //Clear the datasource binding
+                drp_KeyframeActions.DataSource = lstKeyframeActions_Distinct; //Bind the distinct list
+                drp_KeyframeActions.DisplayMember = "ActionName";
+                drp_KeyframeActions.ValueMember = "ID";
+
+                //Disable the Keyframe Move Actions groupbox if no action records (WF, LR, etc. for example)
+                if (lstKeyframeActions.Count > 0)
+                {
+                    drp_KeyframeActions.SelectedItem = lstKeyframeActions[0];
+
+                    //If we are in Capture mode, don't change the grpKeyframeActions enabled state
+                    if (!m_EnableCapture)
+                    {
+                        grpKeyframeActions.Enabled = true;
+                    }
+                }
+                else
+                {
+                    //If we are in Capture mode, don't change the grpKeyframeActions enabled state
+                    if (!m_EnableCapture)
+                    {
+                        grpKeyframeActions.Enabled = false;
+                    }
                 }
             }
-            else
+            catch (Exception ex)
             {
-                //If we are in Capture mode, don't change the grpKeyframeActions enabled state
-                if (!m_EnableCapture)
-                {
-                    grpKeyframeActions.Enabled = false;
-                }
+                LogException("PopulateKeframeActionsList", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ PopulateKeframeActionsList. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -956,46 +1042,53 @@ namespace MB3D_Animation_Copilot
 
         private void drp_KeyframeActions_SelectedIndexChanged(object sender, EventArgs e)
         {
-            KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
-            if (selectedAction != null) //If drp_KeyframeActions has a selectable row
+            try
             {
-                List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
-                lstKeyframeAction = Data_Access_Methods.LoadKeyframeAction(selectedAction.ID);
-                if (lstKeyframeAction.Count > 0) //If we have at least one Keyframe Action record
+                KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
+                if (selectedAction != null) //If drp_KeyframeActions has a selectable row
                 {
-                    //If the selected keyframe does NOT have the No-Move Action
-                    if (lstKeyframeAction[0].ActionName != cNMKn)
+                    List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
+                    lstKeyframeAction = Data_Access_Methods.LoadKeyframeAction(selectedAction.ID);
+                    if (lstKeyframeAction.Count > 0) //If we have at least one Keyframe Action record
                     {
-                        tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
-                        tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
-                        num_SendKeyQuantity.Value = lstKeyframeAction[0].SendKeyQuantity;
-                        num_SendKeyStepAngleCount.Value = lstKeyframeAction[0].StepAngleCount;
+                        //If the selected keyframe does NOT have the No-Move Action
+                        if (lstKeyframeAction[0].ActionName != cNMKn)
+                        {
+                            tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
+                            tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
+                            num_SendKeyQuantity.Value = lstKeyframeAction[0].SendKeyQuantity;
+                            num_SendKeyStepAngleCount.Value = lstKeyframeAction[0].StepAngleCount;
 
-                        //Enable the UI controls that may have been disabled by a previous No-Move Action selection
-                        num_SendKeyQuantity.Enabled = true;
-                        num_SendKeyStepAngleCount.Enabled = true;
-                        btn_KeyframeAction_Update.Enabled = true;
+                            //Enable the UI controls that may have been disabled by a previous No-Move Action selection
+                            num_SendKeyQuantity.Enabled = true;
+                            num_SendKeyStepAngleCount.Enabled = true;
+                            btn_KeyframeAction_Update.Enabled = true;
+                        }
+                        else
+                        {
+                            //If the selected keyframe has the No-Move Action
+
+                            tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
+                            tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
+                            num_SendKeyQuantity.Value = 0; //Override - there is no send quantity
+                            num_SendKeyStepAngleCount.Value = 0; //Override - there is no step/anle count
+
+                            //Disable the UI controls that are not applicable
+                            num_SendKeyQuantity.Enabled = false;
+                            num_SendKeyStepAngleCount.Enabled = false;
+                            btn_KeyframeAction_Update.Enabled = false;
+                        }
                     }
                     else
                     {
-                        //If the selected keyframe has the No-Move Action
-
-                        tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
-                        tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
-                        num_SendKeyQuantity.Value = 0; //Override - there is no send quantity
-                        num_SendKeyStepAngleCount.Value = 0; //Override - there is no step/anle count
-
-                        //Disable the UI controls that are not applicable
-                        num_SendKeyQuantity.Enabled = false;
-                        num_SendKeyStepAngleCount.Enabled = false;
-                        btn_KeyframeAction_Update.Enabled = false;
+                        ClearKeyframeActionControls();
                     }
-
                 }
-                else
-                {
-                    ClearKeyframeActionControls();
-                }
+            }
+            catch (Exception ex)
+            {
+                LogException("drp_KeyframeActions_SelectedIndexChanged", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ drp_KeyframeActions_SelectedIndexChanged. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -1012,125 +1105,223 @@ namespace MB3D_Animation_Copilot
 
         private void btn_KeyframeAction_Update_Click(object sender, EventArgs e)
         {
-            if (num_SendKeyQuantity.Value > 0 & num_SendKeyStepAngleCount.Value > 0)
+            try
             {
-                //Fetch the currently selected dropdown selection
-                KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
+                if (num_SendKeyQuantity.Value > 0 & num_SendKeyStepAngleCount.Value > 0)
+                {
+                    //Fetch the currently selected dropdown selection
+                    KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
 
-                KeyframeActionsModel itemKeyframeAction = new KeyframeActionsModel();
-                itemKeyframeAction.ActionName = tbx_KeyframeAction_Name.Text;
-                itemKeyframeAction.SendKeyChar = tbx_SendKeyChar.Text;
-                itemKeyframeAction.SendKeyQuantity = (int)num_SendKeyQuantity.Value;
-                itemKeyframeAction.StepAngleCount = (int)num_SendKeyStepAngleCount.Value;
+                    KeyframeActionsModel itemKeyframeAction = new KeyframeActionsModel();
+                    itemKeyframeAction.ActionName = tbx_KeyframeAction_Name.Text;
+                    itemKeyframeAction.SendKeyChar = tbx_SendKeyChar.Text;
+                    itemKeyframeAction.SendKeyQuantity = (int)num_SendKeyQuantity.Value;
+                    itemKeyframeAction.StepAngleCount = (int)num_SendKeyStepAngleCount.Value;
 
-                Data_Access_Methods.UpdateKeyframeAction(selectedAction.ID, itemKeyframeAction);
+                    Data_Access_Methods.UpdateKeyframeAction(selectedAction.ID, itemKeyframeAction);
 
-                //Repopulate the Keyframe Move Actions list
+                    //Repopulate the Keyframe Move Actions list
+                    var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
+                    var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
+
+                    var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
+                    var intKeyframeID = (int)cellValue_ID;
+
+                    //Repopulate the Actions dropdown list
+                    PopulateKeframeActionsList(intKeyframeID);
+
+                    //Reconstruct the Keyframe Summary string and update the keyframe record in the database
+
+                    //Fetch a list of all Keyframe Move Actions of the keyframe selected in the datagridview
+                    List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
+                    lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList((int)cellValue_ID);
+
+                    List<KeyframeActionsModel> lstKeyframeActions_Distinct = new List<KeyframeActionsModel>();
+                    var DistinctItems = lstKeyframeAction.GroupBy(x => x.ActionName).Select(y => y.First());
+
+                    //Build the Keyframe display string
+                    StringBuilder sb = new StringBuilder();
+                    foreach (KeyframeActionsModel itemAction in DistinctItems)
+                    {   //Loop over the lstKeyframeAction
+                        sb.Append(itemAction.ActionName);
+                        sb.Append(itemAction.SendKeyQuantity.ToString());
+
+                        //Calculate the Step/Angle count for the Keyframe display ONLY
+                        int intStepAngleResult = (itemAction.SendKeyQuantity * itemAction.StepAngleCount);
+                        sb.Append(string.Concat(" (", intStepAngleResult.ToString(), ") "));
+                    }
+
+                    Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
+                    PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
+
+                    //Set these number inputs to zero to protect the user from indvertently changing the action
+                    num_SendKeyQuantity.Value = 0;
+                    num_SendKeyStepAngleCount.Value = 0;
+
+                    LoadFooterMessage("Keyframe Move Action updated. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
+                }
+                else
+                {
+                    MessageBoxAdv.Show("The Step Quantity value must be greater than zero.", "Invalid Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException("btn_KeyframeAction_Update_Click", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ btn_KeyframeAction_Update_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btn_KeyframeAction_Delete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Fetch the currently selected datagrid row
                 var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
                 var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
 
                 var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
                 var intKeyframeID = (int)cellValue_ID;
 
-                //Repopulate the Actions dropdown list
-                PopulateKeframeActionsList(intKeyframeID);
-
-                //Reconstruct the Keyframe Summary string and update the keyframe record in the database
-
-                //Fetch a list of all Keyframe Move Actions of the keyframe selected in the datagridview
-                List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
-                lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList((int)cellValue_ID);
-
-                List<KeyframeActionsModel> lstKeyframeActions_Distinct = new List<KeyframeActionsModel>();
-                var DistinctItems = lstKeyframeAction.GroupBy(x => x.ActionName).Select(y => y.First());
-
-                //Build the Keyframe display string
-                StringBuilder sb = new StringBuilder();
-                foreach (KeyframeActionsModel itemAction in DistinctItems)
-                {   //Loop over the lstKeyframeAction
-                    sb.Append(itemAction.ActionName);
-                    sb.Append(itemAction.SendKeyQuantity.ToString());
-
-                    //Calculate the Step/Angle count for the Keyframe display ONLY
-                    int intStepAngleResult = (itemAction.SendKeyQuantity * itemAction.StepAngleCount);
-                    sb.Append(string.Concat(" (", intStepAngleResult.ToString(), ") "));
+                if (Data_Access_Methods.GetKeyframeMoveActionsQuantity(m_SelectedProjectID, intKeyframeID) <= 1)
+                {
+                    MessageBoxAdv.Show(string.Concat("You can't delete the only Move Action of a keyframe."), "No Can Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
                 }
 
-                Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
-                PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
+                KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
 
-                //Set these number inputs to zero to protect the user from indvertently changing the action
-                num_SendKeyQuantity.Value = 0;
-                num_SendKeyStepAngleCount.Value = 0;
+                DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Keyframe Move Action '", selectedAction.ActionName, "'? This cannot be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
 
-                LoadFooterMessage("Keyframe Move Action updated. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
+                    Data_Access_Methods.DeleteKeyframeAction(selectedAction.ID);
+
+                    //Repopulate the Keyframe Move Actions list
+                    PopulateKeframeActionsList(intKeyframeID); //intKeyframeID was determined at head of this procedure
+
+                    //Reconstruct the Keyframe Display string and update the keyframe record in the database
+
+                    //Fetch a list of all Keyframe Move Actions of the keyframe selected in the datagridview
+                    List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
+                    lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList(intKeyframeID);
+
+                    //Build the Keyframe display string
+                    StringBuilder sb = new StringBuilder();
+                    foreach (KeyframeActionsModel itemAction in lstKeyframeAction)
+                    {   //Loop over the lstKeyframeAction
+                        sb.Append(itemAction.ActionName);
+                        sb.Append(itemAction.SendKeyQuantity.ToString());
+                        sb.Append(string.Concat(" {", itemAction.StepAngleCount.ToString(), "} "));
+                    }
+
+                    Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
+                    PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
+
+                    LoadFooterMessage("Keyframe Move Action deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBoxAdv.Show("The Step Quantity value must be greater than zero.", "Invalid Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LogException("btn_KeyframeAction_Delete_Click", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ btn_KeyframeAction_Delete_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void btn_KeyframeAction_Delete_Click(object sender, EventArgs e)
+        private void btn_InsertKeyframe_Click(object sender, EventArgs e)
         {
-            //Fetch the currently selected datagrid row
-            var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
-            var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
+            var NL = Environment.NewLine;
 
-            var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
-            var intKeyframeID = (int)cellValue_ID;
-
-            if (Data_Access_Methods.GetKeyframeMoveActionsQuantity(m_SelectedProjectID, intKeyframeID) <= 1)
+            try
             {
-                MessageBoxAdv.Show(string.Concat("You can't delete the only Move Action of a keyframe."), "No Can Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
-            }
+                //Fetch the currently selected datagrid row
+                var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
+                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
 
-            KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
+                var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
+                var cellValue_KFNum = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNum"); //Get the Keyframe Number column value
+                var cellValue_Approved = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeApproved"); //Get the KeyframeAproved column checkbox value
 
-            DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Keyframe Move Action '", selectedAction.ActionName, "'? This cannot be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-            if (result == DialogResult.Yes)
-            {
-
-                Data_Access_Methods.DeleteKeyframeAction(selectedAction.ID);
-
-                //Repopulate the Keyframe Move Actions list
-                PopulateKeframeActionsList(intKeyframeID); //intKeyframeID was determined at head of this procedure
-
-                //Reconstruct the Keyframe Display string and update the keyframe record in the database
-
-                //Fetch a list of all Keyframe Move Actions of the keyframe selected in the datagridview
-                List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
-                lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList(intKeyframeID);
-
-                //Build the Keyframe display string
-                StringBuilder sb = new StringBuilder();
-                foreach (KeyframeActionsModel itemAction in lstKeyframeAction)
-                {   //Loop over the lstKeyframeAction
-                    sb.Append(itemAction.ActionName);
-                    sb.Append(itemAction.SendKeyQuantity.ToString());
-                    sb.Append(string.Concat(" {", itemAction.StepAngleCount.ToString(), "} "));
+                if (recordIndex < 0) //Note: No row relected is a -1 value. A zero value is the first (top most) row selected
+                {
+                    MessageBoxAdv.Show(string.Concat("Please select the keyframe just before where you want a new keyframe inserted."), "Select Keyframe", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return; //Bail
                 }
 
-                Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
-                PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
+                DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to insert a new Keyframe after keyframe #", cellValue_KFNum.ToString(), "?", NL, "The new keyframe will be a 'No-Move Keyframe' to which you can assign moves.", NL, NL, "Note: This does ***NOT*** insert a new keyframe at the Mandelbulb3D application."), "Confirm Insert", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    //Gather data
+                    int intFramesBetween = (int)mtbx_FramesBetween.Value;
+                    int StartKeyframeNum = (int)cellValue_KFNum; //This will be the starting keyframe number for bumping up the keyframe numbers
+                    int NewKeyframeNum = (int)cellValue_KFNum + 1; //Calculate the new keyframe number
 
-                LoadFooterMessage("Keyframe Move Action deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
+                    //Reclaculate the keyframe numbers in the range of the target keyframe and the last keyframe record
+                    Data_Access_Methods.RecalculateKeyframeNumberingRange(m_SelectedProjectID, StartKeyframeNum);
+
+                    //Insert a record into the Keyframes table
+                    KeyframeModel itemKeyframe = new KeyframeModel();
+                    itemKeyframe.KeyframeType = cKeyStackLineChar_Manual; //Make it a "Manual" move
+                    itemKeyframe.KeyframeNum = NewKeyframeNum;
+                    itemKeyframe.KeyframeDisplay = cNMKfn; //The "No-Move Keyframe" display summary
+                    itemKeyframe.FramesBetween = intFramesBetween;
+                    itemKeyframe.FrameCount = 0; //This value will be recalculated by calling RecalculateFrameCountAllRecords() below
+                    itemKeyframe.FarPlane = (int)mtbx_FarPlane.Value;
+                    itemKeyframe.KeyframeNote = "Inserted Keyframe";
+
+                    //Insert into the DB which returns the ID of the newly inserted record
+                    int intNewKeyframeID = Data_Access_Methods.InsertKeyframeData(m_SelectedProjectID, itemKeyframe);
+
+                    //Update the new keyframe with No-Move action set
+                    KeyframeActionsModel KeyframeAction = new KeyframeActionsModel();
+                    KeyframeAction.ActionName = cNMKn;
+                    KeyframeAction.StepAngleCount = 0;
+                    KeyframeAction.SendKeyChar = GetKeyCodeByActionName(cNMKk);
+                    KeyframeAction.SendKeyQuantity = 0;
+                    KeyframeAction.ID = 0; //We don't provide this value here
+
+                    Data_Access_Methods.InsertKeyframeActionData(intNewKeyframeID, KeyframeAction);
+
+                    //Recalculate the Frame Count for each keyframe record of the Project ID
+                    Data_Access_Methods.RecalculateFrameCountAllRecords(m_SelectedProjectID);
+
+                    //Update and display the next Keyframe number
+                    m_NextKeyframeNumber = Data_Access_Methods.GetProjectNextKeyframeNumber(m_SelectedProjectID);
+                    mtbx_NextKeyframeNumber.Value = m_NextKeyframeNumber;
+
+                    CalculateAnimationTime(); //Recalc animation times as mm:ss
+
+                    PopulateKeyframesDatagrid(true); //Repopulate the Keyframe datagrid - set selected row to first
+
+                    //Select the top (latest keyframe number) keyframe row
+                    dgv_Keyframes_sf.SelectedIndex = 0;
+
+                    MessageBoxAdv.Show(string.Concat("Keyframe #'", NewKeyframeNum.ToString(), "' has been added as a No-Move keyframe?", NL, "Keyframe numbers have been renumbered to reflect the inserted keyframe."), "Insert Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    LoadFooterMessage("Keyframe inserted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, true);
+                }
+            }
+            catch (Exception ex)
+            {
+                LogException("btn_InsertKeyframe_Click", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ btn_InsertKeyframe_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btn_DeleteKeyframe_Click(object sender, EventArgs e)
         {
-            //Fetch the currently selected datagrid row
-            var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
-            var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
-
-            var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
-            var cellValue_KFNum = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNum"); //Get the Keyframe Number column value
-            var cellValue_Approved = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeApproved"); //Get the KeyframeAproved column checkbox value
+            var NL = Environment.NewLine;
 
             try
             {
+                //Fetch the currently selected datagrid row
+                var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
+                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
+
+                var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
+                var cellValue_KFNum = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNum"); //Get the Keyframe Number column value
+                var cellValue_Approved = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeApproved"); //Get the KeyframeAproved column checkbox value
+
                 if (Convert.ToBoolean(cellValue_Approved))
                 {
                     DialogResult result1 = MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' is Approved. Are you sure you want to delete the keyframe?"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -1169,12 +1360,9 @@ namespace MB3D_Animation_Copilot
                     //Select the top (latest keyframe number) keyframe row
                     dgv_Keyframes_sf.SelectedIndex = 0;
 
-                    if (cbx_MngKFMessages.Checked)
-                    {
-                        MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' and its Move Actions were deleted? Keyframe numbers have been renumbered to reflect the deleted keyframe."), "Please Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    }
+                    MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' and its Move Actions were deleted?", NL, "Keyframe numbers have been renumbered to reflect the deleted keyframe."), "Please Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                    LoadFooterMessage("Keyframe deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true);
+                    LoadFooterMessage("Keyframe deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
                 }
             }
             catch (Exception ex)
@@ -1280,7 +1468,7 @@ namespace MB3D_Animation_Copilot
 
                     PopulateKeyframesDatagrid(true); //Repopulate the Keyframe datagrid - set selected row to first
 
-                    LoadFooterMessage("Keyframes deleted. Adjust your Mandelbulb3D keyframes according.", true, true);
+                    LoadFooterMessage("Keyframes deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
                 }
             }
             catch (Exception ex)
@@ -1381,7 +1569,7 @@ namespace MB3D_Animation_Copilot
                     lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList_ForKeyframeReplicate(m_SelectedProjectID, idxKeyframeNumber);
                     if (lstKeyframeAction.Count > 0)
                     {
-                        LoadFooterMessage(string.Concat("Replicating keyframe #", idxKeyframeNumber.ToString()), true, false);
+                        LoadFooterMessage(string.Concat("Replicating keyframe #", idxKeyframeNumber.ToString()), true, false, false);
 
                         ClearMoveList(); //Make sure any moves are cleared out.
 
@@ -1462,16 +1650,16 @@ namespace MB3D_Animation_Copilot
                 {
                     if (intReplicatedKeyframeQty == 1)
                     {
-                        LoadFooterMessage(String.Concat("Keyframe replication completed. 1 new keyframe was created."), false, true);
+                        LoadFooterMessage(String.Concat("Keyframe replication completed. 1 new keyframe was created."), false, true, false); ;
                     }
                     else
                     {
-                        LoadFooterMessage(String.Concat("Keyframe replication completed. ", intReplicatedKeyframeQty.ToString(), " new keyframes were created."), false, true);
+                        LoadFooterMessage(String.Concat("Keyframe replication completed. ", intReplicatedKeyframeQty.ToString(), " new keyframes were created."), false, true, false);
                     }
                 }
                 else
                 {
-                    LoadFooterMessage("No keyframes were found to replicate.", false, false);
+                    LoadFooterMessage("No keyframes were found to replicate.", false, false, false);
                 }
             }
             catch (Exception ex)
@@ -2133,10 +2321,8 @@ namespace MB3D_Animation_Copilot
 
                     file.Close();
 
-                    LoadFooterMessage(string.Concat("File saved to ", saveFileDialog1.FileName.ToString()), false, false);
-
+                    LoadFooterMessage(string.Concat("File saved to ", saveFileDialog1.FileName.ToString()), false, false, false);
                 }
-
             }
             catch (Exception ex)
             {
@@ -2283,13 +2469,13 @@ namespace MB3D_Animation_Copilot
             //Bail if a sequence is not selected
             if (drp_UseSequenceList.SelectedIndex < 0)
             {
-                LoadFooterMessage("Select a Move Sequence.", true, false);
+                LoadFooterMessage("Select a Move Sequence.", true, false, false);
                 return; //Bail
             }
 
             if (m_HaveMovesToProcess)
             {
-                LoadFooterMessage("Can't do that - you have moves pending.", false, true);
+                LoadFooterMessage("Can't do that - you have moves pending.", false, true, true);
                 return; //Bail
             }
 
@@ -2299,14 +2485,14 @@ namespace MB3D_Animation_Copilot
             if (SlidingWalkingCount <= 0)
             {
                 mtbx_SlidingWalkingCount.Select();
-                LoadFooterMessage("Check that the Sliding/Walking step count is greater than 0", true, true);
+                LoadFooterMessage("Check that the Sliding/Walking step count is greater than 0", true, true, false);
                 return; //Bail
             }
 
             if (LookingRollingAngle <= 0)
             {
                 mtbx_LookingRollingAngle.Select();
-                LoadFooterMessage("Check that the Looking/Rolling step angle is greater than 0", true, true);
+                LoadFooterMessage("Check that the Looking/Rolling step angle is greater than 0", true, true, false);
                 return; //Bail
             }
 
@@ -2915,7 +3101,7 @@ namespace MB3D_Animation_Copilot
                     SaveAnimationProject(false, false);
 
                     //Footer Message
-                    LoadFooterMessage(string.Concat("Reminder: Save your Mandelbulb3D project!"), true, false);
+                    LoadFooterMessage(string.Concat("Reminder: Save your Mandelbulb3D project!"), true, false, true);
 
                     m_AutoSaveCount = 0;
                 }
@@ -3043,7 +3229,7 @@ namespace MB3D_Animation_Copilot
 
             if (m_HaveMovesToProcess)
             {
-                LoadFooterMessage("Can't do that - you have moves pending.", false, true);
+                LoadFooterMessage("Can't do that - you have moves pending.", false, true, true);
                 return;
             }
 
@@ -3059,7 +3245,7 @@ namespace MB3D_Animation_Copilot
                 {
                     var NL = Environment.NewLine;
 
-                    LoadFooterMessage("Repeating the moves of the last keyframe.", true, false);
+                    LoadFooterMessage("Repeating the moves of the last keyframe.", true, false, false);
 
                     ClearMoveList(); //Make sure any moves are cleared out.
 
@@ -3123,7 +3309,7 @@ namespace MB3D_Animation_Copilot
 
                     SetBusyIndicator(false); //Hide the Busy Indicator
 
-                    LoadFooterMessage(string.Empty, false, false);
+                    LoadFooterMessage(string.Empty, false, false, false);
                 }
             }
             catch (Exception ex)
@@ -3169,6 +3355,7 @@ namespace MB3D_Animation_Copilot
         {
             //Reset the Restore Point
             m_RestorePointDic.Clear();
+            lbl_RestorePointAvail.Visible = false;
             btn_SetRestorePoint.ForeColor = Color.White;
         }
 
@@ -3191,50 +3378,58 @@ namespace MB3D_Animation_Copilot
 
         private void SetRestorePoint()
         {
-
-            //Check if the project have keyframes
-            if (Data_Access_Methods.GetProjectKeyframeQuantity(m_SelectedProjectID) <= 0)
+            try
             {
-                MessageBoxAdv.Show("This project does not have any keyframes yet - there is nothing to do.", "Nothing To Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                //Check if the project have keyframes
+                if (Data_Access_Methods.GetProjectKeyframeQuantity(m_SelectedProjectID) <= 0)
+                {
+                    MessageBoxAdv.Show("This project does not have any keyframes yet - there is nothing to do.", "Nothing To Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                //Fetch the currently selected datagrid row
+                var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
+                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
+
+                //Check if keyframes has been selected
+                if (recordIndex < 0)
+                {
+                    MessageBoxAdv.Show("Please select the keyframe that will be a restore point.", "Nothing To Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    return;
+                }
+
+                SaveAnimationProject(false, false); //Save to the project's database first
+
+                m_RestorePointDic.Clear();
+
+                //Determine the selected keyframe positions
+                var SelectedDatagridKeyframeNumber = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNum"); //Get the keyframe number column value
+                m_RestorePointDic.Add("NextKeyframe", (int)SelectedDatagridKeyframeNumber + 1); //Record the next keyframe value
+                m_RestorePointDic.Add("LastKeyFrameNumber", (int)SelectedDatagridKeyframeNumber); //Record the selected keyframe number
+
+                //Determine the frame count at the selected keyframe position
+                var intSelectedDatagridTotalFrameCount = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "FrameCount"); //Get the frame count column value            
+                m_RestorePointDic.Add("TotalFrameCount", (int)intSelectedDatagridTotalFrameCount); //Record the current Total Frame Count
+
+                //Obtain values for message display
+                int intRPKeyframeNumber = m_RestorePointDic["NextKeyframe"]; //The next keyframe value
+                int intRPFrameCount = m_RestorePointDic["TotalFrameCount"]; //The Total Frame Count
+                int intRPLastKeyframeNumber = m_RestorePointDic["LastKeyFrameNumber"]; //The selected keyframe value
+
+                lbl_RestorePointAvail.Visible = true;
+                btn_SetRestorePoint.ForeColor = Color.Green;
+
+                //Footer message
+                LoadFooterMessage(string.Concat("Restore Point:", "Next KeyFrame # = ", intRPKeyframeNumber.ToString(), ", Total Frame Count = ", intRPFrameCount.ToString(), ", Last Keyframe = ", intRPLastKeyframeNumber.ToString()), false, false, false);
+
+                //Return focus to the selected Keyframe Stack datagrid row
+                dgv_Keyframes_sf.SelectedIndex = recordIndex;
             }
-
-            //Fetch the currently selected datagrid row
-            var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
-            var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
-
-            //Check if keyframes has been selected
-            if (recordIndex < 0)
+            catch (Exception ex)
             {
-                MessageBoxAdv.Show("Please select the keyframe that will be a restore point.", "Nothing To Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                return;
+                LogException("SetRestorePoint", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ SetRestorePoint. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-
-            SaveAnimationProject(false, false); //Save to the project's database first
-
-            m_RestorePointDic.Clear();
-
-            //Determine the selected keyframe positions
-            var SelectedDatagridKeyframeNumber = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "KeyframeNum"); //Get the keyframe number column value
-            m_RestorePointDic.Add("NextKeyframe", (int)SelectedDatagridKeyframeNumber + 1); //Record the next keyframe value
-            m_RestorePointDic.Add("LastKeyFrameNumber", (int)SelectedDatagridKeyframeNumber); //Record the selected keyframe number
-
-            //Determine the frame count at the selected keyframe position
-            var intSelectedDatagridTotalFrameCount = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "FrameCount"); //Get the frame count column value            
-            m_RestorePointDic.Add("TotalFrameCount", (int)intSelectedDatagridTotalFrameCount); //Record the current Total Frame Count
-
-            //Obtain values for message display
-            int intRPKeyframeNumber = m_RestorePointDic["NextKeyframe"]; //The next keyframe value
-            int intRPFrameCount = m_RestorePointDic["TotalFrameCount"]; //The Total Frame Count
-            int intRPLastKeyframeNumber = m_RestorePointDic["LastKeyFrameNumber"]; //The selected keyframe value
-
-            btn_SetRestorePoint.ForeColor = Color.Green;
-
-            //Footer message
-            LoadFooterMessage(string.Concat("Restore Point:", "Next KeyFrame # = ", intRPKeyframeNumber.ToString(), ", Total Frame Count = ", intRPFrameCount.ToString(), ", Last Keyframe = ", intRPLastKeyframeNumber.ToString()), false, false);
-
-            //Return focus to the selected Keyframe Stack datagrid row
-            dgv_Keyframes_sf.SelectedIndex = recordIndex;
         }
 
         private void btn_PerformRestorePoint_Click(object sender, EventArgs e)
@@ -3246,48 +3441,58 @@ namespace MB3D_Animation_Copilot
         {
             var NL = Environment.NewLine;
 
-            if (m_RestorePointDic.Count > 0)
+            try
             {
-                int intRPNextKeyframeNumber = m_RestorePointDic["NextKeyframe"]; //The next keyframe value
-                int intRPFrameCount = m_RestorePointDic["TotalFrameCount"]; //The Total Frame Count
-                int intRPLastKeyframeNumber = m_RestorePointDic["LastKeyFrameNumber"]; //The selected keyframe value
-
-                DialogResult result = MessageBoxAdv.Show(string.Concat("This will reset your keyframe work to the last Set Restore Point as described below.", NL, "The last Set Restore Point is as follows:", NL, NL, "Next KeyFrame # = ", intRPNextKeyframeNumber.ToString(), NL, "Total Frame Count = ", intRPFrameCount.ToString(), NL, "Last Keyframe = ", intRPLastKeyframeNumber.ToString(), NL, NL, "Do you want to proceed?"), "Confirm Restore Point", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
-                if (result == DialogResult.Yes)
+                if (m_RestorePointDic.Count > 0)
                 {
-                    //Restore the next keyframe value
+                    int intRPNextKeyframeNumber = m_RestorePointDic["NextKeyframe"]; //The next keyframe value
+                    int intRPFrameCount = m_RestorePointDic["TotalFrameCount"]; //The Total Frame Count
+                    int intRPLastKeyframeNumber = m_RestorePointDic["LastKeyFrameNumber"]; //The selected keyframe value
 
-                    int intNextKeyframeNumber = intRPLastKeyframeNumber + 1;
-                    mtbx_NextKeyframeNumber.Value = intRPNextKeyframeNumber;
-                    m_NextKeyframeNumber = intRPLastKeyframeNumber;
-
-                    //Restore the current Total Frame Count
-                    mtbx_FrameCount.Value = intRPFrameCount;
-
-                    //Delete the keyframes to be discarded
-                    Data_Access_Methods.DeleteRangeOfKeyframeAndKeyframeActions(m_SelectedProjectID, intNextKeyframeNumber, -1);
-
-                    //Restore the keystack datagrid up to the keyframe of the restore
-                    PopulateKeyframesDatagrid(true); //bolSetToFirstRow=true
-
-                    ClearMoveList();
-
-                    MessageBoxAdv.Show(string.Concat("The Restore Point has completed. Be sure to delete all of the keyframes of the Mandelbulb3D animation after keyframe number ", intRPLastKeyframeNumber.ToString(), "."), "Restore Point Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                    //Footer message
-                    LoadFooterMessage(string.Concat(string.Concat("Restore Point completed. Be sure to delete Mandelbulb3D keyframes after keyframe #", intRPLastKeyframeNumber.ToString(), ".")), true, true);
-
-                    DialogResult result2 = MessageBoxAdv.Show("Do you want to keep the Restore Point that was last set?", "Keep Restore Point?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                    if (result2 == DialogResult.No)
+                    DialogResult result = MessageBoxAdv.Show(string.Concat("This will reset your keyframes to the last Set Restore Point as described below.", NL, "The last Set Restore Point is as follows:", NL, NL, "Next KeyFrame # = ", intRPNextKeyframeNumber.ToString(), NL, "Total Frame Count = ", intRPFrameCount.ToString(), NL, "Last Keyframe = ", intRPLastKeyframeNumber.ToString(), NL, NL, "Do you want to proceed?"), "Confirm Restore Point", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
                     {
-                        m_RestorePointDic.Clear(); //Clear the previous Restore Point dictionary
-                        btn_SetRestorePoint.ForeColor = Color.White;
+                        //Restore the next keyframe value
+
+                        int intNextKeyframeNumber = intRPLastKeyframeNumber + 1;
+                        mtbx_NextKeyframeNumber.Value = intRPNextKeyframeNumber;
+                        m_NextKeyframeNumber = intRPLastKeyframeNumber;
+
+                        //Restore the current Total Frame Count
+                        mtbx_FrameCount.Value = intRPFrameCount;
+
+                        //Delete the keyframes to be discarded
+                        Data_Access_Methods.DeleteRangeOfKeyframeAndKeyframeActions(m_SelectedProjectID, intNextKeyframeNumber, -1);
+
+                        //Restore the keystack datagrid up to the keyframe of the restore
+                        PopulateKeyframesDatagrid(true); //bolSetToFirstRow=true
+
+                        //Clear the move list
+                        ClearMoveList();
+
+                        MessageBoxAdv.Show(string.Concat("The Restore Point has completed. Be sure to delete all of the keyframes of the Mandelbulb3D animation after keyframe number ", intRPLastKeyframeNumber.ToString(), "."), "Restore Point Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        //Footer message
+                        LoadFooterMessage(string.Concat(string.Concat("Be sure to delete Mandelbulb3D keyframes after keyframe #", intRPLastKeyframeNumber.ToString(), ".")), true, true, true);
+
+                        DialogResult result2 = MessageBoxAdv.Show("Do you want to keep the Restore Point that was last set?", "Keep Restore Point?", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                        if (result2 == DialogResult.No)
+                        {
+                            m_RestorePointDic.Clear(); //Clear the previous Restore Point dictionary
+                            lbl_RestorePointAvail.Visible = false;
+                            btn_SetRestorePoint.ForeColor = Color.White;
+                        }
                     }
                 }
+                else
+                {
+                    MessageBoxAdv.Show(string.Concat("There is no Restore Point set."), "No Restore Point", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
             }
-            else
+            catch (Exception ex)
             {
-                MessageBoxAdv.Show(string.Concat("There is no Restore Point set."), "No Restore Point", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                LogException("SetRestorePoint", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ SetRestorePoint. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -3405,7 +3610,7 @@ namespace MB3D_Animation_Copilot
                 }
                 else
                 {
-                    LoadFooterMessage("There are no moves for a new keyframe.", false, true);
+                    LoadFooterMessage("There are no moves for a new keyframe.", false, true, true);
                 }
                 return; //Halt code execution here
             }
@@ -3429,7 +3634,7 @@ namespace MB3D_Animation_Copilot
                 }
                 else
                 {
-                    LoadFooterMessage("Inserting no-move keyframes is not allowed with other moves.", false, true);
+                    LoadFooterMessage("Inserting no-move keyframes is not allowed with other moves.", false, true, true);
                 }
                 return; //Halt code execution here
             }
