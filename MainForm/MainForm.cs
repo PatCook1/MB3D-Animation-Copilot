@@ -173,21 +173,21 @@ namespace MB3D_Animation_Copilot
         private static readonly IReadOnlyList<string> cSlideRLGroup = Array.AsReadOnly(new string[] { "SRL", "SR", "SL" });
         private static readonly IReadOnlyList<string> cRollGroup = Array.AsReadOnly(new string[] { "ROLL", "RCC", "RCW" });
 
-        //Movement Names
+        //Movement (Action) Names
         public const string cWFn = "WF", cWRn = "WR",
                             cLUn = "LU", cLDn = "LD", cLLn = "LL", cLRn = "LR",
                             cSUn = "SU", cSDn = "SD", cSLn = "SL", cSRn = "SR",
                             cRCCn = "RCC", cRCWn = "RCW",
                             cNMKn = "IKF";
 
-        //Movement Names - Full Name
+        //Movement (Action) Names - Full Name
         public const string cWFfn = "Walk Forward", cWRfn = "Walk Reverse",
                             cLUfn = "Look Up", cLDfn = "Look Down", cLLfn = "Look Left", cLRfn = "Look Right",
                             cSUfn = "Slide Up", cSDfn = "Slide Down", cSLfn = "Slide Left", cSRfn = "Slide Right",
                             cRCCfn = "Roll Counter Clockwise", cRCWfn = "Roll Clockwise",
                             cNMKfn = "No-Move Keyframe";
 
-        //Movement KeyCodes - incomomg key codes from key events
+        //Movement (Action) KeyCodes - incomomg key codes from key events
         //Note: Incoming keycodes do not have a case attribute - they always appear as uppercase
         public const string cWFk = "W", cWRk = "S",
                             cLUk = "I", cLDk = "K", cLLk = "J", cLRk = "L",
@@ -767,6 +767,9 @@ namespace MB3D_Animation_Copilot
                     mtbx_FrameCount.Value = 0;
                 }
 
+                //After the keyframes datagrid is populated, populate the keyframe actions dropdown (even if no keyframe records)
+                //Note: GetSelectedKeyframeID() will return -1 if there are no keyframe records
+                PopulateKeframeActionsList(GetSelectedKeyframeID());
             }
             catch (Exception ex)
             {
@@ -781,11 +784,12 @@ namespace MB3D_Animation_Copilot
 
             try
             {
-                //Fetch the currently selected datagrid row
-                var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
-                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
+                //Note: Can't use GetSelectedKeyframeID() in this case because we need the recordIndex below
 
+                int rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
+                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
                 var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
+
                 PopulateKeframeActionsList((int)cellValue_ID);
 
                 //Update the StartKeyframeRange and num_EndDeleteKeyframe numeric entries
@@ -799,49 +803,68 @@ namespace MB3D_Animation_Copilot
             }
         }
 
+        private int GetSelectedKeyframeID()
+        {
+            //Return the ID of the selected Keyframe of the datagrid
+            var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
+            var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
+            var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
+            
+            if (cellValue_ID != null)
+            {
+                return (int)cellValue_ID; //If we have a non-zero keyframe ID
+            }
+            else
+            {
+                return -1; //Else return -1
+            }
+        }
+
         private void PopulateKeframeActionsList(int intKeyframeID)
         {
             try
             {
-
+                //Instaniate an object to hold list of actions
                 List<KeyframeActionsModel> lstKeyframeActions = new List<KeyframeActionsModel>();
-                lstKeyframeActions = Data_Access_Methods.LoadKeyframeActionsList(intKeyframeID);
 
-                List<KeyframeActionsModel> lstKeyframeActions_Distinct = new List<KeyframeActionsModel>();
-                var DistinctItems = lstKeyframeActions.GroupBy(x => x.ActionName).Select(y => y.First());
+                lstKeyframeActions.Clear(); //Clear the from LoadKeyframeActionsList() above
 
-                //Replace the list's abreviated action names with the full action name
-                foreach (KeyframeActionsModel item in DistinctItems)
-                {
-                    item.ActionName = GetActionItemFullName(item.ActionName);
-                    lstKeyframeActions_Distinct.Add(item);
-                }
+                //Build a list of ALL keyframe move actions.
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cNMKn, ActionName_Display = cNMKfn, SendKeyChar = cNMKk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cWFn, ActionName_Display = cWFfn, SendKeyChar = cWFk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cWRn, ActionName_Display = cWRfn, SendKeyChar = cWRk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cLUn, ActionName_Display = cLUfn, SendKeyChar = cLUk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cLDn, ActionName_Display = cLDfn, SendKeyChar = cLDk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cLLn, ActionName_Display = cLLfn, SendKeyChar = cLLk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cLRn, ActionName_Display = cLRfn, SendKeyChar = cLRk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cSUn, ActionName_Display = cSUfn, SendKeyChar = cSUk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cSDn, ActionName_Display = cSDfn, SendKeyChar = cSDk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cSLn, ActionName_Display = cSLfn, SendKeyChar = cSLk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cSRn, ActionName_Display = cSRfn, SendKeyChar = cSRk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cRCCn, ActionName_Display = cRCCfn, SendKeyChar = cRCCk_, SendKeyQuantity = 0, StepAngleCount = 0 });
+                lstKeyframeActions.Add(new KeyframeActionsModel() { ID = 0, ActionName = cRCWn, ActionName_Display = cRCWfn, SendKeyChar = cRCWk_, SendKeyQuantity = 0, StepAngleCount = 0 });
 
                 //Try to databind the Keyframe Action dropdown even if no records - this has the effect of clearing the list
-                drp_KeyframeActions.DataSource = null; //Clear the datasource binding
-                drp_KeyframeActions.DataSource = lstKeyframeActions_Distinct; //Bind the distinct list
-                drp_KeyframeActions.DisplayMember = "ActionName";
-                drp_KeyframeActions.ValueMember = "ID";
+                drp_KeyframeActions.DataSource = null; //Be sure no residual binding
+                drp_KeyframeActions.DataSource = lstKeyframeActions; //Bind the list
+                drp_KeyframeActions.DisplayMember = "ActionName_Display";
+                drp_KeyframeActions.ValueMember = "ActionName";
 
-                //Disable the Keyframe Move Actions groupbox if no action records (WF, LR, etc. for example)
-                if (lstKeyframeActions.Count > 0)
-                {
-                    drp_KeyframeActions.SelectedItem = lstKeyframeActions[0];
+                //Be sure nothing is selected in the Actions list dropdown
+                drp_KeyframeActions.SelectedIndex = -1;
+                drp_KeyframeActions.SelectedItem = null;
+                drp_KeyframeActions.Watermark = "Select Keyframe Action";
 
-                    //If we are in Capture mode, don't change the grpKeyframeActions enabled state
-                    if (!m_EnableCapture)
-                    {
-                        grpKeyframeActions.Enabled = true;
-                    }
-                }
-                else
-                {
-                    //If we are in Capture mode, don't change the grpKeyframeActions enabled state
-                    if (!m_EnableCapture)
-                    {
-                        grpKeyframeActions.Enabled = false;
-                    }
-                }
+                //Clear these UI controls
+                tbx_KeyframeAction_Name.Text = string.Empty;
+                tbx_SendKeyChar.Text = string.Empty;
+
+                num_SendKeyQuantity.Value = 0;
+                num_SendKeyStepAngleCount.Value = 0;
+
+                btn_KeyframeAction_Update.Enabled = false;
+                btn_KeyframeAction_Add.Enabled = false;
+                btn_KeyframeAction_Delete.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -888,6 +911,57 @@ namespace MB3D_Animation_Copilot
                     MessageBoxAdv.Show(ex.Message, "Error @ btn_FindM3A_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private string GetActionItemByFullName(string argActionFullName)
+        {
+
+            string strActionName = string.Empty;
+
+            switch (argActionFullName)
+            {
+                case cWFfn:
+                    strActionName = cWFn;
+                    break;
+                case cWRfn:
+                    strActionName = cWRn;
+                    break;
+                case cLUfn:
+                    strActionName = cLUn;
+                    break;
+                case cLDfn:
+                    strActionName = cLDn;
+                    break;
+                case cLLfn:
+                    strActionName = cLLn;
+                    break;
+                case cLRfn:
+                    strActionName = cLRn;
+                    break;
+                case cSUfn:
+                    strActionName = cSUn;
+                    break;
+                case cSDfn:
+                    strActionName = cSDn;
+                    break;
+                case cSLfn:
+                    strActionName = cSLn;
+                    break;
+                case cSRfn:
+                    strActionName = cSRn;
+                    break;
+                case cRCCfn:
+                    strActionName = cRCCn;
+                    break;
+                case cRCWfn:
+                    strActionName = cRCWn;
+                    break;
+                case cNMKfn:
+                    strActionName = cNMKn;
+                    break;
+            }
+
+            return strActionName;
         }
 
         private string GetActionItemFullName(string argActionName)
@@ -1044,44 +1118,96 @@ namespace MB3D_Animation_Copilot
         {
             try
             {
+                //Default all buttons to disabled
+                btn_KeyframeAction_Update.Enabled = false;
+                btn_KeyframeAction_Add.Enabled = false;
+                btn_KeyframeAction_Delete.Enabled = false;
+
+                //Get the ID of the selected keyframe ID
+                int intKeyframeID = GetSelectedKeyframeID();
+
                 KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
                 if (selectedAction != null) //If drp_KeyframeActions has a selectable row
                 {
+                    //Try to fetch an Action record that matches the user's selected Action
                     List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
-                    lstKeyframeAction = Data_Access_Methods.LoadKeyframeAction(selectedAction.ID);
+                    lstKeyframeAction = Data_Access_Methods.GetKeyframeActionData(m_SelectedProjectID, intKeyframeID, selectedAction.ActionName);
+                    
+                    //This code handles setting the Update/Add buttons as enabled or disabled
+                    if (lstKeyframeAction.Count > 0) //If we have a Keyframe Action record that matches the user's selected Action
+                    {
+                        //If an action record is returned, the user will be updating (or deleting)
+                        //Note: A No-Move action record can't be updated (because it has no steps)
+                        if (selectedAction.ActionName != cNMKn)
+                        {
+                            btn_KeyframeAction_Update.Enabled = true;
+                        }
+                        btn_KeyframeAction_Delete.Enabled = true;
+                    }
+                    else
+                    {
+                        //If an action record is NOT returned, the user will be adding (and NOT deleting)
+                        btn_KeyframeAction_Add.Enabled = true;
+                    }
+
+                    //This code handles setting the entries per the action the user selected
                     if (lstKeyframeAction.Count > 0) //If we have at least one Keyframe Action record
                     {
-                        //If the selected keyframe does NOT have the No-Move Action
-                        if (lstKeyframeAction[0].ActionName != cNMKn)
+                        //If the user selected action is a No-Move action
+                        if (selectedAction.ActionName == cNMKn)
                         {
+                            //If the selected keyframe is a No-Move Action, no update or add but can delete
+                            tbx_KeyframeAction_Name.Text = selectedAction.ActionName;
+                            tbx_SendKeyChar.Text = selectedAction.SendKeyChar;
+                            num_SendKeyQuantity.Value = 0; //There is no send quantity in this case
+                            num_SendKeyStepAngleCount.Value = 0; //There is no step/angle count in this case
+
+                            //Disable the step numeric entries
+                            num_SendKeyQuantity.Enabled = false;
+                            num_SendKeyStepAngleCount.Enabled = false;
+                        }
+                        else
+                        {
+                            //Reflect the returned record to the user inrterface
                             tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
                             tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
                             num_SendKeyQuantity.Value = lstKeyframeAction[0].SendKeyQuantity;
                             num_SendKeyStepAngleCount.Value = lstKeyframeAction[0].StepAngleCount;
 
-                            //Enable the UI controls that may have been disabled by a previous No-Move Action selection
+                            //Enable the step numeric entries
                             num_SendKeyQuantity.Enabled = true;
                             num_SendKeyStepAngleCount.Enabled = true;
-                            btn_KeyframeAction_Update.Enabled = true;
-                        }
-                        else
-                        {
-                            //If the selected keyframe has the No-Move Action
-
-                            tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
-                            tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
-                            num_SendKeyQuantity.Value = 0; //Override - there is no send quantity
-                            num_SendKeyStepAngleCount.Value = 0; //Override - there is no step/anle count
-
-                            //Disable the UI controls that are not applicable
-                            num_SendKeyQuantity.Enabled = false;
-                            num_SendKeyStepAngleCount.Enabled = false;
-                            btn_KeyframeAction_Update.Enabled = false;
                         }
                     }
                     else
                     {
-                        ClearKeyframeActionControls();
+                        //No record returned that matches user's Action dropdown selection
+
+                        //If the user selected action is a No-Move action
+                        if (selectedAction.ActionName == cNMKn)
+                        {
+                            //If the selected keyframe is a No-Move Action, no update or add but can delete
+                            tbx_KeyframeAction_Name.Text = selectedAction.ActionName;
+                            tbx_SendKeyChar.Text = selectedAction.SendKeyChar;
+                            num_SendKeyQuantity.Value = 0; //There is no send quantity in this case
+                            num_SendKeyStepAngleCount.Value = 0; //There is no step/angle count in this case
+
+                            //Disable the step numeric entries
+                            num_SendKeyQuantity.Enabled = false;
+                            num_SendKeyStepAngleCount.Enabled = false;
+                        }
+                        else
+                        {
+                            //If the selected keyframe is a No-Move Action, no update or add but can delete
+                            tbx_KeyframeAction_Name.Text = selectedAction.ActionName;
+                            tbx_SendKeyChar.Text = selectedAction.SendKeyChar;
+                            num_SendKeyQuantity.Value = 0; //There is no send quantity in this case
+                            num_SendKeyStepAngleCount.Value = 0; //There is no step/angle count in this case
+
+                            //Enable the step numeric entries
+                            num_SendKeyQuantity.Enabled = true;
+                            num_SendKeyStepAngleCount.Enabled = true;
+                        }
                     }
                 }
             }
@@ -1096,7 +1222,6 @@ namespace MB3D_Animation_Copilot
         {
             //Clear the Keyframe Move Actions UI control
             //We do this in case there are no keyframe records for the selected project
-            drp_KeyframeActions.DataSource = null;
             tbx_KeyframeAction_Name.Clear();
             tbx_SendKeyChar.Clear();
             num_SendKeyQuantity.Value = 1;
@@ -1105,97 +1230,181 @@ namespace MB3D_Animation_Copilot
 
         private void btn_KeyframeAction_Update_Click(object sender, EventArgs e)
         {
-            try
+            ValidateActionUpdateAdd(false);
+        }
+
+        private void btn_KeyframeAction_Add_Click(object sender, EventArgs e)
+        {
+            ValidateActionUpdateAdd(true);
+        }
+
+        private void ValidateActionUpdateAdd(bool IsActionAdd)
+        {
+
+            var NL = Environment.NewLine;
+            
+            //Get the ID of the selected keyframe ID
+            int intKeyframeID = GetSelectedKeyframeID();
+
+            //Fetch the currently selected dropdown selection
+            KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
+
+            //If the user has selected the No-Move Action, set values to zero and disable those controls
+            if (selectedAction.ActionName == cNMKn)
+            {
+                DialogResult result = MessageBoxAdv.Show(string.Concat("A keyframe can have no other Actions along with a No-Move Action.", NL, "To have a No-Move Action for this keyframe, all other Actions of the keyframe will need to be deleted.", NL, "Would you like to proceed with adding a No-Move Action to this keyframe?"), "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                if (result == DialogResult.Yes)
+                {
+                    //Delete all of the Actions of the selected keyframe, then call PerformActionUpdateAdd() to add the No-Move action
+                    if (Data_Access_Methods.DeleteKeyframeActionsOfKeyframe(GetSelectedKeyframeID()))
+                    {
+                        PerformActionUpdateAdd(IsActionAdd);
+                    }
+                }
+            }
+            else
             {
                 if (num_SendKeyQuantity.Value > 0 & num_SendKeyStepAngleCount.Value > 0)
                 {
-                    //Fetch the currently selected dropdown selection
-                    KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
 
-                    KeyframeActionsModel itemKeyframeAction = new KeyframeActionsModel();
-                    itemKeyframeAction.ActionName = tbx_KeyframeAction_Name.Text;
-                    itemKeyframeAction.SendKeyChar = tbx_SendKeyChar.Text;
-                    itemKeyframeAction.SendKeyQuantity = (int)num_SendKeyQuantity.Value;
-                    itemKeyframeAction.StepAngleCount = (int)num_SendKeyStepAngleCount.Value;
-
-                    Data_Access_Methods.UpdateKeyframeAction(selectedAction.ID, itemKeyframeAction);
-
-                    //Repopulate the Keyframe Move Actions list
-                    var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
-                    var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
-
-                    var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
-                    var intKeyframeID = (int)cellValue_ID;
-
-                    //Repopulate the Actions dropdown list
-                    PopulateKeframeActionsList(intKeyframeID);
-
-                    //Reconstruct the Keyframe Summary string and update the keyframe record in the database
-
-                    //Fetch a list of all Keyframe Move Actions of the keyframe selected in the datagridview
-                    List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
-                    lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList((int)cellValue_ID);
-
-                    List<KeyframeActionsModel> lstKeyframeActions_Distinct = new List<KeyframeActionsModel>();
-                    var DistinctItems = lstKeyframeAction.GroupBy(x => x.ActionName).Select(y => y.First());
-
-                    //Build the Keyframe display string
-                    StringBuilder sb = new StringBuilder();
-                    foreach (KeyframeActionsModel itemAction in DistinctItems)
-                    {   //Loop over the lstKeyframeAction
-                        sb.Append(itemAction.ActionName);
-                        sb.Append(itemAction.SendKeyQuantity.ToString());
-
-                        //Calculate the Step/Angle count for the Keyframe display ONLY
-                        int intStepAngleResult = (itemAction.SendKeyQuantity * itemAction.StepAngleCount);
-                        sb.Append(string.Concat(" (", intStepAngleResult.ToString(), ") "));
+                    //Determine if the keyframe has a No-Move action
+                    if (Data_Access_Methods.GetKeyframeActionNameExists(m_SelectedProjectID, intKeyframeID, cNMKn))
+                    {
+                        DialogResult result = MessageBoxAdv.Show(string.Concat("A keyframe can have no other Actions along with a No-Move Action.", NL, "Would you like to proceed with replacing the No-Move Action of this keyframe with the selected Action?"), "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                        if (result == DialogResult.Yes)
+                        {
+                            //Delete all of the Actions of the selected keyframe, then call PerformActionUpdateAdd() to add the action
+                            if (Data_Access_Methods.DeleteKeyframeActionsOfKeyframe(GetSelectedKeyframeID()))
+                            {
+                                PerformActionUpdateAdd(IsActionAdd);
+                            }
+                        }
                     }
-
-                    Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
-                    PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
-
-                    //Set these number inputs to zero to protect the user from indvertently changing the action
-                    num_SendKeyQuantity.Value = 0;
-                    num_SendKeyStepAngleCount.Value = 0;
-
-                    LoadFooterMessage("Keyframe Move Action updated. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
+                    else
+                    {
+                        PerformActionUpdateAdd(IsActionAdd);
+                    }
                 }
                 else
                 {
-                    MessageBoxAdv.Show("The Step Quantity value must be greater than zero.", "Invalid Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBoxAdv.Show("The Step Quantity and Step Count/Angle values must each be greater than zero.", "Invalid Entry", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return; //Bail out
                 }
+            }
+        }
+
+        private void PerformActionUpdateAdd(bool IsActionAdd)
+        {
+            try
+            {
+                //Get the ID of the selected keyframe ID
+                int intKeyframeID = GetSelectedKeyframeID();
+
+                //Fetch the currently selected dropdown selection
+                KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
+
+                KeyframeActionsModel itemKeyframeAction = new KeyframeActionsModel();
+                itemKeyframeAction.ID = 0; //This value doesn't apply here
+                itemKeyframeAction.ActionName = tbx_KeyframeAction_Name.Text;
+                itemKeyframeAction.ActionName_Display = string.Empty; //This value doesn't apply here;
+                itemKeyframeAction.SendKeyChar = tbx_SendKeyChar.Text;
+                itemKeyframeAction.SendKeyQuantity = (int)num_SendKeyQuantity.Value;
+                itemKeyframeAction.StepAngleCount = (int)num_SendKeyStepAngleCount.Value;
+
+                //Perform an update or add of the action record per IsActionAdd argument
+                if (IsActionAdd)
+                {
+                    Data_Access_Methods.InsertKeyframeActionData(intKeyframeID, itemKeyframeAction);
+                }
+                else
+                {
+                    Data_Access_Methods.UpdateKeyframeAction(intKeyframeID, itemKeyframeAction);
+                }
+
+                //Repopulate the Actions dropdown list
+                PopulateKeframeActionsList(intKeyframeID);
+
+                //Reconstruct the Keyframe Summary string and update the keyframe record in the database
+
+                //Fetch a list of all Keyframe Move Actions of the keyframe selected in the datagridview
+                List<KeyframeActionsModel> lstKeyframeAction = new List<KeyframeActionsModel>();
+                lstKeyframeAction = Data_Access_Methods.LoadKeyframeActionsList(intKeyframeID);
+
+                List<KeyframeActionsModel> lstKeyframeActions_Distinct = new List<KeyframeActionsModel>();
+                var DistinctItems = lstKeyframeAction.GroupBy(x => x.ActionName).Select(y => y.First());
+
+                //Build the Keyframe display string
+                StringBuilder sb = new StringBuilder();
+                foreach (KeyframeActionsModel itemAction in DistinctItems)
+                {   //Loop over the lstKeyframeAction
+                    sb.Append(itemAction.ActionName);
+                    sb.Append(itemAction.SendKeyQuantity.ToString());
+
+                    //Calculate the Step/Angle count for the Keyframe display ONLY
+                    int intStepAngleResult = (itemAction.SendKeyQuantity * itemAction.StepAngleCount);
+                    sb.Append(string.Concat(" (", intStepAngleResult.ToString(), ") "));
+                }
+
+                Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
+                PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
+
+                //Set these number inputs to zero to protect the user from indvertently changing the action
+                num_SendKeyQuantity.Value = 0;
+                num_SendKeyStepAngleCount.Value = 0;
+
+                //Be sure nothing is selected in the Actions list dropdown
+                drp_KeyframeActions.SelectedIndex = -1;
+                drp_KeyframeActions.SelectedItem = null;
+                drp_KeyframeActions.Watermark = "Select Keyframe Action";
+
+                //Footer message per Update or Add
+                if (IsActionAdd)
+                {
+                    LoadFooterMessage("Keyframe Action added. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
+                }
+                else
+                {
+                    LoadFooterMessage("Keyframe Action updated. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
+                }
+
             }
             catch (Exception ex)
             {
-                LogException("btn_KeyframeAction_Update_Click", ex); //Log this error
-                MessageBoxAdv.Show(ex.Message, "Error @ btn_KeyframeAction_Update_Click. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                LogException("PerformActionUpdateAdd", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ PerformActionUpdateAdd. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         private void btn_KeyframeAction_Delete_Click(object sender, EventArgs e)
         {
+            var NL = Environment.NewLine;
+            
             try
             {
-                //Fetch the currently selected datagrid row
-                var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
-                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
-
-                var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
-                var intKeyframeID = (int)cellValue_ID;
+                //Get the ID of the selected keyframe
+                int intKeyframeID = GetSelectedKeyframeID();
 
                 if (Data_Access_Methods.GetKeyframeMoveActionsQuantity(m_SelectedProjectID, intKeyframeID) <= 1)
                 {
-                    MessageBoxAdv.Show(string.Concat("You can't delete the only Move Action of a keyframe."), "No Can Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    MessageBoxAdv.Show(string.Concat("You can't delete the only Action of a keyframe.", NL, "Delete the keyframe itself if you don't want the keyframe Action."), "No Can Do", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     return;
                 }
 
                 KeyframeActionsModel selectedAction = (KeyframeActionsModel)drp_KeyframeActions.SelectedItem;
 
-                DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Keyframe Move Action '", selectedAction.ActionName, "'? This cannot be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result = MessageBoxAdv.Show(string.Concat("Are you sure you want to delete Action '", selectedAction.ActionName, "'? This cannot be reversed!"), "Confirm Delete", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result == DialogResult.Yes)
                 {
 
-                    Data_Access_Methods.DeleteKeyframeAction(selectedAction.ID);
+                    KeyframeActionsModel itemKeyframeAction = new KeyframeActionsModel();
+                    itemKeyframeAction.ID = 0; //This value doesn't apply here
+                    itemKeyframeAction.ActionName = tbx_KeyframeAction_Name.Text;
+                    itemKeyframeAction.ActionName_Display = string.Empty; //This value doesn't apply here;
+                    itemKeyframeAction.SendKeyChar = string.Empty;  //This value doesn't apply here;
+                    itemKeyframeAction.SendKeyQuantity = 0; //This value doesn't apply here;
+                    itemKeyframeAction.StepAngleCount = 0; //This value doesn't apply here;
+
+                    Data_Access_Methods.DeleteKeyframeAction(intKeyframeID, itemKeyframeAction);
 
                     //Repopulate the Keyframe Move Actions list
                     PopulateKeframeActionsList(intKeyframeID); //intKeyframeID was determined at head of this procedure
@@ -1218,7 +1427,7 @@ namespace MB3D_Animation_Copilot
                     Data_Access_Methods.UpdateKeyframeDisplay(intKeyframeID, sb.ToString());
                     PopulateKeyframesDatagrid(false); //Repopulate the Keyframe datagrid - do not change selected row
 
-                    LoadFooterMessage("Keyframe Move Action deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
+                    LoadFooterMessage("Keyframe Action deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
                 }
             }
             catch (Exception ex)
@@ -1275,6 +1484,7 @@ namespace MB3D_Animation_Copilot
                     //Update the new keyframe with No-Move action set
                     KeyframeActionsModel KeyframeAction = new KeyframeActionsModel();
                     KeyframeAction.ActionName = cNMKn;
+                    KeyframeAction.ActionName = cNMKfn; //Full name
                     KeyframeAction.StepAngleCount = 0;
                     KeyframeAction.SendKeyChar = GetKeyCodeByActionName(cNMKk);
                     KeyframeAction.SendKeyQuantity = 0;
@@ -1530,7 +1740,7 @@ namespace MB3D_Animation_Copilot
                 else
                 {
                     //Else replicating more than one keyframe
-                    strConfirmationMessageText = string.Concat("This will replicate keyframes ", intFromKeyframe.ToString(), " to ", intToKeyframe.ToString(), ", creating a new keyframe for each and performing the Move Action for each replicated keyframe.", NL, "Do you want to proceed with the replication of these keyframes and the Move Actions of each keyframe?");
+                    strConfirmationMessageText = string.Concat("This will replicate keyframes ", intFromKeyframe.ToString(), " to ", intToKeyframe.ToString(), ", creating a new keyframe for each and performing the Action for each replicated keyframe.", NL, "Do you want to proceed with the replication of these keyframes and the Move Actions of each keyframe?");
                 }
 
                 //Get user confirmation
@@ -2073,7 +2283,7 @@ namespace MB3D_Animation_Copilot
                 m_sbMovesList.Append(string.Concat("New Project Checklist:", NL));
                 m_sbMovesList.Append(string.Concat("1. Provide Project Name and Description", NL));
                 m_sbMovesList.Append(string.Concat("2. Set Mandelbulb3D File Locations", NL));
-                m_sbMovesList.Append(string.Concat("3. Set Sliding/Walking Step Count", NL));
+                m_sbMovesList.Append(string.Concat("3. Set Sliding/Walking Count", NL));
                 m_sbMovesList.Append(string.Concat("4. Set Looking/Rolling Angle", NL));
                 m_sbMovesList.Append(string.Concat("5. Set Frames Between", NL));
                 m_sbMovesList.Append(string.Concat("6. Set Far Plane value", NL));
@@ -3009,7 +3219,7 @@ namespace MB3D_Animation_Copilot
                         //Send Key Char
                         KeyframeAction_Out.SendKeyChar = SendKeyChar;
 
-                        //Step/Angle Count
+                        //Step Count/Angle
                         KeyframeAction_Out.StepAngleCount = StepAngleCount_abs;
 
                         //Update the database if the Move Action has a non-zero SendKeyQuantity, else ignore the Move Action element
@@ -3036,7 +3246,7 @@ namespace MB3D_Animation_Copilot
                     //Send Key Char
                     KeyframeAction_Out.SendKeyChar = GetKeyCodeByActionName(cNMKk);
 
-                    //Step/Angle Count
+                    //Step Count/Angle
                     KeyframeAction_Out.StepAngleCount = 0;
 
                     //Insert no-move action data into the DB
@@ -3287,7 +3497,7 @@ namespace MB3D_Animation_Copilot
                         //Now, send the keychar out as many times as specified by intSendKeyQuantity with their StepAngleCount values
                         for (int i = 0; i < intSendKeyQuantity; i++)
                         {
-                            m_StepAngleCountDefaultBypass = itemDistinct.StepAngleCount; //This passes the Step/Angle count to the UpdateKeyStepList procedure
+                            m_StepAngleCountDefaultBypass = itemDistinct.StepAngleCount; //This passes the Step Count/Angle to the UpdateKeyStepList procedure
 
                             //Note: A SendKeyChar that has a '+' appended to it will be treated by the SendKeys.Send method as a shift
                             //      character. As such, we do not need to handle the Shift functions of a keyframe SendKeyChar value here.
@@ -3327,16 +3537,14 @@ namespace MB3D_Animation_Copilot
         {
             if (e.Column.MappingName == "KeyframeApproved")
             {
-                //Fetch the currently selected datagrid row
-                var rowIndex = this.dgv_Keyframes_sf.SelectionController.DataGrid.CurrentCell.RowIndex;
-                var recordIndex = dgv_Keyframes_sf.TableControl.ResolveToRecordIndex(rowIndex);
-                var cellValue_ID = DataGridHelper.GetCellValue(dgv_Keyframes_sf, recordIndex, -1, "ID"); //Get the ID column value
+                //Get the ID of the selected keyframe
+                int intKeyframeID = GetSelectedKeyframeID();
 
                 //Get the boolean state of the Approve/Disapprove checkbox
                 bool CheckState = Convert.ToBoolean(e.NewValue);
 
                 //Update the database with the new Approve/Disapprove checkbox state
-                Data_Access_Methods.ApproveByKeyframeID(CheckState, m_SelectedProjectID, (int)cellValue_ID);
+                Data_Access_Methods.ApproveByKeyframeID(CheckState, m_SelectedProjectID, intKeyframeID);
 
                 //Note: There is no need to refresh the datagrid in this case
             }
@@ -3630,7 +3838,7 @@ namespace MB3D_Animation_Copilot
                     m_sbMovesList.Append(string.Concat(cNMKfn, NL));
                     lbl_MovesList.Text = String.Concat(m_sbMovesList.ToString()); //Write this MovesList to the UI (with the newline "NL")
 
-                    MakeNewKeyframe(false, false, true, string.Empty, false, "No Move Keyframe"); //Call the MakeNewKeyframe immediately
+                    MakeNewKeyframe(false, false, true, string.Empty, false, "No-Move Keyframe"); //Call the MakeNewKeyframe immediately
                 }
                 else
                 {
@@ -3672,16 +3880,16 @@ namespace MB3D_Animation_Copilot
                 m_KeysStack += strKey; //Capture the key
                 string strFinalKeyCode = strKey;
 
-                //Determine the source of the Step/Angle values
+                //Determine the source of the Step Count/Angle values
                 if (m_InKeyframeRepeatMode)
                 {
-                    //Use the Step/Angle bypass values
+                    //Use the Step Count/Angle bypass values
                     m_SWStepCount = m_StepAngleCountDefaultBypass;
                     m_LRAngle = m_StepAngleCountDefaultBypass;
                 }
                 else
                 {
-                    //Use the project's default Step/Angle values
+                    //Use the project's default Step Count/Angle values
                     m_SWStepCount = (int)mtbx_SlidingWalkingCount.Value;
                     m_LRAngle = (int)mtbx_LookingRollingAngle.Value;
                 }
@@ -3789,7 +3997,7 @@ namespace MB3D_Animation_Copilot
                     }
                     else
                     {
-                        //Add the current step/ angle count to the previous step / angle count
+                        //Add the current Step Count/Angle to the previous step / angle count
                         intStepCountAngle = intStepCountAngle_out + intStepCountAngle;
                     }
                 }
@@ -3809,7 +4017,7 @@ namespace MB3D_Animation_Copilot
                     }
                     else
                     {
-                        //Subtract the current step/ angle count from the previous step / angle count
+                        //Subtract the current Step Count/Angle from the previous step / angle count
                         intStepCountAngle = intStepCountAngle_out - intStepCountAngle;
                     }
                 }
@@ -3824,7 +4032,7 @@ namespace MB3D_Animation_Copilot
                     strMoveName = strKeyActionGroup[2];
                 }
 
-                //Update the Move Group Tracker dictionary(m_MoveGroupTrackerDic) with the new key step count and step/ angle values
+                //Update the Move Group Tracker dictionary(m_MoveGroupTrackerDic) with the new key step count and step angle values
                 //Tuple<string, int, int> = MoveName, KeyActionCount, StepCountAngle
                 m_MoveGroupTrackerDic[strKeyActionGroup[0]] = new Tuple<string, int, string, int>(strMoveName, intKeyActionCount, strSendKeyChar, intStepCountAngle);
             }
@@ -3846,7 +4054,7 @@ namespace MB3D_Animation_Copilot
                 }
 
                 //If there is NOT an existing dictionary element for the incoming move group item...
-                //...append the Move Group Tracker dictionary (m_MoveGroupTrackerDic) with the new key step count and step/angle values
+                //...append the Move Group Tracker dictionary (m_MoveGroupTrackerDic) with the new key Step Count/Angle value
                 //Tuple<string, int, string, int> = MoveName, KeyActionCount, SendKeyChar, StepCountAngle
                 m_MoveGroupTrackerDic[strKeyActionGroup[0]] = new Tuple<string, int, string, int>(strMoveName, intKeyActionCount, strSendKeyChar, intStepCountAngle);
             }
@@ -4086,7 +4294,8 @@ namespace MB3D_Animation_Copilot
             StepNameList.Add(new StepNameListModel() { Step_Name = cLRn, Step_SendKey = cLRk_ });
             StepNameList.Add(new StepNameListModel() { Step_Name = cSUn, Step_SendKey = cSUk_ });
             StepNameList.Add(new StepNameListModel() { Step_Name = cSDn, Step_SendKey = cSDk_ });
-            StepNameList.Add(new StepNameListModel() { Step_Name = cSLn, Step_SendKey = cSRk_ });
+            StepNameList.Add(new StepNameListModel() { Step_Name = cSLn, Step_SendKey = cSLk_ });
+            StepNameList.Add(new StepNameListModel() { Step_Name = cSRn, Step_SendKey = cSRk_ });
             StepNameList.Add(new StepNameListModel() { Step_Name = cRCCn, Step_SendKey = cRCCk_ });
             StepNameList.Add(new StepNameListModel() { Step_Name = cRCWn, Step_SendKey = cRCWk_ });
 

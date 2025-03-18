@@ -491,6 +491,30 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
+        public static bool DeleteKeyframeActionsOfKeyframe(int argKeyframeID)
+        {
+            try
+            {
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+                    //Delete the Keyframe Actions children records
+                    cnn.Execute("DELETE FROM Keyframe_Actions " +
+                                "WHERE KeyframesID_Ref = @KeyframeID",
+                    param: new
+                    {
+                        @KeyframeID = argKeyframeID
+                    });
+                    return true;
+                }
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM DeleteKeyframeActionsOfKeyframe", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM DeleteKeyframeActionsOfKeyframe. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;   
+            }
+        }
+
         public static void DeleteAllKeyframeAndKeyframeActions(int argProjectID)
         {
             try
@@ -930,6 +954,44 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
+        public static bool GetKeyframeActionNameExists(int argProjectID, int argKeyframeID, string argActioName)
+        {
+            try
+            {
+                int NoMoveActionsQuantity = 0;
+
+                using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+                {
+
+                    //Get the count of Move Actions for the keyframe ID argument
+                    NoMoveActionsQuantity = cnn.ExecuteScalar<int>("SELECT COUNT(A.ActionName)" +
+                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+                                                                 " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @KeyframeID AND A.ActionName = @ActionName",
+                    param: new
+                    {
+                        @ActionName = argActioName,
+                        @ProjectID = argProjectID,
+                        @KeyframeID = argKeyframeID,
+                    });
+                }
+
+                if (NoMoveActionsQuantity > 0)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                Program._MainForm.LogException("DAM GetKeyframeNoMoveActionsExists", ex); //Log this error
+                MessageBoxAdv.Show(ex.Message, "Error @ DAM GetKeyframeNoMoveActionsExists. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return false;
+            }
+        }
+
         public static List<KeyframeActionsModel> LoadKeyframeActionsList(int intKeyframeID)
         {
             try
@@ -1012,20 +1074,22 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
-        public static List<KeyframeActionsModel> LoadKeyframeAction(int intKeyframeActionID)
+        public static List<KeyframeActionsModel> GetKeyframeActionData(int argProjectID, int argKeyframeID, string argKeyframeAction)
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     var output = cnn.Query<KeyframeActionsModel>("SELECT A.ID, A.ActionName, A.SendKeyChar, A.SendKeyQuantity, A.StepAngleCount" +
-                                                                 " FROM Keyframe_Actions A" +
-                                                                 " WHERE A.ID = @KeyframeActionID" +
-                                                                 " ORDER BY A.ID",
+                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+                                                                 " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @KeyframeID AND A.ActionName = @ActionName",
                     param: new
                     {
-                        @KeyframeActionID = intKeyframeActionID
+                        @ProjectID = argProjectID,
+                        @KeyframeID = argKeyframeID,
+                        @ActionName = argKeyframeAction
                     });
+
                     return output.ToList();
                 }
             }
@@ -1037,7 +1101,46 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
-        public static void UpdateKeyframeAction(int argKeyframeActionID, KeyframeActionsModel itemKeyframeAction)
+        //public static bool GetKeyActionExists(int argProjectID, int argKeyframeID, KeyframeActionsModel objKeyframeAction)
+        //{
+
+        //    try
+        //    {
+        //        int MoveActionQuantity = 0;
+
+        //        using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
+        //        {
+
+        //            //Get the count of Move Actions for the keyframe ID argument
+        //            MoveActionQuantity = cnn.ExecuteScalar<int>("SELECT COUNT(A.ActionName)" +
+        //                                                         " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+        //                                                         " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @KeyframeID AND A.ActionName = @ActionName",
+        //            param: new
+        //            {
+        //                @ProjectID = argProjectID,
+        //                @KeyframeID = argKeyframeID,
+        //                @ActionName = objKeyframeAction.ActionName,
+        //            });
+        //        }
+
+        //        if (MoveActionQuantity == 0)
+        //        {
+        //            return false;
+        //        }
+        //        else
+        //        {
+        //            return true;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Program._MainForm.LogException("DAM GetKeyframeMoveActionsQuantity", ex); //Log this error
+        //        MessageBoxAdv.Show(ex.Message, "Error @ DAM GetKeyframeMoveActionsQuantity. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
+        //        return false;
+        //    }
+        //}
+
+        public static void UpdateKeyframeAction(int argKeyframeID_Ref, KeyframeActionsModel itemKeyframeAction)
         {
             try
             {
@@ -1048,14 +1151,14 @@ namespace MB3D_Animation_Copilot.Classes
                         " SendKeyChar=@SendKeyChar," +
                         " SendKeyQuantity=@SendKeyQuantity, " +
                         " StepAngleCount=@StepAngleCount " +
-                        " WHERE ID = @KeyframeActionID ",
+                        " WHERE KeyframesID_Ref = @KeyframesID_Ref AND ActionName = @ActionName",
                     param: new
                     {
-                        itemKeyframeAction.ActionName,
-                        itemKeyframeAction.SendKeyChar,
-                        itemKeyframeAction.SendKeyQuantity,
-                        itemKeyframeAction.StepAngleCount,
-                        @KeyframeActionID = argKeyframeActionID
+                        @KeyframesID_Ref = argKeyframeID_Ref,
+                        @ActionName = itemKeyframeAction.ActionName,
+                        @SendKeyChar = itemKeyframeAction.SendKeyChar,
+                        @SendKeyQuantity = itemKeyframeAction.SendKeyQuantity,
+                        @StepAngleCount = itemKeyframeAction.StepAngleCount
                     });
                 }
             }
@@ -1066,17 +1169,23 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
-        public static void DeleteKeyframeAction(int argKeyframeActionID)
+        public static void DeleteKeyframeAction(int argKeyframeID_Ref, KeyframeActionsModel itemKeyframeAction)
         {
             try
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     cnn.Execute("DELETE FROM Keyframe_Actions " +
-                                "WHERE ID = @KeyframeActionID",
+                                "WHERE KeyframesID_Ref = @KeyframesID_Ref AND ActionName = @ActionName",
                     param: new
                     {
-                        @KeyframeActionID = argKeyframeActionID
+
+                        @KeyframesID_Ref = argKeyframeID_Ref,
+                        @ActionName = itemKeyframeAction.ActionName,
+                        @SendKeyChar = itemKeyframeAction.SendKeyChar,
+                        @SendKeyQuantity = itemKeyframeAction.SendKeyQuantity,
+                        @StepAngleCount = itemKeyframeAction.StepAngleCount
+
                     });
                 }
             }

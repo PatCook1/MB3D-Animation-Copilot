@@ -128,6 +128,7 @@ namespace MB3D_Animation_Copilot
             lbl_KeyframesRange_End = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             num_StartDeleteKeyframe = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
             grpKeyframeActions = new System.Windows.Forms.GroupBox();
+            btn_KeyframeAction_Add = new Syncfusion.WinForms.Controls.SfButton();
             drp_KeyframeActions = new Syncfusion.WinForms.ListView.SfComboBox();
             num_SendKeyStepAngleCount = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
             btn_KeyframeAction_Delete = new Syncfusion.WinForms.Controls.SfButton();
@@ -1555,13 +1556,11 @@ namespace MB3D_Animation_Copilot
             // btn_InsertKeyframe
             // 
             btn_InsertKeyframe.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            btn_InsertKeyframe.ForeColor = System.Drawing.Color.White;
-            btn_InsertKeyframe.Location = new System.Drawing.Point(8, 24);
+            btn_InsertKeyframe.Location = new System.Drawing.Point(12, 24);
             btn_InsertKeyframe.Margin = new System.Windows.Forms.Padding(4);
             btn_InsertKeyframe.Name = "btn_InsertKeyframe";
-            btn_InsertKeyframe.Size = new System.Drawing.Size(78, 26);
-            btn_InsertKeyframe.Style.ForeColor = System.Drawing.Color.White;
-            btn_InsertKeyframe.TabIndex = 25;
+            btn_InsertKeyframe.Size = new System.Drawing.Size(77, 26);
+            btn_InsertKeyframe.TabIndex = 26;
             btn_InsertKeyframe.Text = "Insert KF";
             btn_InsertKeyframe.ThemeName = "HighContrastTheme";
             toolTip1.SetToolTip(btn_InsertKeyframe, "Insert a new keyframe into the Keyframe Stack");
@@ -1666,6 +1665,7 @@ namespace MB3D_Animation_Copilot
             // 
             grpKeyframeActions.BackColor = System.Drawing.Color.Transparent;
             grpKeyframeActions.CausesValidation = false;
+            grpKeyframeActions.Controls.Add(btn_KeyframeAction_Add);
             grpKeyframeActions.Controls.Add(drp_KeyframeActions);
             grpKeyframeActions.Controls.Add(num_SendKeyStepAngleCount);
             grpKeyframeActions.Controls.Add(btn_KeyframeAction_Delete);
@@ -1688,13 +1688,28 @@ namespace MB3D_Animation_Copilot
             grpKeyframeActions.TabStop = false;
             grpKeyframeActions.Text = "Keyframe Actions";
             // 
+            // btn_KeyframeAction_Add
+            // 
+            btn_KeyframeAction_Add.AccessibilityEnabled = false;
+            btn_KeyframeAction_Add.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            btn_KeyframeAction_Add.Location = new System.Drawing.Point(70, 167);
+            btn_KeyframeAction_Add.Margin = new System.Windows.Forms.Padding(4);
+            btn_KeyframeAction_Add.Name = "btn_KeyframeAction_Add";
+            btn_KeyframeAction_Add.Size = new System.Drawing.Size(50, 26);
+            btn_KeyframeAction_Add.TabIndex = 24;
+            btn_KeyframeAction_Add.Text = "Add";
+            btn_KeyframeAction_Add.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(btn_KeyframeAction_Add, "Add Action to selected Keyframe");
+            btn_KeyframeAction_Add.UseVisualStyleBackColor = true;
+            btn_KeyframeAction_Add.Click += btn_KeyframeAction_Add_Click;
+            // 
             // drp_KeyframeActions
             // 
             drp_KeyframeActions.DropDownPosition = Syncfusion.WinForms.Core.Enums.PopupRelativeAlignment.Center;
             drp_KeyframeActions.DropDownStyle = Syncfusion.WinForms.ListView.Enums.DropDownStyle.DropDownList;
             drp_KeyframeActions.Location = new System.Drawing.Point(10, 22);
             drp_KeyframeActions.Margin = new System.Windows.Forms.Padding(4);
-            drp_KeyframeActions.MaxDropDownItems = 8;
+            drp_KeyframeActions.MaxDropDownItems = 13;
             drp_KeyframeActions.Name = "drp_KeyframeActions";
             drp_KeyframeActions.Size = new System.Drawing.Size(171, 23);
             drp_KeyframeActions.Style.TokenStyle.CloseButtonBackColor = System.Drawing.Color.FromArgb(255, 255, 255);
@@ -1720,12 +1735,13 @@ namespace MB3D_Animation_Copilot
             // 
             // btn_KeyframeAction_Delete
             // 
+            btn_KeyframeAction_Delete.Enabled = false;
             btn_KeyframeAction_Delete.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             btn_KeyframeAction_Delete.ForeColor = System.Drawing.Color.Red;
-            btn_KeyframeAction_Delete.Location = new System.Drawing.Point(111, 167);
+            btn_KeyframeAction_Delete.Location = new System.Drawing.Point(128, 167);
             btn_KeyframeAction_Delete.Margin = new System.Windows.Forms.Padding(4);
             btn_KeyframeAction_Delete.Name = "btn_KeyframeAction_Delete";
-            btn_KeyframeAction_Delete.Size = new System.Drawing.Size(68, 26);
+            btn_KeyframeAction_Delete.Size = new System.Drawing.Size(50, 26);
             btn_KeyframeAction_Delete.Style.ForeColor = System.Drawing.Color.Red;
             btn_KeyframeAction_Delete.TabIndex = 13;
             btn_KeyframeAction_Delete.Text = "Delete";
@@ -1776,9 +1792,9 @@ namespace MB3D_Animation_Copilot
             label44.Location = new System.Drawing.Point(106, 106);
             label44.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label44.Name = "label44";
-            label44.Size = new System.Drawing.Size(69, 15);
+            label44.Size = new System.Drawing.Size(76, 15);
             label44.TabIndex = 10;
-            label44.Text = "Step/Angle:";
+            label44.Text = "Count/Angle:";
             label44.ThemeName = "HighContrastTheme";
             // 
             // label42
@@ -1822,7 +1838,7 @@ namespace MB3D_Animation_Copilot
             btn_KeyframeAction_Update.Location = new System.Drawing.Point(12, 167);
             btn_KeyframeAction_Update.Margin = new System.Windows.Forms.Padding(4);
             btn_KeyframeAction_Update.Name = "btn_KeyframeAction_Update";
-            btn_KeyframeAction_Update.Size = new System.Drawing.Size(77, 26);
+            btn_KeyframeAction_Update.Size = new System.Drawing.Size(50, 26);
             btn_KeyframeAction_Update.TabIndex = 12;
             btn_KeyframeAction_Update.Text = "Update";
             btn_KeyframeAction_Update.ThemeName = "HighContrastTheme";
@@ -3600,6 +3616,7 @@ namespace MB3D_Animation_Copilot
         private System.Windows.Forms.GroupBox groupBox3;
         private Syncfusion.Windows.Forms.Tools.AutoLabel lbl_RestorePointAvail;
         private Syncfusion.WinForms.Controls.SfButton btn_InsertKeyframe;
+        private Syncfusion.WinForms.Controls.SfButton btn_KeyframeAction_Add;
     }
 }
 

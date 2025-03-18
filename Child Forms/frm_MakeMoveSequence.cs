@@ -93,7 +93,7 @@ namespace MB3D_Animation_Copilot.Child_Forms
                 return;
             }
 
-            //>>>>>>>>>>>>> Check if move seq name already exists
+            //TODO >>>>>>>>>>>>> Check if move seq name already exists
 
             var dialogResult = MessageBoxAdv.Show(this, string.Concat("This will create a new Move Sequence named '", tbx_MoveSequenceName.Text, "'."), "Proceed?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
