@@ -691,6 +691,7 @@ namespace MB3D_Animation_Copilot
             pb_Logo.TabIndex = 87;
             pb_Logo.TabStop = false;
             toolTip1.SetToolTip(pb_Logo, "Welcome to the Mandelbulb3D Animation Copilot");
+            pb_Logo.Click += pb_Logo_Click;
             // 
             // autoLabel28
             // 
@@ -2141,6 +2142,7 @@ namespace MB3D_Animation_Copilot
             // 
             splitContainer_ManageSeq.Panel2.BackColor = System.Drawing.Color.Transparent;
             splitContainer_ManageSeq.Panel2.Controls.Add(panel4);
+            splitContainer_ManageSeq.Panel2.Paint += splitContainer_ManageSeq_Panel2_Paint;
             splitContainer_ManageSeq.Size = new System.Drawing.Size(1276, 421);
             splitContainer_ManageSeq.SplitterDistance = 429;
             splitContainer_ManageSeq.TabIndex = 22;
@@ -2826,9 +2828,9 @@ namespace MB3D_Animation_Copilot
             groupBox1.Controls.Add(btn_EraseAllDatabaseRecords);
             groupBox1.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             groupBox1.ForeColor = System.Drawing.Color.White;
-            groupBox1.Location = new System.Drawing.Point(18, 325);
+            groupBox1.Location = new System.Drawing.Point(18, 321);
             groupBox1.Name = "groupBox1";
-            groupBox1.Size = new System.Drawing.Size(734, 199);
+            groupBox1.Size = new System.Drawing.Size(734, 203);
             groupBox1.TabIndex = 13;
             groupBox1.TabStop = false;
             groupBox1.Text = "Erase Database Records";
@@ -2838,7 +2840,7 @@ namespace MB3D_Animation_Copilot
             btn_EraseAllDatabaseRecords_KeepMS.AllowWrapText = true;
             btn_EraseAllDatabaseRecords_KeepMS.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_EraseAllDatabaseRecords_KeepMS.ForeColor = System.Drawing.Color.Red;
-            btn_EraseAllDatabaseRecords_KeepMS.Location = new System.Drawing.Point(425, 137);
+            btn_EraseAllDatabaseRecords_KeepMS.Location = new System.Drawing.Point(425, 145);
             btn_EraseAllDatabaseRecords_KeepMS.Name = "btn_EraseAllDatabaseRecords_KeepMS";
             btn_EraseAllDatabaseRecords_KeepMS.Size = new System.Drawing.Size(185, 44);
             btn_EraseAllDatabaseRecords_KeepMS.Style.ForeColor = System.Drawing.Color.Red;
@@ -2853,7 +2855,7 @@ namespace MB3D_Animation_Copilot
             autoLabel34.AutoSize = false;
             autoLabel34.BackColor = System.Drawing.Color.Black;
             autoLabel34.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            autoLabel34.Location = new System.Drawing.Point(9, 21);
+            autoLabel34.Location = new System.Drawing.Point(9, 29);
             autoLabel34.Name = "autoLabel34";
             autoLabel34.Size = new System.Drawing.Size(716, 113);
             autoLabel34.TabIndex = 1;
@@ -2867,7 +2869,7 @@ namespace MB3D_Animation_Copilot
             btn_EraseAllDatabaseRecords.AllowWrapText = true;
             btn_EraseAllDatabaseRecords.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_EraseAllDatabaseRecords.ForeColor = System.Drawing.Color.Red;
-            btn_EraseAllDatabaseRecords.Location = new System.Drawing.Point(110, 137);
+            btn_EraseAllDatabaseRecords.Location = new System.Drawing.Point(110, 145);
             btn_EraseAllDatabaseRecords.Name = "btn_EraseAllDatabaseRecords";
             btn_EraseAllDatabaseRecords.Size = new System.Drawing.Size(181, 44);
             btn_EraseAllDatabaseRecords.Style.ForeColor = System.Drawing.Color.Red;
@@ -2897,7 +2899,7 @@ namespace MB3D_Animation_Copilot
             gb_DBAdmin_Restore.Controls.Add(btn_DBAdmin_Restore);
             gb_DBAdmin_Restore.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
             gb_DBAdmin_Restore.ForeColor = System.Drawing.Color.White;
-            gb_DBAdmin_Restore.Location = new System.Drawing.Point(18, 222);
+            gb_DBAdmin_Restore.Location = new System.Drawing.Point(18, 211);
             gb_DBAdmin_Restore.Margin = new System.Windows.Forms.Padding(4);
             gb_DBAdmin_Restore.Name = "gb_DBAdmin_Restore";
             gb_DBAdmin_Restore.Padding = new System.Windows.Forms.Padding(4);
@@ -2986,7 +2988,7 @@ namespace MB3D_Animation_Copilot
             gb_DBAdmin_Backup.Margin = new System.Windows.Forms.Padding(4);
             gb_DBAdmin_Backup.Name = "gb_DBAdmin_Backup";
             gb_DBAdmin_Backup.Padding = new System.Windows.Forms.Padding(4);
-            gb_DBAdmin_Backup.Size = new System.Drawing.Size(734, 163);
+            gb_DBAdmin_Backup.Size = new System.Drawing.Size(734, 144);
             gb_DBAdmin_Backup.TabIndex = 0;
             gb_DBAdmin_Backup.TabStop = false;
             gb_DBAdmin_Backup.Text = "Database Backup";
@@ -2994,7 +2996,7 @@ namespace MB3D_Animation_Copilot
             // btn_AdminDBBackup_Help
             // 
             btn_AdminDBBackup_Help.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_AdminDBBackup_Help.Location = new System.Drawing.Point(9, 126);
+            btn_AdminDBBackup_Help.Location = new System.Drawing.Point(9, 104);
             btn_AdminDBBackup_Help.Name = "btn_AdminDBBackup_Help";
             btn_AdminDBBackup_Help.Size = new System.Drawing.Size(38, 28);
             btn_AdminDBBackup_Help.TabIndex = 12;
@@ -3007,15 +3009,15 @@ namespace MB3D_Animation_Copilot
             // 
             lbl_DatabaseFileInUse.AutoSize = false;
             lbl_DatabaseFileInUse.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            lbl_DatabaseFileInUse.Location = new System.Drawing.Point(125, 18);
+            lbl_DatabaseFileInUse.Location = new System.Drawing.Point(125, 24);
             lbl_DatabaseFileInUse.Name = "lbl_DatabaseFileInUse";
-            lbl_DatabaseFileInUse.Size = new System.Drawing.Size(600, 42);
+            lbl_DatabaseFileInUse.Size = new System.Drawing.Size(600, 22);
             lbl_DatabaseFileInUse.TabIndex = 11;
             lbl_DatabaseFileInUse.ThemeName = "HighContrastTheme";
             // 
             // autoLabel22
             // 
-            autoLabel22.Location = new System.Drawing.Point(9, 17);
+            autoLabel22.Location = new System.Drawing.Point(9, 27);
             autoLabel22.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             autoLabel22.Name = "autoLabel22";
             autoLabel22.Size = new System.Drawing.Size(114, 15);
@@ -3024,7 +3026,7 @@ namespace MB3D_Animation_Copilot
             // 
             // label52
             // 
-            label52.Location = new System.Drawing.Point(18, 94);
+            label52.Location = new System.Drawing.Point(18, 80);
             label52.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label52.Name = "label52";
             label52.Size = new System.Drawing.Size(106, 15);
@@ -3034,7 +3036,7 @@ namespace MB3D_Animation_Copilot
             // tbx_DBAdmin_Backup_DBNewFileName
             // 
             tbx_DBAdmin_Backup_DBNewFileName.BeforeTouchSize = new System.Drawing.Size(477, 420);
-            tbx_DBAdmin_Backup_DBNewFileName.Location = new System.Drawing.Point(126, 68);
+            tbx_DBAdmin_Backup_DBNewFileName.Location = new System.Drawing.Point(126, 54);
             tbx_DBAdmin_Backup_DBNewFileName.Margin = new System.Windows.Forms.Padding(4);
             tbx_DBAdmin_Backup_DBNewFileName.Name = "tbx_DBAdmin_Backup_DBNewFileName";
             tbx_DBAdmin_Backup_DBNewFileName.Size = new System.Drawing.Size(278, 23);
@@ -3044,7 +3046,7 @@ namespace MB3D_Animation_Copilot
             // 
             // label56
             // 
-            label56.Location = new System.Drawing.Point(19, 69);
+            label56.Location = new System.Drawing.Point(19, 55);
             label56.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             label56.Name = "label56";
             label56.Size = new System.Drawing.Size(105, 15);
@@ -3054,7 +3056,7 @@ namespace MB3D_Animation_Copilot
             // btn_DBAdmin_BackupFolder
             // 
             btn_DBAdmin_BackupFolder.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_DBAdmin_BackupFolder.Location = new System.Drawing.Point(126, 120);
+            btn_DBAdmin_BackupFolder.Location = new System.Drawing.Point(126, 106);
             btn_DBAdmin_BackupFolder.Margin = new System.Windows.Forms.Padding(4);
             btn_DBAdmin_BackupFolder.Name = "btn_DBAdmin_BackupFolder";
             btn_DBAdmin_BackupFolder.Size = new System.Drawing.Size(278, 26);
@@ -3067,7 +3069,7 @@ namespace MB3D_Animation_Copilot
             // tbx_DBAdmin_Backup_FolderName
             // 
             tbx_DBAdmin_Backup_FolderName.BeforeTouchSize = new System.Drawing.Size(477, 420);
-            tbx_DBAdmin_Backup_FolderName.Location = new System.Drawing.Point(126, 94);
+            tbx_DBAdmin_Backup_FolderName.Location = new System.Drawing.Point(126, 80);
             tbx_DBAdmin_Backup_FolderName.Margin = new System.Windows.Forms.Padding(4);
             tbx_DBAdmin_Backup_FolderName.Name = "tbx_DBAdmin_Backup_FolderName";
             tbx_DBAdmin_Backup_FolderName.Size = new System.Drawing.Size(599, 23);
@@ -3086,7 +3088,7 @@ namespace MB3D_Animation_Copilot
             // btn_DBAdmin_Backup
             // 
             btn_DBAdmin_Backup.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
-            btn_DBAdmin_Backup.Location = new System.Drawing.Point(561, 119);
+            btn_DBAdmin_Backup.Location = new System.Drawing.Point(561, 105);
             btn_DBAdmin_Backup.Margin = new System.Windows.Forms.Padding(4);
             btn_DBAdmin_Backup.Name = "btn_DBAdmin_Backup";
             btn_DBAdmin_Backup.Size = new System.Drawing.Size(164, 27);

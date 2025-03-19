@@ -185,9 +185,9 @@ namespace MB3D_Animation_Copilot.Classes
                         "SlideWalk_StepCount," +
                         "LookingRolling_Angle," +
                         "Frames_Between," +
-                        "Key_Delay," +
+                        "SendKeyDelay," +
                         "Total_Frames_Count," +
-                        "Far_Plane," +
+                        "ProjectFarPlane," +
                         "Animation_Length_30," +
                         "Animation_Length_60," +
                         "M3PIFileLocation," +
@@ -199,9 +199,9 @@ namespace MB3D_Animation_Copilot.Classes
                         "@SlideWalk_StepCount," +
                         "@LookingRolling_Angle," +
                         "@Frames_Between," +
-                        "@Key_Delay," +
+                        "@SendKeyDelay," +
                         "@Total_Frames_Count," +
-                        "@Far_Plane," +
+                        "@ProjectFarPlane," +
                         "@Animation_Length_30," +
                         "@Animation_Length_60," +
                         "@M3PIFileLocation," +
@@ -214,9 +214,9 @@ namespace MB3D_Animation_Copilot.Classes
                         colProjectData[0].SlideWalk_StepCount,
                         colProjectData[0].LookingRolling_Angle,
                         colProjectData[0].Frames_Between,
-                        colProjectData[0].Key_Delay,
+                        colProjectData[0].SendKeyDelay,
                         colProjectData[0].Total_Frames_Count,
-                        colProjectData[0].Far_Plane,
+                        colProjectData[0].ProjectFarPlane,
                         colProjectData[0].Animation_Length_30,
                         colProjectData[0].Animation_Length_60,
                         colProjectData[0].M3PIFileLocation,
@@ -269,9 +269,9 @@ namespace MB3D_Animation_Copilot.Classes
                         "SlideWalk_StepCount=@SlideWalk_StepCount," +
                         "LookingRolling_Angle=@LookingRolling_Angle," +
                         "Frames_Between=@Frames_Between," +
-                        "Key_Delay = @Key_Delay," +
+                        "SendKeyDelay = @SendKeyDelay," +
                         "Total_Frames_Count=@Total_Frames_Count," +
-                        "Far_Plane=@Far_Plane," +
+                        "ProjectFarPlane=@ProjectFarPlane," +
                         "Animation_Length_30 = @AnimationLen30, " +
                         "Animation_Length_60 = @AnimationLen60, " +
                         "M3PIFileLocation = @M3PIFileLocation," +
@@ -285,9 +285,9 @@ namespace MB3D_Animation_Copilot.Classes
                         colProjectData[0].SlideWalk_StepCount,
                         colProjectData[0].LookingRolling_Angle,
                         colProjectData[0].Frames_Between,
-                        colProjectData[0].Key_Delay,
+                        colProjectData[0].SendKeyDelay,
                         colProjectData[0].Total_Frames_Count,
-                        colProjectData[0].Far_Plane,
+                        colProjectData[0].ProjectFarPlane,
                         @AnimationLen30 = colProjectData[0].Animation_Length_30,
                         @AnimationLen60 = colProjectData[0].Animation_Length_60,
                         colProjectData[0].M3PIFileLocation,
@@ -338,8 +338,8 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     int intKeyframeID = cnn.ExecuteScalar<int>("INSERT INTO Keyframes " +
-                        "(ProjectID_Ref,KeyframeType,KeyframeNum,KeyframeDisplay,FramesBetween,FrameCount,FarPlane,KeyframeNote) " +
-                        "VALUES(@intProjectID,@KeyframeType,@KeyframeNum,@KeyframeDisplay,@FramesBetween,@FrameCount,@FarPlane,@KeyframeNote) " +
+                        "(ProjectID_Ref,KeyframeType,KeyframeNum,KeyframeDisplay,FramesBetween,FrameCount,KeyframeFarPlane,KeyframeNote) " +
+                        "VALUES(@intProjectID,@KeyframeType,@KeyframeNum,@KeyframeDisplay,@FramesBetween,@FrameCount,@KeyframeFarPlane,@KeyframeNote) " +
                         "RETURNING ID",
                     param: new
                     {
@@ -349,7 +349,7 @@ namespace MB3D_Animation_Copilot.Classes
                         itemKeyframe.KeyframeDisplay,
                         itemKeyframe.FramesBetween,
                         itemKeyframe.FrameCount,
-                        itemKeyframe.FarPlane,
+                        itemKeyframe.KeyframeFarPlane,
                         itemKeyframe.KeyframeNote
                     });
 
@@ -371,20 +371,20 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     cnn.Execute("INSERT INTO Keyframe_Actions " +
-                        "(KeyframesID_Ref," +
+                        "(KeyframeID_Ref," +
                         "ActionName," +
                         "SendKeyChar," +
                         "SendKeyQuantity," +
                         "StepAngleCount) " +
                         "VALUES(" +
-                        "@KeframesID_Ref," +
+                        "@KeframeID_Ref," +
                         "@ActionName," +
                         "@SendKeyChar," +
                         "@SendKeyQuantity," +
                         "@StepAngleCount)",
                     param: new
                     {
-                        @KeframesID_Ref = intKeyframeID,
+                        @KeframeID_Ref = intKeyframeID,
                         itemKeyframeAction.ActionName,
                         itemKeyframeAction.SendKeyChar,
                         itemKeyframeAction.SendKeyQuantity,
@@ -408,14 +408,14 @@ namespace MB3D_Animation_Copilot.Classes
                     string strQueryAsc;
                     if (bolSortAsc)
                     {
-                        strQueryAsc = "SELECT ID,KeyframeType,KeyframeNum,KeyframeDisplay,FramesBetween,FrameCount,FarPlane,KeyframeApproved,KeyframeNote" +
+                        strQueryAsc = "SELECT ID,KeyframeType,KeyframeNum,KeyframeDisplay,FramesBetween,FrameCount,KeyframeFarPlane,KeyframeApproved,KeyframeNote" +
                                       " FROM Keyframes" +
                                       " WHERE ProjectID_Ref = @ProjectID" +
                                       " ORDER BY KeyframeNum ASC";
                     }
                     else
                     {
-                        strQueryAsc = "SELECT ID,KeyframeType,KeyframeNum,KeyframeDisplay,FramesBetween,FrameCount,FarPlane,KeyframeApproved,KeyframeNote" +
+                        strQueryAsc = "SELECT ID,KeyframeType,KeyframeNum,KeyframeDisplay,FramesBetween,FrameCount,KeyframeFarPlane,KeyframeApproved,KeyframeNote" +
                                       " FROM Keyframes" +
                                       " WHERE ProjectID_Ref = @ProjectID" +
                                       " ORDER BY KeyframeNum DESC";
@@ -469,7 +469,7 @@ namespace MB3D_Animation_Copilot.Classes
                 {
                     //Delete the Keyframe Actions children records
                     cnn.Execute("DELETE FROM Keyframe_Actions " +
-                                "WHERE KeyframesID_Ref = @KeyframeID",
+                                "WHERE KeyframeID_Ref = @KeyframeID",
                     param: new
                     {
                         @KeyframeID = argKeyframeID
@@ -499,7 +499,7 @@ namespace MB3D_Animation_Copilot.Classes
                 {
                     //Delete the Keyframe Actions children records
                     cnn.Execute("DELETE FROM Keyframe_Actions " +
-                                "WHERE KeyframesID_Ref = @KeyframeID",
+                                "WHERE KeyframeID_Ref = @KeyframeID",
                     param: new
                     {
                         @KeyframeID = argKeyframeID
@@ -523,7 +523,7 @@ namespace MB3D_Animation_Copilot.Classes
                 {
                     cnn.Execute("DELETE FROM Keyframe_Actions WHERE ID IN (" +
                                     "SELECT A.ID FROM Keyframes as K " +
-                                    "LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref " +
+                                    "LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframeID_Ref " +
                                     "WHERE K.ProjectID_Ref = @ProjectID)",
                     param: new
                     {
@@ -555,7 +555,7 @@ namespace MB3D_Animation_Copilot.Classes
                     //Delete Keyframe actions
                     cnn.Execute("DELETE FROM Keyframe_Actions WHERE ID IN (" +
                                     "SELECT A.ID FROM Keyframes as K " +
-                                    "LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref " +
+                                    "LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframeID_Ref " +
                                     "WHERE K.ProjectID_Ref = @ProjectID " +
                                     "AND K.KeyframeNum BETWEEN @StartKeyFrame AND @EndKeyFrame)",
                     param: new
@@ -695,7 +695,7 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
-        public static void UpdateFarPlaneRangeOfKeyframe(int argFarPlane, int argProjectID, int argStartKeyFrame, int argEndKeyFrame)
+        public static void UpdateFarPlaneRangeOfKeyframe(int argKeyframeFarPlane, int argProjectID, int argStartKeyFrame, int argEndKeyFrame)
         {
             using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
             {
@@ -703,13 +703,13 @@ namespace MB3D_Animation_Copilot.Classes
                 {
                     //Update Keyframes
                     cnn.Execute("UPDATE Keyframes" +
-                                " SET FarPlane = @FarPlane" +
+                                " SET KeyframeFarPlane = @KeyframeFarPlane" +
                                 " WHERE ProjectID_Ref = @ProjectID" +
                                 " AND KeyframeNum BETWEEN @StartKeyFrame AND @EndKeyFrame",
                     param: new
                     {
                         @ProjectID = argProjectID,
-                        @FarPlane = argFarPlane,
+                        @KeyframeFarPlane = argKeyframeFarPlane,
                         @StartKeyFrame = argStartKeyFrame,
                         @EndKeyFrame = argEndKeyFrame
                     });
@@ -934,7 +934,7 @@ namespace MB3D_Animation_Copilot.Classes
 
                     //Get the count of Move Actions for the keyframe ID argument
                     MoveActionsQuantity = cnn.ExecuteScalar<int>("SELECT COUNT(A.ActionName)" +
-                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframeID_Ref" +
                                                                  " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @KeyframeID",
                     param: new
                     {
@@ -965,7 +965,7 @@ namespace MB3D_Animation_Copilot.Classes
 
                     //Get the count of Move Actions for the keyframe ID argument
                     NoMoveActionsQuantity = cnn.ExecuteScalar<int>("SELECT COUNT(A.ActionName)" +
-                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframeID_Ref" +
                                                                  " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @KeyframeID AND A.ActionName = @ActionName",
                     param: new
                     {
@@ -1000,7 +1000,7 @@ namespace MB3D_Animation_Copilot.Classes
                 {
                     var output = cnn.Query<KeyframeActionsModel>("SELECT A.ID, A.ActionName, A.SendKeyChar, A.SendKeyQuantity, A.StepAngleCount" +
                                                                  " FROM Keyframe_Actions A" +
-                                                                 " WHERE A.KeyframesID_Ref = @KeyframeID AND A.SendKeyChar <> @InsertCmd" +
+                                                                 " WHERE A.KeyframeID_Ref = @KeyframeID AND A.SendKeyChar <> @InsertCmd" +
                                                                  " ORDER BY A.ID",
                     param: new
                     {
@@ -1026,7 +1026,7 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     var output = cnn.Query<KeyframeActionsModel>("SELECT A.ID, A.ActionName,A.SendKeyChar,A.SendKeyQuantity,A.StepAngleCount" +
-                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframeID_Ref" +
                                                                  " WHERE K.ProjectID_Ref=@ProjectID AND K.KeyframeNum = @KeyframeNum" +
                                                                  " ORDER BY A.ID",
                     param: new
@@ -1055,7 +1055,7 @@ namespace MB3D_Animation_Copilot.Classes
                     int intMaxKeyframeID = GetProjectLastKeyframeID(intProjectID);
 
                     var output = cnn.Query<KeyframeActionsModel>("SELECT A.ID, A.ActionName,A.SendKeyChar,A.SendKeyQuantity,A.StepAngleCount" +
-                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframeID_Ref" +
                                                                  " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @TargetKeyframeID" +
                                                                  " ORDER BY A.ID",
                     param: new
@@ -1081,7 +1081,7 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     var output = cnn.Query<KeyframeActionsModel>("SELECT A.ID, A.ActionName, A.SendKeyChar, A.SendKeyQuantity, A.StepAngleCount" +
-                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
+                                                                 " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframeID_Ref" +
                                                                  " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @KeyframeID AND A.ActionName = @ActionName",
                     param: new
                     {
@@ -1101,45 +1101,6 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
-        //public static bool GetKeyActionExists(int argProjectID, int argKeyframeID, KeyframeActionsModel objKeyframeAction)
-        //{
-
-        //    try
-        //    {
-        //        int MoveActionQuantity = 0;
-
-        //        using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
-        //        {
-
-        //            //Get the count of Move Actions for the keyframe ID argument
-        //            MoveActionQuantity = cnn.ExecuteScalar<int>("SELECT COUNT(A.ActionName)" +
-        //                                                         " FROM Keyframes as K LEFT JOIN Keyframe_Actions A ON K.ID = A.KeyframesID_Ref" +
-        //                                                         " WHERE K.ProjectID_Ref=@ProjectID AND K.ID = @KeyframeID AND A.ActionName = @ActionName",
-        //            param: new
-        //            {
-        //                @ProjectID = argProjectID,
-        //                @KeyframeID = argKeyframeID,
-        //                @ActionName = objKeyframeAction.ActionName,
-        //            });
-        //        }
-
-        //        if (MoveActionQuantity == 0)
-        //        {
-        //            return false;
-        //        }
-        //        else
-        //        {
-        //            return true;
-        //        }
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        Program._MainForm.LogException("DAM GetKeyframeMoveActionsQuantity", ex); //Log this error
-        //        MessageBoxAdv.Show(ex.Message, "Error @ DAM GetKeyframeMoveActionsQuantity. Error was logged.", MessageBoxButtons.OK, MessageBoxIcon.Error);
-        //        return false;
-        //    }
-        //}
-
         public static void UpdateKeyframeAction(int argKeyframeID_Ref, KeyframeActionsModel itemKeyframeAction)
         {
             try
@@ -1151,10 +1112,10 @@ namespace MB3D_Animation_Copilot.Classes
                         " SendKeyChar=@SendKeyChar," +
                         " SendKeyQuantity=@SendKeyQuantity, " +
                         " StepAngleCount=@StepAngleCount " +
-                        " WHERE KeyframesID_Ref = @KeyframesID_Ref AND ActionName = @ActionName",
+                        " WHERE KeyframeID_Ref = @KeyframeID_Ref AND ActionName = @ActionName",
                     param: new
                     {
-                        @KeyframesID_Ref = argKeyframeID_Ref,
+                        @KeyframeID_Ref = argKeyframeID_Ref,
                         @ActionName = itemKeyframeAction.ActionName,
                         @SendKeyChar = itemKeyframeAction.SendKeyChar,
                         @SendKeyQuantity = itemKeyframeAction.SendKeyQuantity,
@@ -1176,11 +1137,11 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     cnn.Execute("DELETE FROM Keyframe_Actions " +
-                                "WHERE KeyframesID_Ref = @KeyframesID_Ref AND ActionName = @ActionName",
+                                "WHERE KeyframeID_Ref = @KeyframeID_Ref AND ActionName = @ActionName",
                     param: new
                     {
 
-                        @KeyframesID_Ref = argKeyframeID_Ref,
+                        @KeyframeID_Ref = argKeyframeID_Ref,
                         @ActionName = itemKeyframeAction.ActionName,
                         @SendKeyChar = itemKeyframeAction.SendKeyChar,
                         @SendKeyQuantity = itemKeyframeAction.SendKeyQuantity,
@@ -1407,9 +1368,9 @@ namespace MB3D_Animation_Copilot.Classes
             {
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
-                    cnn.Execute("INSERT INTO Sequence_Steps(SequenceParent_ID, Step_Group, Step_Name, Step_Count, Step_SendKey, Step_SendKeyQty) " +
+                    cnn.Execute("INSERT INTO Sequence_Steps(SequenceParent_ID, Step_Group, Step_Name, Step_AngleCount, Step_SendKey, Step_SendKeyQty) " +
                                 "SELECT @SeqParentID, k.KeyframeNum, a.ActionName, a.StepAngleCount, a.SendKeyChar, a.SendKeyQuantity " +
-                                "FROM Keyframes as k LEFT JOIN Keyframe_Actions a ON k.ID = a.KeyframesID_Ref " +
+                                "FROM Keyframes as k LEFT JOIN Keyframe_Actions a ON k.ID = a.KeyframeID_Ref " +
                                 "WHERE k.ProjectID_Ref = @ProjectID " +
                                 "AND k.KeyframeNum BETWEEN @FromKeyframeNum AND @ToKeyframeNum " +
                                 "ORDER BY a.ID",
@@ -1540,7 +1501,7 @@ namespace MB3D_Animation_Copilot.Classes
                 using (IDbConnection cnn = new SQLiteConnection(LoadConnectionString()))
                 {
                     StringBuilder sb = new StringBuilder();
-                    sb.Append("SELECT Step_ID, Step_Group, Step_Name, Step_Count, Step_SendKey, Step_SendKeyQty ");
+                    sb.Append("SELECT Step_ID, Step_Group, Step_Name, Step_AngleCount, Step_SendKey, Step_SendKeyQty ");
                     sb.Append("FROM Sequence_Steps ");
                     sb.Append("INNER JOIN Sequence_Parent ON Sequence_Parent.ID = Sequence_Steps.SequenceParent_ID ");
                     sb.Append("WHERE Sequence_Parent.ID = ");
@@ -1559,7 +1520,7 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
-        public static void ManageSeqUpdateStep(int argStepID, int argStepGroup, string argStepName, int argSendKeyQtyUserEntry, string argStepSendKey, int argStepCount)
+        public static void ManageSeqUpdateStep(int argStepID, int argStepGroup, string argStepName, int argSendKeyQtyUserEntry, string argStepSendKey, int argStepAngleCount)
         {
             try
             {
@@ -1568,7 +1529,7 @@ namespace MB3D_Animation_Copilot.Classes
                     cnn.Execute("UPDATE Sequence_Steps" +
                         " SET Step_Group=@StepGroup," +
                         " Step_Name=@StepName," +
-                        " Step_Count=@StepCount," +
+                        " Step_AngleCount=@StepAngleCount," +
                         " Step_SendKeyQty=@StepSendKeyQty," +
                         " Step_SendKey=@StepSendKey " +
                         " WHERE Step_ID = @StepID ",
@@ -1576,7 +1537,7 @@ namespace MB3D_Animation_Copilot.Classes
                     {
                         @StepGroup = argStepGroup,
                         @StepName = argStepName,
-                        @StepCount = argStepCount,
+                        @StepAngleCount = argStepAngleCount,
                         @StepSendKeyQty = argSendKeyQtyUserEntry,
                         @StepSendKey = argStepSendKey,
                         @StepID = argStepID
@@ -1590,7 +1551,7 @@ namespace MB3D_Animation_Copilot.Classes
             }
         }
 
-        public static void ManageSeqAddMoveStep(int argSequenceParentID, int argStepGroup, string argMoveStepName, int argMoveStepCount, string argMoveStepSendKey)
+        public static void ManageSeqAddMoveStep(int argSequenceParentID, int argStepGroup, string argMoveStepName, int argMoveStepAngleCount, string argMoveStepSendKey)
         {
             try
             {
@@ -1600,13 +1561,13 @@ namespace MB3D_Animation_Copilot.Classes
                                 "(SequenceParent_ID," +
                                 " Step_Group," +
                                 " Step_Name," +
-                                " Step_Count," +
+                                " Step_AngleCount," +
                                 " Step_SendKey, " +
                                 " Step_SendKeyQty) " +
                                 "VALUES(@SequenceParentID," +
                                 " @StepGroup," +
                                 " @MoveStepName," +
-                                " @MoveStepCount," +
+                                " @MoveStepCountAngle," +
                                 " @MoveStepSendKey," +
                                 " @MoveSendKeyQty)",
                     param: new
@@ -1614,9 +1575,9 @@ namespace MB3D_Animation_Copilot.Classes
                         @SequenceParentID = argSequenceParentID,
                         @StepGroup = argStepGroup,
                         @MoveStepName = argMoveStepName,
-                        @MoveStepCount = argMoveStepCount,
+                        @MoveStepCountAngle = argMoveStepAngleCount,
                         @MoveStepSendKey = argMoveStepSendKey,
-                        @MoveSendKeyQty = argMoveStepCount,
+                        @MoveSendKeyQty = argMoveStepAngleCount,
 
                     });
                 }
@@ -1760,9 +1721,9 @@ namespace MB3D_Animation_Copilot.Classes
                 colProjectData[0].SlideWalk_StepCount = MainForm.cSlideWalkStepCountDefault;
                 colProjectData[0].LookingRolling_Angle = MainForm.cLookingRollingAngleDefault;
                 colProjectData[0].Frames_Between = MainForm.cFramesBetweenDefault;
-                colProjectData[0].Key_Delay = MainForm.cKeyDelayDefault;
+                colProjectData[0].SendKeyDelay = MainForm.cKeyDelayDefault;
                 colProjectData[0].Total_Frames_Count = 0;
-                colProjectData[0].Far_Plane = "500";
+                colProjectData[0].ProjectFarPlane = "500";
                 colProjectData[0].Animation_Length_30 = "00:00";
                 colProjectData[0].Animation_Length_60 = "00:00";
                 colProjectData[0].M3PIFileLocation = string.Empty;
@@ -1794,46 +1755,46 @@ namespace MB3D_Animation_Copilot.Classes
                     //FrameCount increments by the value of Frames Between
                     
                     //Walk forward
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 1, KeyframeType = KT, KeyframeNum = 1, KeyframeDisplay = GetKFDisplay("WF",1,SWC), FramesBetween = FB, FrameCount = 50, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 1, KeyframeType = KT, KeyframeNum = 1, KeyframeDisplay = GetKFDisplay("WF",1,SWC), FramesBetween = FB, FrameCount = 50, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 1, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 2, KeyframeType = KT, KeyframeNum = 2, KeyframeDisplay = GetKFDisplay("WF",1,SWC), FramesBetween = FB, FrameCount = 100, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 2, KeyframeType = KT, KeyframeNum = 2, KeyframeDisplay = GetKFDisplay("WF",1,SWC), FramesBetween = FB, FrameCount = 100, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 2, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
 
                     //Right banking turn
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 3, KeyframeType = KT, KeyframeNum = 3, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 150, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "starting banking right turn "});
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 3, KeyframeType = KT, KeyframeNum = 3, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 150, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "starting banking right turn "});
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 4, KeyframeType = KT, KeyframeNum = 4, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 200, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 4, KeyframeType = KT, KeyframeNum = 4, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 200, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 5, KeyframeType = KT, KeyframeNum = 5, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 250, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 5, KeyframeType = KT, KeyframeNum = 5, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 250, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
                     //Leveling out right banking turn
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 6, KeyframeType = KT, KeyframeNum = 6, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("RCC", 1, LRA)), FramesBetween = FB, FrameCount = 300, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "leveling out from banking right turn " });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 6, KeyframeType = KT, KeyframeNum = 6, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("RCC", 1, LRA)), FramesBetween = FB, FrameCount = 300, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "leveling out from banking right turn " });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 6, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 6, ActionName = "RCC", SendKeyChar = "o", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 7, KeyframeType = KT, KeyframeNum = 7, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("RCC", 1, LRA)), FramesBetween = FB, FrameCount = 350, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "cont leveling out from banking right turn " });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 7, KeyframeType = KT, KeyframeNum = 7, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("RCC", 1, LRA)), FramesBetween = FB, FrameCount = 350, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "cont leveling out from banking right turn " });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 7, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 7, ActionName = "RCC", SendKeyChar = "o", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 8, KeyframeType = KT, KeyframeNum = 8, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("RCC", 1, LRA)), FramesBetween = FB, FrameCount = 400, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "cont leveling out from banking right turn " });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 8, KeyframeType = KT, KeyframeNum = 8, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("RCC", 1, LRA)), FramesBetween = FB, FrameCount = 400, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "cont leveling out from banking right turn " });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 8, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 8, ActionName = "RCC", SendKeyChar = "o", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
                     //Resume walk forward
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 9, KeyframeType = KT, KeyframeNum = 9, KeyframeDisplay = GetKFDisplay("WF", 1, SWC), FramesBetween = FB, FrameCount = 450, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "turn ended, resuming walk forward" });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 9, KeyframeType = KT, KeyframeNum = 9, KeyframeDisplay = GetKFDisplay("WF", 1, SWC), FramesBetween = FB, FrameCount = 450, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "turn ended, resuming walk forward" });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 9, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 10, KeyframeType = KT, KeyframeNum = 10, KeyframeDisplay = GetKFDisplay("WF", 1, SWC), FramesBetween = FB, FrameCount = 500, FarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 10, KeyframeType = KT, KeyframeNum = 10, KeyframeDisplay = GetKFDisplay("WF", 1, SWC), FramesBetween = FB, FrameCount = 500, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "walk forward" });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 10, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1*SWC });
 
                     //Insert the sample keyframe records defined above
@@ -1845,7 +1806,7 @@ namespace MB3D_Animation_Copilot.Classes
                         itemKeyframe.KeyframeDisplay = itemKF.KeyframeDisplay;
                         itemKeyframe.FramesBetween = itemKF.FramesBetween;
                         itemKeyframe.FrameCount = itemKF.FrameCount;
-                        itemKeyframe.FarPlane = itemKF.FarPlane;
+                        itemKeyframe.KeyframeFarPlane = itemKF.KeyframeFarPlane;
                         itemKeyframe.KeyframeNote = itemKF.KeyframeNote;
 
                         //Insert into the DB which returns the ID of the newly inserted keyframe record

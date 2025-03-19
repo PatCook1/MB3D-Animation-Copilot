@@ -54,7 +54,7 @@ namespace MB3D_Animation_Copilot.Child_Forms
             dgv_MoveSequenceSteps.Columns.Add(new GridNumericColumn() { MappingName = "Step_Name", HeaderText = "Step Name", MinimumWidth = 8, Width = 95, AllowEditing = false });
             dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_SendKeyQty", HeaderText = "Send Qty", MinimumWidth = 8, Width = 95, AllowEditing = false, Visible = true, Format = "0.#####" });
             dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_SendKey", HeaderText = "Send Key", MinimumWidth = 8, Width = 95, AllowEditing = false, Visible=false });
-            dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_Count", HeaderText = "Step Count", MinimumWidth = 8, Width = 95, AllowEditing = false, Format = "0.#####" });
+            dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_AngleCount", HeaderText = "Angle/Count", MinimumWidth = 8, Width = 95, AllowEditing = false, Format = "0.#####" });
             dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_Display", HeaderText = "Step Display", MinimumWidth = 8, Width = 95, AllowEditing = false });
 
             dgv_MoveSequenceSteps.AllowEditing = false;
