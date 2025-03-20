@@ -1668,13 +1668,20 @@ namespace MB3D_Animation_Copilot.Classes
                     if (DeleteMoveSequenceRecords)
                     {
                         cnn.Execute("DELETE FROM Sequence_Steps");
+                        cnn.Execute("UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = 'Sequence_Steps'");
+
                         cnn.Execute("DELETE FROM Sequence_Parent");
+                        cnn.Execute("UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = 'Sequence_Parent'");
                     }
 
                     cnn.Execute("DELETE FROM Keyframe_Actions");
+                    cnn.Execute("UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = 'Keyframe_Actions'");
+
                     cnn.Execute("DELETE FROM Keyframes");
+                    cnn.Execute("UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = 'Keyframes'");
 
                     cnn.Execute("DELETE FROM Animation_Project");
+                    cnn.Execute("UPDATE SQLITE_SEQUENCE SET SEQ = 0 WHERE NAME = 'Animation_Project'");
                 }
 
                 return true;
@@ -1762,19 +1769,19 @@ namespace MB3D_Animation_Copilot.Classes
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 2, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
 
                     //Right banking turn
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 3, KeyframeType = KT, KeyframeNum = 3, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 150, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "starting banking right turn "});
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 3, KeyframeType = KT, KeyframeNum = 3, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 2, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 150, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "starting banking right turn "});
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
-                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 2, StepAngleCount = 2 * LRA });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 3, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 4, KeyframeType = KT, KeyframeNum = 4, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 200, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 4, KeyframeType = KT, KeyframeNum = 4, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 2, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 200, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
-                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 2, StepAngleCount = 2 * LRA });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 4, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
-                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 5, KeyframeType = KT, KeyframeNum = 5, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 1, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 250, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
+                    lstSampleDataModel.Add(new SampleProjectKeyframesModel() { SampleKeyframeID = 5, KeyframeType = KT, KeyframeNum = 5, KeyframeDisplay = string.Concat(GetKFDisplay("WF", 1, SWC), GetKFDisplay("LL", 2, LRA), GetKFDisplay("RCW", 1, LRA)), FramesBetween = FB, FrameCount = 250, KeyframeFarPlane = FP, KeyframeApproved = false, KeyframeNote = "holding banking right turn " });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "WF", SendKeyChar = "w", SendKeyQuantity = 1, StepAngleCount = 1 * SWC });
-                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
+                    lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "LL", SendKeyChar = "i", SendKeyQuantity = 2, StepAngleCount = 2 * LRA });
                     lstKeyframeAction_temp.Add(new SampleProjectActionsModel() { SampleKeyframeID_Ref = 5, ActionName = "RCW", SendKeyChar = "u", SendKeyQuantity = 1, StepAngleCount = 1 * LRA });
 
                     //Leveling out right banking turn

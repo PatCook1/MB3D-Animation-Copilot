@@ -394,6 +394,11 @@ namespace MB3D_Animation_Copilot
             tabControl1.SelectedTab = page_About;
         }
 
+        private Exception Exception()
+        {
+            throw new NotImplementedException();
+        }
+
         private void UpdateKeyframeStackLineCharsLegend()
         {
             lbl_KeyframeStackLineChars.Text = string.Concat("Manual:'", cKeyStackLineChar_Manual, "'   Repeat:'", cKeyStackLineChar_Repeat, "'   Move Seq:'", cKeyStackLineChar_Sequence, "'   Replicate Seq:'", cKeyStackLineChar_Replicate, "'");
@@ -403,7 +408,6 @@ namespace MB3D_Animation_Copilot
         {
             try
             {
-
                 //If applicable, find the project list item that matches the Project ID
                 List<ProjectListModel> lstProjectList = null;
                 lstProjectList = Data_Access_Methods.LoadProjectsList();
@@ -632,7 +636,7 @@ namespace MB3D_Animation_Copilot
                         mtbx_KeyDelay.Value = lstProjectData[0].SendKeyDelay;
                         mtbx_FrameCount.Value = Convert.ToDouble(lstProjectData[0].Total_Frames_Count);
                         m_TotalFramesCount = (int)lstProjectData[0].Total_Frames_Count;
-                        mtbx_FarPlane.Value = Convert.ToDouble(lstProjectData[0].ProjectFarPlane);
+                        mtbx_ProjectFarPlane.Value = Convert.ToDouble(lstProjectData[0].ProjectFarPlane);
                         lbl_30FPSTimeCalc.Text = lstProjectData[0].Animation_Length_30;
                         lbl_60FPSTimeCalc.Text = lstProjectData[0].Animation_Length_60;
                         tbx_M3PI_FileLocation.Text = lstProjectData[0].M3PIFileLocation;
@@ -1147,9 +1151,9 @@ namespace MB3D_Animation_Copilot
                     if (lstKeyframeAction.Count > 0) //If we have at least one Keyframe Action record
                     {
 
-                        //------------------------------------------------------------------
-                        //An Action record was that matches user's Action dropdown selection
-                        //------------------------------------------------------------------
+                        //---------------------------------------------------------------------------
+                        //An Action record was returned that matches user's Action dropdown selection
+                        //---------------------------------------------------------------------------
 
                         //If the user selected the No-Move action from the dropdown action list
                         if (selectedAction.ActionName == cNMKn)
@@ -1175,8 +1179,8 @@ namespace MB3D_Animation_Copilot
                             tbx_KeyframeAction_Name.Text = lstKeyframeAction[0].ActionName;
                             tbx_SendKeyChar.Text = lstKeyframeAction[0].SendKeyChar;
                             num_SendKeyQuantity.Value = lstKeyframeAction[0].SendKeyQuantity;
-                            num_SendKeyStepAngleCount.Value = lstKeyframeAction[0].StepAngleCount;
-
+                            //Below loads the num_SendKeyStepAngleCount control per the mainform header step/angle values per the Action Name
+                            num_SendKeyStepAngleCount.Value = GetStepAngleCountValue_FromMainForm(lstKeyframeAction[0].ActionName);
                             //Enable the step qty entries
                             num_SendKeyQuantity.Enabled = true;
                             num_SendKeyStepAngleCount.Enabled = true;
@@ -1245,8 +1249,8 @@ namespace MB3D_Animation_Copilot
             //We do this in case there are no keyframe records for the selected project
             tbx_KeyframeAction_Name.Clear();
             tbx_SendKeyChar.Clear();
-            num_SendKeyQuantity.Value = 1;
-            num_SendKeyStepAngleCount.Value = 1;
+            num_SendKeyQuantity.Value = 0;
+            num_SendKeyStepAngleCount.Value = 0;
         }
 
         private void btn_KeyframeAction_Update_Click(object sender, EventArgs e)
@@ -1506,7 +1510,7 @@ namespace MB3D_Animation_Copilot
                     itemKeyframe.KeyframeDisplay = cNMKfn; //The "No-Move Keyframe" display summary
                     itemKeyframe.FramesBetween = intFramesBetween;
                     itemKeyframe.FrameCount = 0; //This value will be recalculated by calling RecalculateFrameCountAllRecords() below
-                    itemKeyframe.KeyframeFarPlane = (int)mtbx_FarPlane.Value;
+                    itemKeyframe.KeyframeFarPlane = (int)mtbx_ProjectFarPlane.Value;
                     itemKeyframe.KeyframeNote = "Inserted Keyframe";
 
                     //Insert into the DB which returns the ID of the newly inserted record
@@ -1537,7 +1541,7 @@ namespace MB3D_Animation_Copilot
                     //Select the top (latest keyframe number) keyframe row
                     dgv_Keyframes_sf.SelectedIndex = 0;
 
-                    MessageBoxAdv.Show(string.Concat("Keyframe #'", NewKeyframeNum.ToString(), "' has been added as a No-Move keyframe?", NL, "Keyframe numbers have been renumbered to reflect the inserted keyframe."), "Insert Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBoxAdv.Show(string.Concat("Keyframe #'", NewKeyframeNum.ToString(), "' has been added as a No-Move keyframe?", NL, "Keyframe numbers have been renumbered to reflect the inserted keyframe.",NL, "Be sure your Mandelbulb3D project keyframes are ajusted accordingly."), "Insert Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     LoadFooterMessage("Keyframe inserted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, true);
                 }
@@ -1606,7 +1610,7 @@ namespace MB3D_Animation_Copilot
                     //Select the top (latest keyframe number) keyframe row
                     dgv_Keyframes_sf.SelectedIndex = 0;
 
-                    MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' and its Move Actions were deleted?", NL, "Keyframe numbers have been renumbered to reflect the deleted keyframe."), "Please Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBoxAdv.Show(string.Concat("Keyframe #'", cellValue_KFNum, "' and its Move Actions were deleted?", NL, "Keyframe numbers have been renumbered to reflect the deleted keyframe.", NL, "Be sure your Mandelbulb3D keyframes are adjusted accordingly."), "Please Note", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     LoadFooterMessage("Keyframe deleted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, false);
                 }
@@ -1972,7 +1976,7 @@ namespace MB3D_Animation_Copilot
         {
             try
             {
-                int intFarPlane = (int)mtbx_FarPlane.Value;
+                int intFarPlane = (int)mtbx_ProjectFarPlane.Value;
                 int intStartKeyframeNum = (int)num_StartDeleteKeyframe.Value;
                 int intEndKeyframeNum = (int)num_EndDeleteKeyframe.Value;
                 int intHighestKFNumber = Data_Access_Methods.GetHighestKeyframeNumberByProjectID(m_SelectedProjectID);
@@ -2174,7 +2178,7 @@ namespace MB3D_Animation_Copilot
             }
             else
             {
-                if (!m_EnableCapture == true & mtbx_FarPlane.Value == 0)
+                if (!m_EnableCapture == true & mtbx_ProjectFarPlane.Value == 0)
                 {
                     MessageBoxAdv.Show("Reminder: The Far Plane value is zero.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
@@ -2283,7 +2287,7 @@ namespace MB3D_Animation_Copilot
                     mtbx_LookingRollingAngle.Value = cLookingRollingAngleDefault;
                     mtbx_FramesBetween.Value = cFramesBetweenDefault;
                     mtbx_KeyDelay.Value = cKeyDelayDefault;
-                    mtbx_FarPlane.Value = 0;
+                    mtbx_ProjectFarPlane.Value = 0;
 
                     tbx_M3PI_FileLocation.Text = string.Empty;
                     tbx_M3A_FileLocation.Text = string.Empty;
@@ -2434,7 +2438,7 @@ namespace MB3D_Animation_Copilot
                 colProjectData[0].Frames_Between = (int)mtbx_FramesBetween.Value;
                 colProjectData[0].SendKeyDelay = (int)mtbx_KeyDelay.Value;
                 colProjectData[0].Total_Frames_Count = (int)mtbx_FrameCount.Value;
-                colProjectData[0].ProjectFarPlane = mtbx_FarPlane.Value.ToString();
+                colProjectData[0].ProjectFarPlane = mtbx_ProjectFarPlane.Value.ToString();
                 colProjectData[0].Animation_Length_30 = lbl_30FPSTimeCalc.Text;
                 colProjectData[0].Animation_Length_60 = lbl_60FPSTimeCalc.Text;
                 colProjectData[0].M3PIFileLocation = tbx_M3PI_FileLocation.Text;
@@ -2562,7 +2566,7 @@ namespace MB3D_Animation_Copilot
                     file.WriteLine(string.Concat("   Total Frames Count:", mtbx_FrameCount.Value.ToString()));
                     file.WriteLine(string.Concat("   Estimated Length @ 30FPS:", lbl_30FPSTimeCalc.Text));
                     file.WriteLine(string.Concat("   Estimated Length @ 60FPS::", lbl_60FPSTimeCalc.Text));
-                    file.WriteLine(string.Concat("   Far Plane:", mtbx_FarPlane.Value.ToString()));
+                    file.WriteLine(string.Concat("   Far Plane:", mtbx_ProjectFarPlane.Value.ToString()));
 
                     file.WriteLine("");
 
@@ -2939,6 +2943,8 @@ namespace MB3D_Animation_Copilot
 
         private void ClearProject(bool bolIsFullClear)
         {
+            var NL = Environment.NewLine;
+           
             //Check if the project have keyframes
             if (Data_Access_Methods.GetProjectKeyframeQuantity(m_SelectedProjectID) <= 0)
             {
@@ -2950,10 +2956,10 @@ namespace MB3D_Animation_Copilot
             m_SelectedProjectID = selectedProject.ID; //Update the global m_SelectedProjectID var
             string strSelectedProjectName = selectedProject.Project_Name; //Update the global m_SelectedProjectID var
 
-            DialogResult result1 = MessageBoxAdv.Show(string.Concat("This function is intended to restart a project. It will delete all project Keyframes for project '", strSelectedProjectName, "'. This action cannot be undone! Proceed?"), "Confirm Start Over", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+            DialogResult result1 = MessageBoxAdv.Show(string.Concat("This function is intended to restart a project.", NL, "It will delete all project Keyframes for project '", strSelectedProjectName, "'.", NL, "This action cannot be undone! Proceed?"), "Confirm Start Over", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (result1 == DialogResult.Yes)
             {
-                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you VERY sure? This will DELETE all of the Keyframes for project '", strSelectedProjectName, "'. This action cannot be undone!"), "Confirm Start Over", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                DialogResult result2 = MessageBoxAdv.Show(string.Concat("Are you VERY sure? This will DELETE all of the Keyframes for project '", strSelectedProjectName, "'.", NL, "This action cannot be undone!"), "Confirm Start Over", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
                 if (result2 == DialogResult.Yes)
                 {
                     ClearKeyStack();
@@ -3232,7 +3238,7 @@ namespace MB3D_Animation_Copilot
                 itemKeyframe.KeyframeDisplay = m_MovesList;
                 itemKeyframe.FramesBetween = intFramesBetween;
                 itemKeyframe.FrameCount = m_TotalFramesCount;
-                itemKeyframe.KeyframeFarPlane = (int)mtbx_FarPlane.Value;
+                itemKeyframe.KeyframeFarPlane = (int)mtbx_ProjectFarPlane.Value;
                 itemKeyframe.KeyframeNote = strKeyframeNote;
 
                 //Insert into the DB which returns the ID of the newly inserted record
@@ -4916,7 +4922,7 @@ namespace MB3D_Animation_Copilot
                     //Perform the database purge                
                     if (Data_Access_Methods.EraseAllDatabaseRecords(true))
                     {
-                        PrepareMainformPostPurge();
+                        PrepareMainformPostPurge(true);
                         MessageBoxAdv.Show("Your database has been purged of all records.", "Purge Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
@@ -4938,14 +4944,14 @@ namespace MB3D_Animation_Copilot
                     //Perform the database purge                
                     if (Data_Access_Methods.EraseAllDatabaseRecords(false))
                     {
-                        PrepareMainformPostPurge();
+                        PrepareMainformPostPurge(false);
                         MessageBoxAdv.Show("Your database has been purged of all records except Move Sequence records.", "Purge Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                 }
             }
         }
 
-        private void PrepareMainformPostPurge()
+        private void PrepareMainformPostPurge(bool ResetMoveDesignerControls)
         {
             PopulateProjectList(-1);
 
@@ -4957,11 +4963,20 @@ namespace MB3D_Animation_Copilot
             mtbx_KeyDelay.Value = cKeyDelayDefault;
             mtbx_FrameCount.Value = 0;
             m_TotalFramesCount = 0;
-            mtbx_FarPlane.Value = 0;
+            mtbx_ProjectFarPlane.Value = 0;
+            mtbx_NextKeyframeNumber.Value = 1;
+            m_NextKeyframeNumber = 1;
             lbl_30FPSTimeCalc.Text = "00:00";
             lbl_60FPSTimeCalc.Text = "00:00";
             tbx_M3PI_FileLocation.Text = string.Empty;
             tbx_M3A_FileLocation.Text = string.Empty;
+
+            if (ResetMoveDesignerControls)
+            {
+                drp_ManageSeqMoveSequences.SelectedItem = null;
+                tbx_SequenceDesc_Manage.Text = string.Empty;
+                dgv_ManageMoveSequence.DataSource = null;
+            }
 
             PopulateKeyframesDatagrid(false);
             PopulateUseSequenceList();
@@ -4995,7 +5010,7 @@ namespace MB3D_Animation_Copilot
 
             if (Data_Access_Methods.CreateSampleAnimationProject(SampleProjectName))
             {
-                mtbx_FarPlane.Value = 500; //Update the UI to be consistent with the value of FarPlane for the sample records
+                mtbx_ProjectFarPlane.Value = 500; //Update the UI to be consistent with the value of FarPlane for the sample records
 
                 PopulateProjectList(-1);
 
@@ -5015,6 +5030,9 @@ namespace MB3D_Animation_Copilot
 
                 //And set the dropdown to the found item
                 //Note: The Change event of drp_ProjectList will fire LoadProjectData and PopulateKeyframesDatagrid to populate the UI
+
+                drp_ProjectList.Focus(); //Set focus on the project dropdown
+                drp_ProjectList.Select();
                 drp_ProjectList.SelectedIndex = idx;
 
                 MessageBoxAdv.Show(string.Concat("A sample animation project named '", SampleProjectName, "' has been created."), "Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -5326,6 +5344,8 @@ namespace MB3D_Animation_Copilot
             using (StreamWriter writer = new StreamWriter(ErrorFilePathName, false))
             {
                 writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
+                writer.WriteLine("AppVersion : " + ConfigurationManager.AppSettings["AppVersionDate"]);
+                writer.WriteLine("AssemblyVer : " + typeof(String).Assembly.GetName().Version);
                 writer.WriteLine("Error @ " + argProcedureName);
                 writer.WriteLine();
                 while (ex != null)

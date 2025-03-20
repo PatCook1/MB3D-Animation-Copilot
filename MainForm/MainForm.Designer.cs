@@ -71,7 +71,7 @@ namespace MB3D_Animation_Copilot
             mtbx_FramesBetween = new Syncfusion.WinForms.Input.SfNumericTextBox();
             mtbx_LookingRollingAngle = new Syncfusion.WinForms.Input.SfNumericTextBox();
             mtbx_SlidingWalkingCount = new Syncfusion.WinForms.Input.SfNumericTextBox();
-            mtbx_FarPlane = new Syncfusion.WinForms.Input.SfNumericTextBox();
+            mtbx_ProjectFarPlane = new Syncfusion.WinForms.Input.SfNumericTextBox();
             mtbx_FrameCount = new Syncfusion.WinForms.Input.SfNumericTextBox();
             tbx_AnimationName = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
             tbx_ProjectNotes = new Syncfusion.Windows.Forms.Tools.TextBoxExt();
@@ -649,7 +649,7 @@ namespace MB3D_Animation_Copilot
             pnl_Top.Controls.Add(mtbx_FramesBetween);
             pnl_Top.Controls.Add(mtbx_LookingRollingAngle);
             pnl_Top.Controls.Add(mtbx_SlidingWalkingCount);
-            pnl_Top.Controls.Add(mtbx_FarPlane);
+            pnl_Top.Controls.Add(mtbx_ProjectFarPlane);
             pnl_Top.Controls.Add(mtbx_FrameCount);
             pnl_Top.Controls.Add(tbx_AnimationName);
             pnl_Top.Controls.Add(tbx_ProjectNotes);
@@ -888,28 +888,28 @@ namespace MB3D_Animation_Copilot
             mtbx_SlidingWalkingCount.TextChanged += mtbx_SlidingWalkingCount_TextChanged;
             mtbx_SlidingWalkingCount.Enter += mtbx_SlidingWalkingCount_Enter;
             // 
-            // mtbx_FarPlane
+            // mtbx_ProjectFarPlane
             // 
-            mtbx_FarPlane.BackColor = System.Drawing.Color.Black;
-            mtbx_FarPlane.Font = new System.Drawing.Font("Segoe UI", 26F);
-            mtbx_FarPlane.ForeColor = System.Drawing.Color.White;
-            mtbx_FarPlane.HideTrailingZeros = true;
-            mtbx_FarPlane.Location = new System.Drawing.Point(1059, 76);
-            mtbx_FarPlane.MaxLength = 5;
-            mtbx_FarPlane.MaxValue = 10000D;
-            mtbx_FarPlane.MinValue = 0D;
-            mtbx_FarPlane.Name = "mtbx_FarPlane";
-            mtbx_FarPlane.Size = new System.Drawing.Size(140, 54);
-            mtbx_FarPlane.Style.BackColor = System.Drawing.Color.Black;
-            mtbx_FarPlane.Style.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            mtbx_FarPlane.Style.NegativeForeColor = System.Drawing.Color.White;
-            mtbx_FarPlane.Style.PositiveForeColor = System.Drawing.Color.White;
-            mtbx_FarPlane.Style.ZeroForeColor = System.Drawing.Color.White;
-            mtbx_FarPlane.TabIndex = 71;
-            mtbx_FarPlane.Text = "0";
-            mtbx_FarPlane.ThemeName = "Edit the far Plane Setting (0-10,000)";
-            mtbx_FarPlane.Enter += mtbx_FarPlane_Enter;
-            mtbx_FarPlane.KeyUp += mtbx_FrameCount_KeyUp;
+            mtbx_ProjectFarPlane.BackColor = System.Drawing.Color.Black;
+            mtbx_ProjectFarPlane.Font = new System.Drawing.Font("Segoe UI", 26F);
+            mtbx_ProjectFarPlane.ForeColor = System.Drawing.Color.White;
+            mtbx_ProjectFarPlane.HideTrailingZeros = true;
+            mtbx_ProjectFarPlane.Location = new System.Drawing.Point(1059, 76);
+            mtbx_ProjectFarPlane.MaxLength = 5;
+            mtbx_ProjectFarPlane.MaxValue = 10000D;
+            mtbx_ProjectFarPlane.MinValue = 0D;
+            mtbx_ProjectFarPlane.Name = "mtbx_ProjectFarPlane";
+            mtbx_ProjectFarPlane.Size = new System.Drawing.Size(140, 54);
+            mtbx_ProjectFarPlane.Style.BackColor = System.Drawing.Color.Black;
+            mtbx_ProjectFarPlane.Style.Font = new System.Drawing.Font("Segoe UI", 28F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            mtbx_ProjectFarPlane.Style.NegativeForeColor = System.Drawing.Color.White;
+            mtbx_ProjectFarPlane.Style.PositiveForeColor = System.Drawing.Color.White;
+            mtbx_ProjectFarPlane.Style.ZeroForeColor = System.Drawing.Color.White;
+            mtbx_ProjectFarPlane.TabIndex = 71;
+            mtbx_ProjectFarPlane.Text = "0";
+            mtbx_ProjectFarPlane.ThemeName = "Edit the far Plane Setting (0-10,000)";
+            mtbx_ProjectFarPlane.Enter += mtbx_FarPlane_Enter;
+            mtbx_ProjectFarPlane.KeyUp += mtbx_FrameCount_KeyUp;
             // 
             // mtbx_FrameCount
             // 
@@ -1856,8 +1856,8 @@ namespace MB3D_Animation_Copilot
             tabControl1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             tabControl1.Controls.Add(page_AnimationCopilot);
             tabControl1.Controls.Add(page_MoveDesigner);
-            tabControl1.Controls.Add(page_Utilities);
             tabControl1.Controls.Add(page_Library);
+            tabControl1.Controls.Add(page_Utilities);
             tabControl1.Controls.Add(page_Admin);
             tabControl1.Controls.Add(page_About);
             tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -3518,7 +3518,7 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.Windows.Forms.Tools.TextBoxExt tbx_AnimationName;
         private System.Windows.Forms.ContextMenuStrip contextMenuStrip1;
         private Syncfusion.WinForms.Input.SfNumericTextBox mtbx_FrameCount;
-        private Syncfusion.WinForms.Input.SfNumericTextBox mtbx_FarPlane;
+        private Syncfusion.WinForms.Input.SfNumericTextBox mtbx_ProjectFarPlane;
         private Syncfusion.WinForms.Input.SfNumericTextBox mtbx_FramesBetween;
         private Syncfusion.WinForms.Input.SfNumericTextBox mtbx_KeyDelay;
         private Syncfusion.WinForms.Input.SfNumericTextBox mtbx_LookingRollingAngle;
