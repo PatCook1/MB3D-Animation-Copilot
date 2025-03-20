@@ -120,7 +120,6 @@ namespace MB3D_Animation_Copilot
         //Various boolean variables
         public static bool m_HaveMovesToProcess = false;
         public bool m_ShiftKeyActive = false;
-        public bool m_ShiftKeyActive_Record = false;
         public bool m_IsMoveSequence = false;
         public static bool m_SequenceRecordingOn = false;
         public static bool m_ProcessStop = false;
@@ -1541,7 +1540,7 @@ namespace MB3D_Animation_Copilot
                     //Select the top (latest keyframe number) keyframe row
                     dgv_Keyframes_sf.SelectedIndex = 0;
 
-                    MessageBoxAdv.Show(string.Concat("Keyframe #'", NewKeyframeNum.ToString(), "' has been added as a No-Move keyframe?", NL, "Keyframe numbers have been renumbered to reflect the inserted keyframe.",NL, "Be sure your Mandelbulb3D project keyframes are ajusted accordingly."), "Insert Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    MessageBoxAdv.Show(string.Concat("Keyframe #'", NewKeyframeNum.ToString(), "' has been added as a No-Move keyframe?", NL, "Keyframe numbers have been renumbered to reflect the inserted keyframe.", NL, "Be sure your Mandelbulb3D project keyframes are ajusted accordingly."), "Insert Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     LoadFooterMessage("Keyframe inserted. Adjust your Mandelbulb3D keyframes accordingly.", true, true, true);
                 }
@@ -1878,8 +1877,6 @@ namespace MB3D_Animation_Copilot
                                 SendKeys.Send(itemDistinct.SendKeyChar); //Send the key, examples: "w", "+w"
 
                                 System.Threading.Thread.Sleep(intKeyEventThreadSleep); //Let's not get ahead of ourselves
-                                                                                       //Console.WriteLine(String.Concat($"SENDKEY=", string.Concat(step.Step_SendKey)));
-
                             }
 
                             m_HaveMovesToProcess = true;
@@ -2845,7 +2842,6 @@ namespace MB3D_Animation_Copilot
                             SendKeys.Send(MoveStep.Step_SendKey); //Send the key, examples: "w", "+w"
 
                             System.Threading.Thread.Sleep(intKeyEventThreadSleep); //Let's not rush things
-                                                                                   //Console.WriteLine(String.Concat($"SENDKEY=", string.Concat(step.Step_SendKey)));
                         }
 
                         //Look ahead in the lstStepsList collection to see if the next element is a different Step_Group number.
@@ -2944,7 +2940,7 @@ namespace MB3D_Animation_Copilot
         private void ClearProject(bool bolIsFullClear)
         {
             var NL = Environment.NewLine;
-           
+
             //Check if the project have keyframes
             if (Data_Access_Methods.GetProjectKeyframeQuantity(m_SelectedProjectID) <= 0)
             {
@@ -3082,7 +3078,7 @@ namespace MB3D_Animation_Copilot
                 lbl_JTK_AppRun_Warn.BringToFront();
 
                 var NL = Environment.NewLine;
-                MessageBoxAdv.Show(string.Concat("This application requires the JoyToKey application to map a hand-held game controller or standard", NL, "PC keboard to the keys used for Mandlebulb3D animation. See the 'About' tab of this", NL, "application for instructions running the JoyToKey application with the appropriate configuration."), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBoxAdv.Show(string.Concat("This application uses the JoyToKey application to map a hand-held game controller to the navigation keys of the mandelbulb3D Navigator.", NL, "As an alternative to a game controller, your PC keyboard can be used for Mandlebulb3D navigation.", NL, "However, the JoyToKey application is required whether using a game controller or PC keyboard.", NL, "See the 'About' tab for instructions obtaining and running the JoyToKey application with the appropriate configuration."), "Warning", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return false;
             }
             else
@@ -3371,7 +3367,7 @@ namespace MB3D_Animation_Copilot
                 //=======================================
                 // Perform the Auto Move (if enabled)
                 //=======================================
-                ProcessAutoLastMove(); //Process the AutoLastMove if a move is selected from the dropdown control
+                ProcessAutoMove(); //Process the AutoLastMove if a move is selected from the dropdown control
 
                 //=======================================
                 // Save to the database if applicable
@@ -3425,12 +3421,12 @@ namespace MB3D_Animation_Copilot
             {
                 if (m_EnableAutoMove & drp_AutoLastMove.SelectedIndex >= 0 & nup_AutoMoveQuantity.Value > 0)
                 {
-                    ProcessAutoLastMove();
+                    ProcessAutoMove();
                 }
             }
         }
 
-        private void ProcessAutoLastMove()
+        private void ProcessAutoMove()
         {
             //Set focus on the Mandelbulb3D Navigator window
             if (BringFocusToMB3DNavigator() == false)
@@ -3470,20 +3466,19 @@ namespace MB3D_Animation_Copilot
 
                     for (int i = 0; i < intAutoLastStepQuantity; i++)
                     {
-                        if (cbx_AutoMoveShift.Checked)
+                        //If the Auto Move Apply key shif is checked
+                        if (cbx_AutoMoveApplyKeyShift.Checked)
                         {
                             m_StepAngleCountDefaultBypass = StepAngleCount / 2;
 
                             SendKeys.Send(string.Concat("+", strSelectedValue)); //Send the key, example "+w"\
-                            //Console.WriteLine(String.Concat($"SENDKEY=", string.Concat("+", strSelectedValue)));
                         }
                         else
                         {
-
+                            //If the Auto Move Apply key shif is NOT checked
                             m_StepAngleCountDefaultBypass = StepAngleCount;
 
                             SendKeys.Send(strSelectedValue); //Send the key, example "w"
-                            //Console.WriteLine(String.Concat($"SENDKEY=", strSelectedValue));
                         }
                         System.Threading.Thread.Sleep(intKeyEventThreadSleep); //Let's not get too rambunctious
                     }
@@ -3577,8 +3572,6 @@ namespace MB3D_Animation_Copilot
                             SendKeys.Send(itemDistinct.SendKeyChar); //Send the key, examples: "w", "+w"
 
                             System.Threading.Thread.Sleep(intKeyEventThreadSleep); //Let's not get ahead of ourselves
-                            //Console.WriteLine(String.Concat($"SENDKEY=", string.Concat(step.Step_SendKey)));
-
                         }
                     }
 
@@ -3925,8 +3918,8 @@ namespace MB3D_Animation_Copilot
 
             if (strKey == "RShiftKey" | strKey == "LShiftKey")
             {
-                //Toggle shift mode - turn OFF the shift mode
-                m_ShiftKeyActive = !m_ShiftKeyActive;
+                //Keydown turns on the shift mode
+                m_ShiftKeyActive = true;
                 lbl_ShiftIndicator.Visible = m_ShiftKeyActive;
                 return; //Halt code execution heref
             }
@@ -3937,7 +3930,9 @@ namespace MB3D_Animation_Copilot
 
             if (strKey == cEAMk)
             {
+                //Reverse the current state of m_EnableAutoMove, i.e., toggle m_EnableAutoMove
                 m_EnableAutoMove = !m_EnableAutoMove;
+
                 cbx_EnableAutoMove.Checked = m_EnableAutoMove;
                 return; //Halt code execution here
             }
@@ -4261,17 +4256,13 @@ namespace MB3D_Animation_Copilot
         }
 
         //Note: Do not call this sub - let only HookCallback call it
-        //This is key UP event
         private void ProcessKeyUpEvent(string strKey)
         {
             if (strKey == cLShiftk | strKey == cRShiftk)
             {
-                //Key UP turns shift mode ON
-                m_ShiftKeyActive = !m_ShiftKeyActive;
+                //Key UP turns shift mode OFF
+                m_ShiftKeyActive = false;
                 lbl_ShiftIndicator.Visible = m_ShiftKeyActive;
-
-                //Also turn record mode shift mode OFF
-                m_ShiftKeyActive_Record = !m_ShiftKeyActive_Record;
 
                 return;
             }
@@ -4477,7 +4468,7 @@ namespace MB3D_Animation_Copilot
             dgv_ManageMoveSequence.Columns.Add(new GridNumericColumn() { MappingName = "Step_SendKeyQty", HeaderText = "Send Qty", MinimumWidth = 8, Width = 75, AllowEditing = false, Format = "0.#####" });
             dgv_ManageMoveSequence.Columns.Add(new GridNumericColumn() { MappingName = "Step_AngleCount", HeaderText = "Step Count", MinimumWidth = 8, Width = 75, AllowEditing = false, Format = "0.#####" });
             dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_SendKey", HeaderText = "Send Key", MinimumWidth = 8, Width = 75, AllowEditing = false, Visible = false });
-            dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_Display_Calc", HeaderText = "Step Display", MinimumWidth = 8, Width = 100, AllowEditing = false });
+            dgv_ManageMoveSequence.Columns.Add(new GridTextColumn() { MappingName = "Step_Display", HeaderText = "Step Display", MinimumWidth = 8, Width = 100, AllowEditing = false });
 
             dgv_ManageMoveSequence.AllowEditing = false;
         }

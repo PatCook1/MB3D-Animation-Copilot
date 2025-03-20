@@ -110,7 +110,7 @@ namespace MB3D_Animation_Copilot
             nup_AutoMoveQuantity = new Syncfusion.Windows.Forms.Tools.NumericUpDownExt();
             btn_InsertAutoMove = new Syncfusion.WinForms.Controls.SfButton();
             cbx_EnableAutoMove = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
-            cbx_AutoMoveShift = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
+            cbx_AutoMoveApplyKeyShift = new Syncfusion.Windows.Forms.Tools.CheckBoxAdv();
             label14 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             label13 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             drp_AutoLastMove = new Syncfusion.WinForms.ListView.SfComboBox();
@@ -180,6 +180,12 @@ namespace MB3D_Animation_Copilot
             autoLabel15 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             label18 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             label24 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            page_Library = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
+            panel10 = new System.Windows.Forms.Panel();
+            autoLabel23 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            autoLabel21 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            label10 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
+            label40 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             page_Utilities = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel_UtilitiesPage = new System.Windows.Forms.Panel();
             grp_Admin_JoytoKey = new System.Windows.Forms.GroupBox();
@@ -198,12 +204,6 @@ namespace MB3D_Animation_Copilot
             btn_CreateSampleProject = new Syncfusion.WinForms.Controls.SfButton();
             autoLabel35 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel20 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            page_Library = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
-            panel10 = new System.Windows.Forms.Panel();
-            autoLabel23 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            autoLabel21 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            label10 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
-            label40 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             page_Admin = new Syncfusion.Windows.Forms.Tools.TabPageAdv();
             panel11 = new System.Windows.Forms.Panel();
             groupBox3 = new System.Windows.Forms.GroupBox();
@@ -275,7 +275,7 @@ namespace MB3D_Animation_Copilot
             panel5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)nup_AutoMoveQuantity).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cbx_EnableAutoMove).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_AutoMoveShift).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)cbx_AutoMoveApplyKeyShift).BeginInit();
             ((System.ComponentModel.ISupportInitialize)drp_AutoLastMove).BeginInit();
             pnl_KeyStack.SuspendLayout();
             panel14.SuspendLayout();
@@ -310,13 +310,13 @@ namespace MB3D_Animation_Copilot
             panel_ManageSeqTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_SequenceDesc_Manage).BeginInit();
             ((System.ComponentModel.ISupportInitialize)drp_ManageSeqMoveSequences).BeginInit();
+            page_Library.SuspendLayout();
+            panel10.SuspendLayout();
             page_Utilities.SuspendLayout();
             panel_UtilitiesPage.SuspendLayout();
             grp_Admin_JoytoKey.SuspendLayout();
             grp_KeyframeModifierUtilities.SuspendLayout();
             groupBox2.SuspendLayout();
-            page_Library.SuspendLayout();
-            panel10.SuspendLayout();
             page_Admin.SuspendLayout();
             panel11.SuspendLayout();
             groupBox3.SuspendLayout();
@@ -1362,7 +1362,7 @@ namespace MB3D_Animation_Copilot
             panel5.Controls.Add(nup_AutoMoveQuantity);
             panel5.Controls.Add(btn_InsertAutoMove);
             panel5.Controls.Add(cbx_EnableAutoMove);
-            panel5.Controls.Add(cbx_AutoMoveShift);
+            panel5.Controls.Add(cbx_AutoMoveApplyKeyShift);
             panel5.Controls.Add(label14);
             panel5.Controls.Add(label13);
             panel5.Controls.Add(drp_AutoLastMove);
@@ -1422,21 +1422,21 @@ namespace MB3D_Animation_Copilot
             toolTip1.SetToolTip(cbx_EnableAutoMove, "Check to Enable Keyframe Auto Move");
             cbx_EnableAutoMove.CheckedChanged += cbx_EnableAutoMove_CheckedChanged;
             // 
-            // cbx_AutoMoveShift
+            // cbx_AutoMoveApplyKeyShift
             // 
-            cbx_AutoMoveShift.AccessibilityEnabled = true;
-            cbx_AutoMoveShift.AutoSize = true;
-            cbx_AutoMoveShift.BeforeTouchSize = new System.Drawing.Size(92, 18);
-            cbx_AutoMoveShift.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            cbx_AutoMoveShift.ForeColor = System.Drawing.Color.White;
-            cbx_AutoMoveShift.Location = new System.Drawing.Point(145, 34);
-            cbx_AutoMoveShift.Margin = new System.Windows.Forms.Padding(4);
-            cbx_AutoMoveShift.Name = "cbx_AutoMoveShift";
-            cbx_AutoMoveShift.Size = new System.Drawing.Size(92, 18);
-            cbx_AutoMoveShift.TabIndex = 35;
-            cbx_AutoMoveShift.Text = "Set Key Shift";
-            cbx_AutoMoveShift.ThemeName = "HighContrastTheme";
-            toolTip1.SetToolTip(cbx_AutoMoveShift, "Check to apply Shift to Auto Move");
+            cbx_AutoMoveApplyKeyShift.AccessibilityEnabled = true;
+            cbx_AutoMoveApplyKeyShift.AutoSize = true;
+            cbx_AutoMoveApplyKeyShift.BeforeTouchSize = new System.Drawing.Size(104, 18);
+            cbx_AutoMoveApplyKeyShift.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            cbx_AutoMoveApplyKeyShift.ForeColor = System.Drawing.Color.White;
+            cbx_AutoMoveApplyKeyShift.Location = new System.Drawing.Point(145, 34);
+            cbx_AutoMoveApplyKeyShift.Margin = new System.Windows.Forms.Padding(4);
+            cbx_AutoMoveApplyKeyShift.Name = "cbx_AutoMoveApplyKeyShift";
+            cbx_AutoMoveApplyKeyShift.Size = new System.Drawing.Size(104, 18);
+            cbx_AutoMoveApplyKeyShift.TabIndex = 35;
+            cbx_AutoMoveApplyKeyShift.Text = "Apply Key Shift";
+            cbx_AutoMoveApplyKeyShift.ThemeName = "HighContrastTheme";
+            toolTip1.SetToolTip(cbx_AutoMoveApplyKeyShift, "Check to apply Key Shift to Auto Move");
             // 
             // label14
             // 
@@ -2408,6 +2408,79 @@ namespace MB3D_Animation_Copilot
             label24.TabIndex = 17;
             label24.Text = "Move Sequence Description:";
             // 
+            // page_Library
+            // 
+            page_Library.Controls.Add(panel10);
+            page_Library.Image = null;
+            page_Library.ImageSize = new System.Drawing.Size(16, 16);
+            page_Library.Location = new System.Drawing.Point(3, 30);
+            page_Library.Margin = new System.Windows.Forms.Padding(4);
+            page_Library.Name = "page_Library";
+            page_Library.ShowCloseButton = true;
+            page_Library.Size = new System.Drawing.Size(1284, 540);
+            page_Library.TabIndex = 4;
+            page_Library.Text = "     Mandelbulb3D Library     ";
+            page_Library.ThemesEnabled = true;
+            toolTip1.SetToolTip(page_Library, "Mandelbulb3D Project Library");
+            // 
+            // panel10
+            // 
+            panel10.Controls.Add(autoLabel23);
+            panel10.Controls.Add(autoLabel21);
+            panel10.Controls.Add(label10);
+            panel10.Controls.Add(label40);
+            panel10.Dock = System.Windows.Forms.DockStyle.Fill;
+            panel10.Location = new System.Drawing.Point(0, 0);
+            panel10.Name = "panel10";
+            panel10.Size = new System.Drawing.Size(1284, 540);
+            panel10.TabIndex = 3;
+            // 
+            // autoLabel23
+            // 
+            autoLabel23.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel23.ForeColor = System.Drawing.Color.White;
+            autoLabel23.Location = new System.Drawing.Point(10, 9);
+            autoLabel23.Name = "autoLabel23";
+            autoLabel23.Size = new System.Drawing.Size(182, 21);
+            autoLabel23.TabIndex = 11;
+            autoLabel23.Text = "Mandelbulb3D Library";
+            // 
+            // autoLabel21
+            // 
+            autoLabel21.AutoSize = false;
+            autoLabel21.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            autoLabel21.ForeColor = System.Drawing.Color.White;
+            autoLabel21.Location = new System.Drawing.Point(152, 202);
+            autoLabel21.Name = "autoLabel21";
+            autoLabel21.Size = new System.Drawing.Size(1000, 88);
+            autoLabel21.TabIndex = 3;
+            autoLabel21.Text = resources.GetString("autoLabel21.Text");
+            autoLabel21.ThemeName = "HighContrastTheme";
+            // 
+            // label10
+            // 
+            label10.BackColor = System.Drawing.Color.Transparent;
+            label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            label10.ForeColor = System.Drawing.Color.White;
+            label10.Location = new System.Drawing.Point(214, 99);
+            label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label10.Name = "label10";
+            label10.Size = new System.Drawing.Size(857, 39);
+            label10.TabIndex = 0;
+            label10.Text = "The Future Home of the Mandelbulb3D Project Library!";
+            // 
+            // label40
+            // 
+            label40.BackColor = System.Drawing.Color.Transparent;
+            label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
+            label40.ForeColor = System.Drawing.Color.White;
+            label40.Location = new System.Drawing.Point(152, 155);
+            label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            label40.Name = "label40";
+            label40.Size = new System.Drawing.Size(109, 26);
+            label40.TabIndex = 1;
+            label40.Text = "Overview:";
+            // 
             // page_Utilities
             // 
             page_Utilities.Controls.Add(panel_UtilitiesPage);
@@ -2646,79 +2719,6 @@ namespace MB3D_Animation_Copilot
             autoLabel20.Size = new System.Drawing.Size(70, 21);
             autoLabel20.TabIndex = 10;
             autoLabel20.Text = "Utilities";
-            // 
-            // page_Library
-            // 
-            page_Library.Controls.Add(panel10);
-            page_Library.Image = null;
-            page_Library.ImageSize = new System.Drawing.Size(16, 16);
-            page_Library.Location = new System.Drawing.Point(3, 30);
-            page_Library.Margin = new System.Windows.Forms.Padding(4);
-            page_Library.Name = "page_Library";
-            page_Library.ShowCloseButton = true;
-            page_Library.Size = new System.Drawing.Size(1284, 540);
-            page_Library.TabIndex = 4;
-            page_Library.Text = "     Mandelbulb3D Library     ";
-            page_Library.ThemesEnabled = true;
-            toolTip1.SetToolTip(page_Library, "Mandelbulb3D Project Library");
-            // 
-            // panel10
-            // 
-            panel10.Controls.Add(autoLabel23);
-            panel10.Controls.Add(autoLabel21);
-            panel10.Controls.Add(label10);
-            panel10.Controls.Add(label40);
-            panel10.Dock = System.Windows.Forms.DockStyle.Fill;
-            panel10.Location = new System.Drawing.Point(0, 0);
-            panel10.Name = "panel10";
-            panel10.Size = new System.Drawing.Size(1284, 540);
-            panel10.TabIndex = 3;
-            // 
-            // autoLabel23
-            // 
-            autoLabel23.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
-            autoLabel23.ForeColor = System.Drawing.Color.White;
-            autoLabel23.Location = new System.Drawing.Point(10, 9);
-            autoLabel23.Name = "autoLabel23";
-            autoLabel23.Size = new System.Drawing.Size(182, 21);
-            autoLabel23.TabIndex = 11;
-            autoLabel23.Text = "Mandelbulb3D Library";
-            // 
-            // autoLabel21
-            // 
-            autoLabel21.AutoSize = false;
-            autoLabel21.Font = new System.Drawing.Font("Segoe UI", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            autoLabel21.ForeColor = System.Drawing.Color.White;
-            autoLabel21.Location = new System.Drawing.Point(152, 202);
-            autoLabel21.Name = "autoLabel21";
-            autoLabel21.Size = new System.Drawing.Size(1000, 88);
-            autoLabel21.TabIndex = 3;
-            autoLabel21.Text = resources.GetString("autoLabel21.Text");
-            autoLabel21.ThemeName = "HighContrastTheme";
-            // 
-            // label10
-            // 
-            label10.BackColor = System.Drawing.Color.Transparent;
-            label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 26F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            label10.ForeColor = System.Drawing.Color.White;
-            label10.Location = new System.Drawing.Point(214, 99);
-            label10.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label10.Name = "label10";
-            label10.Size = new System.Drawing.Size(857, 39);
-            label10.TabIndex = 0;
-            label10.Text = "The Future Home of the Mandelbulb3D Project Library!";
-            // 
-            // label40
-            // 
-            label40.BackColor = System.Drawing.Color.Transparent;
-            label40.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, 0);
-            label40.ForeColor = System.Drawing.Color.White;
-            label40.Location = new System.Drawing.Point(152, 155);
-            label40.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            label40.Name = "label40";
-            label40.Size = new System.Drawing.Size(109, 26);
-            label40.TabIndex = 1;
-            label40.Text = "Overview:";
             // 
             // page_Admin
             // 
@@ -3325,7 +3325,7 @@ namespace MB3D_Animation_Copilot
             panel5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)nup_AutoMoveQuantity).EndInit();
             ((System.ComponentModel.ISupportInitialize)cbx_EnableAutoMove).EndInit();
-            ((System.ComponentModel.ISupportInitialize)cbx_AutoMoveShift).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cbx_AutoMoveApplyKeyShift).EndInit();
             ((System.ComponentModel.ISupportInitialize)drp_AutoLastMove).EndInit();
             pnl_KeyStack.ResumeLayout(false);
             panel14.ResumeLayout(false);
@@ -3366,6 +3366,9 @@ namespace MB3D_Animation_Copilot
             panel_ManageSeqTop.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)tbx_SequenceDesc_Manage).EndInit();
             ((System.ComponentModel.ISupportInitialize)drp_ManageSeqMoveSequences).EndInit();
+            page_Library.ResumeLayout(false);
+            panel10.ResumeLayout(false);
+            panel10.PerformLayout();
             page_Utilities.ResumeLayout(false);
             panel_UtilitiesPage.ResumeLayout(false);
             panel_UtilitiesPage.PerformLayout();
@@ -3373,9 +3376,6 @@ namespace MB3D_Animation_Copilot
             grp_Admin_JoytoKey.PerformLayout();
             grp_KeyframeModifierUtilities.ResumeLayout(false);
             groupBox2.ResumeLayout(false);
-            page_Library.ResumeLayout(false);
-            panel10.ResumeLayout(false);
-            panel10.PerformLayout();
             page_Admin.ResumeLayout(false);
             panel11.ResumeLayout(false);
             panel11.PerformLayout();
@@ -3419,7 +3419,7 @@ namespace MB3D_Animation_Copilot
         private Syncfusion.WinForms.ListView.SfComboBox drp_AutoLastMove;
         private Syncfusion.Windows.Forms.Tools.AutoLabel label14;
         private Syncfusion.Windows.Forms.Tools.AutoLabel label13;
-        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv cbx_AutoMoveShift;
+        private Syncfusion.Windows.Forms.Tools.CheckBoxAdv cbx_AutoMoveApplyKeyShift;
         private Syncfusion.Windows.Forms.Tools.CheckBoxAdv cbx_EnableAutoMove;
         private Syncfusion.Windows.Forms.Tools.TabControlAdv TabControl1;
         private Syncfusion.Windows.Forms.Tools.TabPageAdv page_MoveDesigner;
