@@ -48,10 +48,36 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Images\Aeeow_RotateCCW.png" />
+    <None Remove="Images\Aeeow_RotateCW.png" />
+    <None Remove="Images\Arrow_LookDown.png" />
+    <None Remove="Images\Arrow_LookLeft.png" />
+    <None Remove="Images\Arrow_LookRight.png" />
+    <None Remove="Images\Arrow_LookUp.png" />
+    <None Remove="Images\Arrow_SlideDown.png" />
+    <None Remove="Images\Arrow_SlideLeft.png" />
+    <None Remove="Images\Arrow_SlideRight.png" />
+    <None Remove="Images\Arrow_SlideUp.png" />
+    <None Remove="Images\Arrow_WalkFwd.png" />
+    <None Remove="Images\Arrow_WalkRev.png" />
+    <None Remove="Images\MakeNewKeyframe.png" />
     <None Remove="MB3DAnimationCopilot.sqbpro" />
     <None Remove="MB3DKeyframeStore.db" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Images\Arrow_LookDown.png" />
+    <EmbeddedResource Include="Images\Arrow_LookLeft.png" />
+    <EmbeddedResource Include="Images\Arrow_LookRight.png" />
+    <EmbeddedResource Include="Images\Arrow_LookUp.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideDown.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideLeft.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideRight.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideUp.png" />
+    <EmbeddedResource Include="Images\Arrow_WalkFwd.png" />
+    <EmbeddedResource Include="Images\Arrow_WalkRev.png" />
     <Content Include="Images\MB3D Copilot 16x16.ico" />
     <Content Include="Images\For App 084798861-desktop-keyboard.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -79,6 +105,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Images\MakeNewKeyframe.png" />
+    <EmbeddedResource Include="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.35" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
@@ -103,11 +133,22 @@
     <Compile Update="Child Forms\frm_Update_Keyframes_Parameter.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Properties\Resource_Legend.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource_Legend.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resource_Legend.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource_Legend.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Update="LICENSE Install.rtf">

@@ -186,7 +186,7 @@ namespace MB3D_Animation_Copilot
                             cRCCfn = "Roll Counter Clockwise", cRCWfn = "Roll Clockwise",
                             cNMKfn = "No-Move Keyframe";
 
-        //Movement (Action) KeyCodes - incomomg key codes from key events
+        //Movement (Action) KeyCodes - incoming key codes from key events
         //Note: Incoming keycodes do not have a case attribute - they always appear as uppercase
         public const string cWFk = "W", cWRk = "S",
                             cLUk = "I", cLDk = "K", cLLk = "J", cLRk = "L",
@@ -219,6 +219,7 @@ namespace MB3D_Animation_Copilot
         public const string cDoubleSpaceCharSequence = "  ";
 
         //Define the various children forms
+        private frm_Key_Legend_Child_Window frmKeyLegend = null;
         private frm_MakeMoveSequence frmMakeMoveSequence = null;
         private frm_Update_Keyframes_FarPlane frmUpdateKeyframesFarPlane = null;
         private frm_Update_Keyframes_LookLeft frmUpdateKeyframesLookLeft = null;
@@ -347,6 +348,9 @@ namespace MB3D_Animation_Copilot
 
             ValidateMandelbulb3DRunning(); //validate if Mandelbulb3D application is running
             ValidateJoyToKeyRunning(); //validate if JoyToKey application is running
+
+            //Instantiate the Legend window class (because the Mainform communicates with that child form at various code locations)
+            frmKeyLegend = new frm_Key_Legend_Child_Window();
         }
 
         private void SetUpExternalLinks()
@@ -3845,8 +3849,21 @@ namespace MB3D_Animation_Copilot
         {
             var NL = Environment.NewLine;
 
+            //===========================
             //Display this key event
+            //===========================
+
             lbl_LastKeyEvent.Text = String.Concat("Last Key Event:", strKey);
+
+            //===========================
+            //Update Legend Symbols
+            //===========================
+
+            //Send this key char out to the Kegend child form, if that form is open
+            if (System.Windows.Forms.Application.OpenForms.OfType<frm_Key_Legend_Child_Window>().Count() > 0)
+            {
+               frmKeyLegend.ReceiveMovementChar(strKey);
+            }
 
             //===========================
             //Toggle Capture Mode
@@ -4011,12 +4028,12 @@ namespace MB3D_Animation_Copilot
                     case cRCCk: //Rotate Counter-Clockwise *** Pass in the Looking/Rolling Angle value ***
                         UpdateKeyStepList(cRollGroup, cRCCn, cRCCk_, 1, m_LRAngle);
                         break;
-                    case cRCWk: //Rotate C *** Pass in the Looking/Rolling Angle value ***
+                    case cRCWk: //Rotate Clockwise *** Pass in the Looking/Rolling Angle value ***
                         UpdateKeyStepList(cRollGroup, cRCWn, cRCWk_, 2, m_LRAngle);
                         break;
 
                     default:
-                        //If none of the above cases were mey, there were no moves to process
+                        //If none of the above cases were met, there were no moves to process
                         return; //Do nothing
                 }
             }
@@ -4165,8 +4182,6 @@ namespace MB3D_Animation_Copilot
 
         private void btn_ShowKeyLegendWindow_Click(object sender, EventArgs e)
         {
-            frm_Key_Legend_Child_Window frmKeyLegend = new frm_Key_Legend_Child_Window();
-
             //Check if the child form is already open
             if (System.Windows.Forms.Application.OpenForms.OfType<frm_Key_Legend_Child_Window>().Count() == 0)
             {
@@ -4384,7 +4399,8 @@ namespace MB3D_Animation_Copilot
             catch
             {
                 //do not throw - there may be no Move Sequence records"
-            };
+            }
+            ;
         }
 
         private void drp_ManageSeqMoveSequences_SelectedIndexChanged(object sender, EventArgs e)
@@ -5449,7 +5465,7 @@ namespace MB3D_Animation_Copilot
 
         private void splitContainer_ManageSeq_Panel2_Paint(object sender, PaintEventArgs e)
         {
-
+            //No code here
         }
     }
 }
