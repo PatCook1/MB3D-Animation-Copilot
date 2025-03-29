@@ -113,20 +113,20 @@
     <EmbeddedResource Include="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.35" />
+    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="Stub.System.Data.SQLite.Core.NetStandard" Version="1.0.119" />
-    <PackageReference Include="Syncfusion.Core.WinForms" Version="28.1.41" />
-    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="28.1.41" />
-    <PackageReference Include="Syncfusion.Shared.Base" Version="28.1.41" />
-    <PackageReference Include="Syncfusion.Tools.Windows" Version="28.1.41" />
+    <PackageReference Include="Syncfusion.Core.WinForms" Version="29.1.33" />
+    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="29.1.33" />
+    <PackageReference Include="Syncfusion.Shared.Base" Version="29.1.33" />
+    <PackageReference Include="Syncfusion.Tools.Windows" Version="29.1.33" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.3" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HighContrastTheme">
