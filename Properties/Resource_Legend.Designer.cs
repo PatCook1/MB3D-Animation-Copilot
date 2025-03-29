@@ -103,6 +103,16 @@ namespace MB3D_Animation_Copilot.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Byte[].
         /// </summary>
+        internal static byte[] Arrow_RepeatLast {
+            get {
+                object obj = ResourceManager.GetObject("Arrow_RepeatLast", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
         internal static byte[] Arrow_RotateCCW {
             get {
                 object obj = ResourceManager.GetObject("Arrow_RotateCCW", resourceCulture);
@@ -156,6 +166,16 @@ namespace MB3D_Animation_Copilot.Properties {
         internal static byte[] Arrow_SlideUp {
             get {
                 object obj = ResourceManager.GetObject("Arrow_SlideUp", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Arrow_ToggleCapture {
+            get {
+                object obj = ResourceManager.GetObject("Arrow_ToggleCapture", resourceCulture);
                 return ((byte[])(obj));
             }
         }

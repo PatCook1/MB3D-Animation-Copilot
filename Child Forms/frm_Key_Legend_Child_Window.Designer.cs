@@ -31,7 +31,9 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_Key_Legend_Child_Window));
             tabControl1 = new System.Windows.Forms.TabControl();
             tab_Controller = new System.Windows.Forms.TabPage();
-            pbx_MakeNewKeyframeSymbol = new System.Windows.Forms.PictureBox();
+            pbx_ToggleCapture_Symbol = new System.Windows.Forms.PictureBox();
+            pbx_RepeatLast_Symbol = new System.Windows.Forms.PictureBox();
+            pbx_MakeNewKeyframe_Symbol = new System.Windows.Forms.PictureBox();
             pbx_RollSymbol_CW = new System.Windows.Forms.PictureBox();
             pbx_RollSymbol_CCW = new System.Windows.Forms.PictureBox();
             pbx_SlideSymbol_Multi = new System.Windows.Forms.PictureBox();
@@ -45,7 +47,9 @@
             panel2 = new System.Windows.Forms.Panel();
             tabControl1.SuspendLayout();
             tab_Controller.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)pbx_MakeNewKeyframeSymbol).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbx_ToggleCapture_Symbol).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbx_RepeatLast_Symbol).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)pbx_MakeNewKeyframe_Symbol).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbx_RollSymbol_CW).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbx_RollSymbol_CCW).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pbx_SlideSymbol_Multi).BeginInit();
@@ -72,7 +76,9 @@
             // 
             tab_Controller.BackgroundImage = (System.Drawing.Image)resources.GetObject("tab_Controller.BackgroundImage");
             tab_Controller.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            tab_Controller.Controls.Add(pbx_MakeNewKeyframeSymbol);
+            tab_Controller.Controls.Add(pbx_ToggleCapture_Symbol);
+            tab_Controller.Controls.Add(pbx_RepeatLast_Symbol);
+            tab_Controller.Controls.Add(pbx_MakeNewKeyframe_Symbol);
             tab_Controller.Controls.Add(pbx_RollSymbol_CW);
             tab_Controller.Controls.Add(pbx_RollSymbol_CCW);
             tab_Controller.Controls.Add(pbx_SlideSymbol_Multi);
@@ -88,15 +94,35 @@
             tab_Controller.Text = "          Controller Legend          ";
             tab_Controller.UseVisualStyleBackColor = true;
             // 
-            // pbx_MakeNewKeyframeSymbol
+            // pbx_ToggleCapture_Symbol
             // 
-            pbx_MakeNewKeyframeSymbol.Location = new System.Drawing.Point(451, 158);
-            pbx_MakeNewKeyframeSymbol.Name = "pbx_MakeNewKeyframeSymbol";
-            pbx_MakeNewKeyframeSymbol.Size = new System.Drawing.Size(90, 81);
-            pbx_MakeNewKeyframeSymbol.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            pbx_MakeNewKeyframeSymbol.TabIndex = 6;
-            pbx_MakeNewKeyframeSymbol.TabStop = false;
-            pbx_MakeNewKeyframeSymbol.Visible = false;
+            pbx_ToggleCapture_Symbol.Location = new System.Drawing.Point(217, 91);
+            pbx_ToggleCapture_Symbol.Name = "pbx_ToggleCapture_Symbol";
+            pbx_ToggleCapture_Symbol.Size = new System.Drawing.Size(87, 76);
+            pbx_ToggleCapture_Symbol.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pbx_ToggleCapture_Symbol.TabIndex = 8;
+            pbx_ToggleCapture_Symbol.TabStop = false;
+            pbx_ToggleCapture_Symbol.Visible = false;
+            // 
+            // pbx_RepeatLast_Symbol
+            // 
+            pbx_RepeatLast_Symbol.Location = new System.Drawing.Point(411, 57);
+            pbx_RepeatLast_Symbol.Name = "pbx_RepeatLast_Symbol";
+            pbx_RepeatLast_Symbol.Size = new System.Drawing.Size(90, 68);
+            pbx_RepeatLast_Symbol.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pbx_RepeatLast_Symbol.TabIndex = 7;
+            pbx_RepeatLast_Symbol.TabStop = false;
+            pbx_RepeatLast_Symbol.Visible = false;
+            // 
+            // pbx_MakeNewKeyframe_Symbol
+            // 
+            pbx_MakeNewKeyframe_Symbol.Location = new System.Drawing.Point(411, 125);
+            pbx_MakeNewKeyframe_Symbol.Name = "pbx_MakeNewKeyframe_Symbol";
+            pbx_MakeNewKeyframe_Symbol.Size = new System.Drawing.Size(90, 81);
+            pbx_MakeNewKeyframe_Symbol.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            pbx_MakeNewKeyframe_Symbol.TabIndex = 6;
+            pbx_MakeNewKeyframe_Symbol.TabStop = false;
+            pbx_MakeNewKeyframe_Symbol.Visible = false;
             // 
             // pbx_RollSymbol_CW
             // 
@@ -233,7 +259,9 @@
             Text = "Mandelbulb3D Animation Copilot Key Mapping Legend";
             tabControl1.ResumeLayout(false);
             tab_Controller.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)pbx_MakeNewKeyframeSymbol).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbx_ToggleCapture_Symbol).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbx_RepeatLast_Symbol).EndInit();
+            ((System.ComponentModel.ISupportInitialize)pbx_MakeNewKeyframe_Symbol).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbx_RollSymbol_CW).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbx_RollSymbol_CCW).EndInit();
             ((System.ComponentModel.ISupportInitialize)pbx_SlideSymbol_Multi).EndInit();
@@ -261,6 +289,8 @@
         private System.Windows.Forms.PictureBox pbx_SlideSymbol_Multi;
         private System.Windows.Forms.PictureBox pbx_RollSymbol_CCW;
         private System.Windows.Forms.PictureBox pbx_RollSymbol_CW;
-        private System.Windows.Forms.PictureBox pbx_MakeNewKeyframeSymbol;
+        private System.Windows.Forms.PictureBox pbx_MakeNewKeyframe_Symbol;
+        private System.Windows.Forms.PictureBox pbx_RepeatLast_Symbol;
+        private System.Windows.Forms.PictureBox pbx_ToggleCapture_Symbol;
     }
 }

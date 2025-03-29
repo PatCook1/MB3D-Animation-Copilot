@@ -130,6 +130,9 @@
   <data name="Arrow_LookUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Arrow_LookUp.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Arrow_RepeatLast" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Arrow_RepeatLast.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Arrow_RotateCCW" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Arrow_RotateCCW.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
@@ -147,6 +150,9 @@
   </data>
   <data name="Arrow_SlideUp" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Arrow_SlideUp.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Arrow_ToggleCapture" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Images\Arrow_ToggleCapture.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="Arrow_WalkFwd" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Images\Arrow_WalkFwd.png;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>

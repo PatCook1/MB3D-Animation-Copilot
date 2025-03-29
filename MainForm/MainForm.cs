@@ -4241,6 +4241,12 @@ namespace MB3D_Animation_Copilot
 
                 ClearMoveList(); //Be sure the Move List is cleared
 
+                //Send this key event out to the Kegend child form, if that form is open
+                if (System.Windows.Forms.Application.OpenForms.OfType<frm_Key_Legend_Child_Window>().Count() > 0)
+                {
+                    frmKeyLegend.ReceiveMovementChar(cEAMk);
+                }
+
             }
             else
             {

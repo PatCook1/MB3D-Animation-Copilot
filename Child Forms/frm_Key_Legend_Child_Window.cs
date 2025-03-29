@@ -227,12 +227,32 @@ namespace MB3D_Animation_Copilot
 
                 //Make New Keyframe
                 case cMNKk:
-                    ClearMoveSymbols_All(); //Clear all symbols with this new move
+                    ClearMoveSymbols_All(); //Clear all symbols with this new event
                     byteArrow = Properties.Resource_Legend.MakeNewKeyframe;
                     imgArrow = byteArrayToImage(byteArrow);
-                    pbx_MakeNewKeyframeSymbol.Image = imgArrow;
-                    pbx_MakeNewKeyframeSymbol.Refresh();
-                    pbx_MakeNewKeyframeSymbol.Visible = true;
+                    pbx_MakeNewKeyframe_Symbol.Image = imgArrow;
+                    pbx_MakeNewKeyframe_Symbol.Refresh();
+                    pbx_MakeNewKeyframe_Symbol.Visible = true;
+                    break;
+
+                //Repeat Last Move
+                case cRLMk:
+                    ClearMoveSymbols_All(); //Clear all symbols with this new event
+                    byteArrow = Properties.Resource_Legend.Arrow_RepeatLast;
+                    imgArrow = byteArrayToImage(byteArrow);
+                    pbx_RepeatLast_Symbol.Image = imgArrow;
+                    pbx_RepeatLast_Symbol.Refresh();
+                    pbx_RepeatLast_Symbol.Visible = true;
+                    break;
+
+                //Toggle Capture Mode
+                case cEAMk:
+                    ClearMoveSymbols_All(); //Clear all symbols with this new event
+                    byteArrow = Properties.Resource_Legend.Arrow_ToggleCapture;
+                    imgArrow = byteArrayToImage(byteArrow);
+                    pbx_ToggleCapture_Symbol.Image = imgArrow;
+                    pbx_ToggleCapture_Symbol.Refresh();
+                    pbx_ToggleCapture_Symbol.Visible = true;
                     break;
 
                 default:

@@ -57,10 +57,12 @@
     <None Remove="Images\Arrow_LookLeft.png" />
     <None Remove="Images\Arrow_LookRight.png" />
     <None Remove="Images\Arrow_LookUp.png" />
+    <None Remove="Images\Arrow_RepeatLast.png" />
     <None Remove="Images\Arrow_SlideDown.png" />
     <None Remove="Images\Arrow_SlideLeft.png" />
     <None Remove="Images\Arrow_SlideRight.png" />
     <None Remove="Images\Arrow_SlideUp.png" />
+    <None Remove="Images\Arrow_ToggleCapture.png" />
     <None Remove="Images\Arrow_WalkFwd.png" />
     <None Remove="Images\Arrow_WalkRev.png" />
     <None Remove="Images\MakeNewKeyframe.png" />
@@ -72,10 +74,12 @@
     <EmbeddedResource Include="Images\Arrow_LookLeft.png" />
     <EmbeddedResource Include="Images\Arrow_LookRight.png" />
     <EmbeddedResource Include="Images\Arrow_LookUp.png" />
+    <EmbeddedResource Include="Images\Arrow_RepeatLast.png" />
     <EmbeddedResource Include="Images\Arrow_SlideDown.png" />
     <EmbeddedResource Include="Images\Arrow_SlideLeft.png" />
     <EmbeddedResource Include="Images\Arrow_SlideRight.png" />
     <EmbeddedResource Include="Images\Arrow_SlideUp.png" />
+    <EmbeddedResource Include="Images\Arrow_ToggleCapture.png" />
     <EmbeddedResource Include="Images\Arrow_WalkFwd.png" />
     <EmbeddedResource Include="Images\Arrow_WalkRev.png" />
     <Content Include="Images\MB3D Copilot 16x16.ico" />
