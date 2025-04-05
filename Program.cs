@@ -20,7 +20,7 @@ namespace MB3D_Animation_Copilot
             // see https://aka.ms/applicationconfiguration.
 
             //Register Syncfusion license https://help.syncfusion.com/common/essential-studio/licensing/how-to-generate
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MzcwODQ4NEAzMjM4MmUzMDJlMzBkSm9QSTRGdnhXQ2Z5c0o0VFNRM3VXMzJiNnJHK1ZrbC80ZUpmcHUwU3NJPQ==");
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("Ngo9BigBOggjHTQxAR8/V1NNaF5cXmBCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdmWXtedXVcRmhfWEVzWkBWYUA=");
 
             SkinManager.LoadAssembly(typeof(HighContrastTheme).Assembly);
 

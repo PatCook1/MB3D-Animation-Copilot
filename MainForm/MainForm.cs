@@ -129,6 +129,7 @@ namespace MB3D_Animation_Copilot
         public static bool m_IsAppStarting = true;
         public static bool m_BlockInsertKeyframe = false;
         public static bool m_InKeyframeRepeatMode = false;
+        public static bool m_ErrorLoggingEnabled = false;
 
         #endregion
 
@@ -258,11 +259,51 @@ namespace MB3D_Animation_Copilot
         public MainForm()
         {
             InitializeComponent();
-            DisplayAssemblyInfo();
-            SetStylesAndThemes();
-            LoadAndInitMainForm();
 
-            LoadFooterMessage("Welcome to the Mandelbulb3D Animation Copilot!", true, false, false);
+            if (VerifyDatabaseFileExists())
+            {
+                m_ErrorLoggingEnabled = true; //Enable error logging
+
+                DisplayAssemblyInfo();
+                SetStylesAndThemes();
+                LoadAndInitMainForm();
+
+                LoadFooterMessage("Welcome to the Mandelbulb3D Animation Copilot!", true, false, false);
+            }
+            else
+            {
+                var NL = Environment.NewLine;
+                MessageBoxAdv.Show(string.Concat("This application is not able to run because its database file was not found.", NL, "Please re-install this application to correct the missing database file.", NL, "Alternatively, restore the database file from a backup you may have performed.", NL, "This application will now exit."), "Missing Database", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                this.Close(); //Shut 'er down!
+            }
+        }
+
+        private bool VerifyDatabaseFileExists()
+        {
+
+            //Assembly the path where the database is expected to reside
+            string DatabaseFilePath = string.Concat(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), @"\", ConfigurationManager.AppSettings["AppDataPathSub"], @"\", ConfigurationManager.AppSettings["dbFileName"]);
+
+            //See if the file at the above path exists
+            if (File.Exists(DatabaseFilePath))
+            {
+                //If the database file exists, attempt a query to check if it's readable (and belonmgs to the Copilot)
+                try
+                {
+                    //Note: We don't about the data, only if a query of the database throws an error
+                    Data_Access_Methods.GetProjectRecordCount();
+                }
+                catch
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
+
+            return true; //Return true if we make it to this line of code
         }
 
         private void SetStylesAndThemes()
@@ -2181,7 +2222,12 @@ namespace MB3D_Animation_Copilot
             {
                 if (!m_EnableCapture == true & mtbx_ProjectFarPlane.Value == 0)
                 {
-                    MessageBoxAdv.Show("Reminder: The Far Plane value is zero.", "Alert", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    DialogResult result = MessageBoxAdv.Show("Reminder: The Far Plane value is zero. Do you want to continue in Capture Enabled mode.", "Alert", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (result == DialogResult.No)
+                    {
+                        SetCaptureMode(false); //Disable record mode
+                        return; //And bail
+                    }
                 }
             }
 
@@ -3554,8 +3600,8 @@ namespace MB3D_Animation_Copilot
                         {
                             if (itemAction.ActionName == itemDistinct.ActionName)
                             {
-                                intSendKeyQuantity += itemAction.SendKeyQuantity;
-                                intStepAngleCount += itemDistinct.StepAngleCount;
+                                intSendKeyQuantity = itemAction.SendKeyQuantity;
+                                intStepAngleCount = itemDistinct.StepAngleCount;
                             }
                         }
 
@@ -5346,43 +5392,46 @@ namespace MB3D_Animation_Copilot
         public void LogException(string argProcedureName, Exception ex)
         {
 
-            string ErrorFilePathName = GetErrorLogPathName();
-
-            string ExistingErrorText = string.Empty;
-            if (File.Exists(ErrorFilePathName))
+            if (m_ErrorLoggingEnabled)
             {
-                ExistingErrorText = File.ReadAllText(ErrorFilePathName);
-            }
+                string ErrorFilePathName = GetErrorLogPathName();
 
-            using (StreamWriter writer = new StreamWriter(ErrorFilePathName, false))
-            {
-                writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
-                writer.WriteLine("AppVersion : " + ConfigurationManager.AppSettings["AppVersionDate"]);
-                writer.WriteLine("AssemblyVer : " + typeof(String).Assembly.GetName().Version);
-                writer.WriteLine("Error @ " + argProcedureName);
-                writer.WriteLine();
-                while (ex != null)
+                string ExistingErrorText = string.Empty;
+                if (File.Exists(ErrorFilePathName))
                 {
-                    writer.WriteLine(ex.GetType().FullName);
-                    writer.WriteLine("Message : " + ex.Message);
-                    writer.WriteLine("StackTrace : " + ex.StackTrace);
-
-                    ex = ex.InnerException;
+                    ExistingErrorText = File.ReadAllText(ErrorFilePathName);
                 }
-                writer.WriteLine("=========================================================================");
 
-                if (ExistingErrorText.Length > 0)
+                using (StreamWriter writer = new StreamWriter(ErrorFilePathName, false))
                 {
-                    writer.WriteLine(ExistingErrorText);
+                    writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
+                    writer.WriteLine("AppVersion : " + ConfigurationManager.AppSettings["AppVersionDate"]);
+                    writer.WriteLine("AssemblyVer : " + typeof(String).Assembly.GetName().Version);
+                    writer.WriteLine("Error @ " + argProcedureName);
+                    writer.WriteLine();
+                    while (ex != null)
+                    {
+                        writer.WriteLine(ex.GetType().FullName);
+                        writer.WriteLine("Message : " + ex.Message);
+                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+
+                        ex = ex.InnerException;
+                    }
+                    writer.WriteLine("=========================================================================");
+
+                    if (ExistingErrorText.Length > 0)
+                    {
+                        writer.WriteLine(ExistingErrorText);
+                    }
                 }
-            }
 
-            //If the Admin page is open, load the Error Log textbox immediately
-            if (tabControl1.SelectedTab.Name == "page_Admin")
-            {
-                LoadErrorFileTextbox();
-            }
+                //If the Admin page is open, load the Error Log textbox immediately
+                if (tabControl1.SelectedTab.Name == "page_Admin")
+                {
+                    LoadErrorFileTextbox();
+                }
 
+            }
         }
 
         public void LoadErrorFileTextbox()
