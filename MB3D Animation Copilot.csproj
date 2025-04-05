@@ -20,7 +20,7 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
+    <UseWPF>False</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
@@ -58,6 +58,8 @@
     <None Remove="Images\Arrow_LookRight.png" />
     <None Remove="Images\Arrow_LookUp.png" />
     <None Remove="Images\Arrow_RepeatLast.png" />
+    <None Remove="Images\Arrow_RotateCCW.png" />
+    <None Remove="Images\Arrow_RotateCW.png" />
     <None Remove="Images\Arrow_SlideDown.png" />
     <None Remove="Images\Arrow_SlideLeft.png" />
     <None Remove="Images\Arrow_SlideRight.png" />
@@ -65,7 +67,11 @@
     <None Remove="Images\Arrow_ToggleCapture.png" />
     <None Remove="Images\Arrow_WalkFwd.png" />
     <None Remove="Images\Arrow_WalkRev.png" />
+    <None Remove="Images\Logo .png" />
     <None Remove="Images\MakeNewKeyframe.png" />
+    <None Remove="Images\MB3D Copilot 32x32.ico" />
+    <None Remove="Images\MB3D Copilot 48x48.ico" />
+    <None Remove="Images\Mb3D Copilot Banner.jpg" />
     <None Remove="MB3DAnimationCopilot.sqbpro" />
     <None Remove="MB3DKeyframeStore.db" />
   </ItemGroup>
@@ -75,6 +81,8 @@
     <EmbeddedResource Include="Images\Arrow_LookRight.png" />
     <EmbeddedResource Include="Images\Arrow_LookUp.png" />
     <EmbeddedResource Include="Images\Arrow_RepeatLast.png" />
+    <EmbeddedResource Include="Images\Arrow_RotateCCW.png" />
+    <EmbeddedResource Include="Images\Arrow_RotateCW.png" />
     <EmbeddedResource Include="Images\Arrow_SlideDown.png" />
     <EmbeddedResource Include="Images\Arrow_SlideLeft.png" />
     <EmbeddedResource Include="Images\Arrow_SlideRight.png" />
@@ -82,13 +90,13 @@
     <EmbeddedResource Include="Images\Arrow_ToggleCapture.png" />
     <EmbeddedResource Include="Images\Arrow_WalkFwd.png" />
     <EmbeddedResource Include="Images\Arrow_WalkRev.png" />
-    <Content Include="Images\MB3D Copilot 16x16.ico" />
-    <Content Include="Images\For App 084798861-desktop-keyboard.png">
+    <EmbeddedResource Include="Images\MB3D Copilot 16x16.ico" />
+    <EmbeddedResource Include="Images\For App 084798861-desktop-keyboard.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\For App 167929795-xbox controller.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\For App 167929795-xbox controller.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    </EmbeddedResource>
     <Content Include="Libraries\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -109,7 +117,11 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Images\Logo .png" />
     <EmbeddedResource Include="Images\MakeNewKeyframe.png" />
+    <EmbeddedResource Include="Images\MB3D Copilot 32x32.ico" />
+    <EmbeddedResource Include="Images\MB3D Copilot 48x48.ico" />
+    <EmbeddedResource Include="Images\Mb3D Copilot Banner.jpg" />
     <EmbeddedResource Include="Properties\Resources.Designer.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -118,15 +130,15 @@
     <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="Stub.System.Data.SQLite.Core.NetStandard" Version="1.0.119" />
-    <PackageReference Include="Syncfusion.Core.WinForms" Version="29.1.33" />
-    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="29.1.33" />
-    <PackageReference Include="Syncfusion.Shared.Base" Version="29.1.33" />
-    <PackageReference Include="Syncfusion.Tools.Windows" Version="29.1.33" />
+    <PackageReference Include="Syncfusion.Core.WinForms" Version="29.1.35" />
+    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="29.1.35" />
+    <PackageReference Include="Syncfusion.Shared.Base" Version="29.1.35" />
+    <PackageReference Include="Syncfusion.Tools.Windows" Version="29.1.35" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.3" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.1" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HighContrastTheme">

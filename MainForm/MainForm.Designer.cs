@@ -2030,13 +2030,13 @@ namespace MB3D_Animation_Copilot
             // 
             lbl_BusyLabel.AutoSize = true;
             lbl_BusyLabel.BackColor = System.Drawing.Color.Firebrick;
-            lbl_BusyLabel.Font = new System.Drawing.Font("Blackoak Std", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
+            lbl_BusyLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 20F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, 0);
             lbl_BusyLabel.ForeColor = System.Drawing.Color.Yellow;
             lbl_BusyLabel.Location = new System.Drawing.Point(662, 14);
             lbl_BusyLabel.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             lbl_BusyLabel.Name = "lbl_BusyLabel";
             lbl_BusyLabel.Padding = new System.Windows.Forms.Padding(29, 8, 29, 5);
-            lbl_BusyLabel.Size = new System.Drawing.Size(260, 49);
+            lbl_BusyLabel.Size = new System.Drawing.Size(150, 44);
             lbl_BusyLabel.TabIndex = 15;
             lbl_BusyLabel.Text = "BUSY";
             lbl_BusyLabel.Visible = false;
@@ -2103,12 +2103,12 @@ namespace MB3D_Animation_Copilot
             page_MoveDesigner.ForeColor = System.Drawing.Color.White;
             page_MoveDesigner.Image = null;
             page_MoveDesigner.ImageSize = new System.Drawing.Size(16, 16);
-            page_MoveDesigner.Location = new System.Drawing.Point(3, 2);
+            page_MoveDesigner.Location = new System.Drawing.Point(3, 30);
             page_MoveDesigner.Margin = new System.Windows.Forms.Padding(4);
             page_MoveDesigner.Name = "page_MoveDesigner";
             page_MoveDesigner.Padding = new System.Windows.Forms.Padding(4);
             page_MoveDesigner.ShowCloseButton = true;
-            page_MoveDesigner.Size = new System.Drawing.Size(1284, 568);
+            page_MoveDesigner.Size = new System.Drawing.Size(1284, 540);
             page_MoveDesigner.TabIndex = 1;
             page_MoveDesigner.Text = "     Move Designer     ";
             page_MoveDesigner.ThemesEnabled = true;
@@ -2123,7 +2123,7 @@ namespace MB3D_Animation_Copilot
             panel9.Location = new System.Drawing.Point(4, 4);
             panel9.Margin = new System.Windows.Forms.Padding(4);
             panel9.Name = "panel9";
-            panel9.Size = new System.Drawing.Size(1276, 560);
+            panel9.Size = new System.Drawing.Size(1276, 532);
             panel9.TabIndex = 19;
             // 
             // splitContainer_ManageSeq
@@ -2143,7 +2143,7 @@ namespace MB3D_Animation_Copilot
             splitContainer_ManageSeq.Panel2.BackColor = System.Drawing.Color.Transparent;
             splitContainer_ManageSeq.Panel2.Controls.Add(panel4);
             splitContainer_ManageSeq.Panel2.Paint += splitContainer_ManageSeq_Panel2_Paint;
-            splitContainer_ManageSeq.Size = new System.Drawing.Size(1276, 449);
+            splitContainer_ManageSeq.Size = new System.Drawing.Size(1276, 421);
             splitContainer_ManageSeq.SplitterDistance = 429;
             splitContainer_ManageSeq.TabIndex = 22;
             // 
@@ -2154,7 +2154,7 @@ namespace MB3D_Animation_Copilot
             dgv_ManageMoveSequence.Location = new System.Drawing.Point(12, 0);
             dgv_ManageMoveSequence.Name = "dgv_ManageMoveSequence";
             dgv_ManageMoveSequence.Padding = new System.Windows.Forms.Padding(3);
-            dgv_ManageMoveSequence.Size = new System.Drawing.Size(417, 449);
+            dgv_ManageMoveSequence.Size = new System.Drawing.Size(417, 421);
             dgv_ManageMoveSequence.Style.BorderColor = System.Drawing.Color.FromArgb(100, 100, 100);
             dgv_ManageMoveSequence.Style.CheckBoxStyle.CheckedBackColor = System.Drawing.Color.FromArgb(0, 120, 215);
             dgv_ManageMoveSequence.Style.CheckBoxStyle.CheckedBorderColor = System.Drawing.Color.FromArgb(0, 120, 215);
@@ -2169,7 +2169,7 @@ namespace MB3D_Animation_Copilot
             panel6.Dock = System.Windows.Forms.DockStyle.Left;
             panel6.Location = new System.Drawing.Point(0, 0);
             panel6.Name = "panel6";
-            panel6.Size = new System.Drawing.Size(12, 449);
+            panel6.Size = new System.Drawing.Size(12, 421);
             panel6.TabIndex = 20;
             // 
             // panel4
@@ -2188,7 +2188,7 @@ namespace MB3D_Animation_Copilot
             panel4.Dock = System.Windows.Forms.DockStyle.Left;
             panel4.Location = new System.Drawing.Point(0, 0);
             panel4.Name = "panel4";
-            panel4.Size = new System.Drawing.Size(405, 449);
+            panel4.Size = new System.Drawing.Size(405, 421);
             panel4.TabIndex = 21;
             // 
             // autoLabel17
@@ -2413,11 +2413,11 @@ namespace MB3D_Animation_Copilot
             page_Library.Controls.Add(panel10);
             page_Library.Image = null;
             page_Library.ImageSize = new System.Drawing.Size(16, 16);
-            page_Library.Location = new System.Drawing.Point(3, 2);
+            page_Library.Location = new System.Drawing.Point(3, 30);
             page_Library.Margin = new System.Windows.Forms.Padding(4);
             page_Library.Name = "page_Library";
             page_Library.ShowCloseButton = true;
-            page_Library.Size = new System.Drawing.Size(1284, 568);
+            page_Library.Size = new System.Drawing.Size(1284, 540);
             page_Library.TabIndex = 4;
             page_Library.Text = "     Mandelbulb3D Library     ";
             page_Library.ThemesEnabled = true;
@@ -2432,7 +2432,7 @@ namespace MB3D_Animation_Copilot
             panel10.Dock = System.Windows.Forms.DockStyle.Fill;
             panel10.Location = new System.Drawing.Point(0, 0);
             panel10.Name = "panel10";
-            panel10.Size = new System.Drawing.Size(1284, 568);
+            panel10.Size = new System.Drawing.Size(1284, 540);
             panel10.TabIndex = 3;
             // 
             // autoLabel23
@@ -2487,11 +2487,11 @@ namespace MB3D_Animation_Copilot
             page_Utilities.ForeColor = System.Drawing.Color.Black;
             page_Utilities.Image = null;
             page_Utilities.ImageSize = new System.Drawing.Size(16, 16);
-            page_Utilities.Location = new System.Drawing.Point(3, 2);
+            page_Utilities.Location = new System.Drawing.Point(3, 30);
             page_Utilities.Margin = new System.Windows.Forms.Padding(4);
             page_Utilities.Name = "page_Utilities";
             page_Utilities.ShowCloseButton = true;
-            page_Utilities.Size = new System.Drawing.Size(1284, 568);
+            page_Utilities.Size = new System.Drawing.Size(1284, 540);
             page_Utilities.TabIndex = 2;
             page_Utilities.Text = "       Utilities         ";
             page_Utilities.ThemesEnabled = true;
@@ -2506,7 +2506,7 @@ namespace MB3D_Animation_Copilot
             panel_UtilitiesPage.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_UtilitiesPage.Location = new System.Drawing.Point(0, 0);
             panel_UtilitiesPage.Name = "panel_UtilitiesPage";
-            panel_UtilitiesPage.Size = new System.Drawing.Size(1284, 568);
+            panel_UtilitiesPage.Size = new System.Drawing.Size(1284, 540);
             panel_UtilitiesPage.TabIndex = 11;
             // 
             // grp_Admin_JoytoKey
@@ -2725,11 +2725,11 @@ namespace MB3D_Animation_Copilot
             page_Admin.Controls.Add(panel11);
             page_Admin.Image = null;
             page_Admin.ImageSize = new System.Drawing.Size(16, 16);
-            page_Admin.Location = new System.Drawing.Point(3, 2);
+            page_Admin.Location = new System.Drawing.Point(3, 30);
             page_Admin.Margin = new System.Windows.Forms.Padding(4);
             page_Admin.Name = "page_Admin";
             page_Admin.ShowCloseButton = true;
-            page_Admin.Size = new System.Drawing.Size(1284, 568);
+            page_Admin.Size = new System.Drawing.Size(1284, 540);
             page_Admin.TabIndex = 3;
             page_Admin.Text = "        Admin        ";
             page_Admin.ThemesEnabled = true;
@@ -2745,7 +2745,7 @@ namespace MB3D_Animation_Copilot
             panel11.Dock = System.Windows.Forms.DockStyle.Fill;
             panel11.Location = new System.Drawing.Point(0, 0);
             panel11.Name = "panel11";
-            panel11.Size = new System.Drawing.Size(1284, 568);
+            panel11.Size = new System.Drawing.Size(1284, 540);
             panel11.TabIndex = 2;
             // 
             // groupBox3
@@ -3104,10 +3104,10 @@ namespace MB3D_Animation_Copilot
             page_About.Controls.Add(panel13);
             page_About.Image = null;
             page_About.ImageSize = new System.Drawing.Size(16, 16);
-            page_About.Location = new System.Drawing.Point(3, 2);
+            page_About.Location = new System.Drawing.Point(3, 30);
             page_About.Name = "page_About";
             page_About.ShowCloseButton = true;
-            page_About.Size = new System.Drawing.Size(1284, 568);
+            page_About.Size = new System.Drawing.Size(1284, 540);
             page_About.TabIndex = 5;
             page_About.Text = "       About       ";
             page_About.ThemesEnabled = true;
@@ -3127,7 +3127,7 @@ namespace MB3D_Animation_Copilot
             panel13.Dock = System.Windows.Forms.DockStyle.Fill;
             panel13.Location = new System.Drawing.Point(0, 0);
             panel13.Name = "panel13";
-            panel13.Size = new System.Drawing.Size(1284, 568);
+            panel13.Size = new System.Drawing.Size(1284, 540);
             panel13.TabIndex = 0;
             // 
             // lbl_AssemblyInfo

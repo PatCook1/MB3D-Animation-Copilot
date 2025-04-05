@@ -611,11 +611,17 @@
         QuDV09+l22DgbjzzGsCWeRVczbucHk5dV75qbFB4vwZ4v+b+6v8/L+QKSLlbQysAAAAASUVORK5CYII=
 </value>
   </data>
+  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>409, 27</value>
+  </metadata>
   <data name="autoLabel17.Text" xml:space="preserve">
     <value>Note: When you perform a move step update or add, the walking and sliding move steps (WF, WR, SR, SL, SU and SD) will use the 'Sliding/Walking Step Count' value of the top panel of this application. Looking and rolling move steps (LR, LL, LU, LD, RC and RCC) will use the 'Looking/Rolling Step Angle' value of the top panel of this application.</value>
   </data>
   <data name="autoLabel21.Text" xml:space="preserve">
     <value>Capture and store Mandelbulb3D project information into a local database, including the MP3 parameter set, project file locations, keyframe data and screenshots of the Mandelbulb graphics. The goal is to have a local source of information that describes each Mandelbulb3D project that is in the works or that has been completed and published.</value>
+  </data>
+  <data name="autoLabel26.Text" xml:space="preserve">
+    <value>The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.</value>
   </data>
   <data name="lbl_Admin_JoyToKey_Intro.Text" xml:space="preserve">
     <value>The JoyToKey app provides mapping of the keys of a console game controller or a standard PC keyboard to the movement keys of the Mandelbulb3D Navigator. The JoyToKey application allows a liberal period of evaluation at full functionality, and offers a low license fee.</value>
@@ -629,9 +635,6 @@
   <metadata name="sfToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>1039, 67</value>
   </metadata>
-  <data name="autoLabel26.Text" xml:space="preserve">
-    <value>The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.</value>
-  </data>
   <metadata name="openFileDialog_BackupFindFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -652,6 +655,9 @@
   </metadata>
   <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>857, 67</value>
+  </metadata>
+  <metadata name="sfToolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>1039, 67</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>69</value>
