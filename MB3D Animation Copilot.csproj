@@ -95,7 +95,7 @@
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <EmbeddedResource Include="Images\For App 167929795-xbox controller.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </EmbeddedResource>
     <Content Include="Libraries\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
