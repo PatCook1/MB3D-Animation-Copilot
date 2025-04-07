@@ -72,7 +72,7 @@
             autoLabel2.Name = "autoLabel2";
             autoLabel2.Size = new System.Drawing.Size(470, 37);
             autoLabel2.TabIndex = 1;
-            autoLabel2.Text = "The requested keyframes (and their respective Move Actions) listed below will be grouped into a new move sequence that is named and described below.";
+            autoLabel2.Text = "The requested keyframes (and their respective Move Actions) listed below will be grouped into a new move sequence that you name and describe below.";
             // 
             // autoLabel3
             // 
@@ -275,7 +275,6 @@
         private Syncfusion.Windows.Forms.Tools.AutoLabel autoLabel5;
         private System.Windows.Forms.Panel panel_lower;
         private System.Windows.Forms.Panel panel_upper;
-        private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel_Main;
         private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.Panel panel2;

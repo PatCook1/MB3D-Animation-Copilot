@@ -1,6 +1,7 @@
 ﻿/*========================================================================================
-File: MB3D_Animation_Copilot.Models.RepeatMoveListModel
-Description: This class provides the data structure for list of pre-designed move sequences.
+File: MB3D_Animation_Copilot.Models.SampleProjectActionsModel.cs
+Description: This class provides the data structure for a inserting actions records of
+             sample keyframes
 Original Author: Patrick C. Cook
 Copyright: Patrick C. Cook 2025
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -14,11 +15,15 @@ using System.Threading.Tasks;
 
 namespace MB3D_Animation_Copilot.Models
 {
-    internal class RepeatMovesListModel
+    internal class SampleProjectActionsModel
     {
-        public string MoveName { get; set; }
-        public int MoveStepCount { get; set; }
-        public string SendKeyCode { get; set; }
+        public int SampleKeyframeID_Ref { get; set; }
+        public string ActionName { get; set; }
+        public string SendKeyChar { get; set; }
+        public int SendKeyQuantity { get; set; }
         public int StepAngleCount { get; set; }
     }
 }
+
+
+

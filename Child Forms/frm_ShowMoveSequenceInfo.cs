@@ -1,4 +1,13 @@
-﻿using MB3D_Animation_Copilot.Classes;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Child_Forms.frm_ShowMoveSequences
+Description: A child form of parent MainForm to display moves (actions) that were selected
+             at the Mainform to become a move sequence.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using MB3D_Animation_Copilot.Classes;
 using MB3D_Animation_Copilot.Models;
 using Syncfusion.Styles;
 using Syncfusion.WinForms.DataGrid;
@@ -41,10 +50,11 @@ namespace MB3D_Animation_Copilot.Child_Forms
 
             //Column definitions
             dgv_MoveSequenceSteps.Columns.Add(new GridNumericColumn() { MappingName = "Step_ID", HeaderText = "Step ID", Width = 50, AllowEditing = false, Visible=false, Format = "0.#####" });
-            dgv_MoveSequenceSteps.Columns.Add(new GridNumericColumn() { MappingName = "Step_Group", HeaderText = "Step Group", MinimumWidth = 8, Width = 95, AllowEditing = false, Format = "0.#####" });
+            dgv_MoveSequenceSteps.Columns.Add(new GridNumericColumn() { MappingName = "Step_Group", HeaderText = "Step Group", MinimumWidth = 8, Width = 95, AllowEditing = false, Visible = false, Format = "0.#####" });
             dgv_MoveSequenceSteps.Columns.Add(new GridNumericColumn() { MappingName = "Step_Name", HeaderText = "Step Name", MinimumWidth = 8, Width = 95, AllowEditing = false });
-            dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_Count", HeaderText = "Step/Angle Count", MinimumWidth = 8, Width = 125, AllowEditing = false, Format = "0.#####" });
+            dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_SendKeyQty", HeaderText = "Send Qty", MinimumWidth = 8, Width = 95, AllowEditing = false, Visible = true, Format = "0.#####" });
             dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_SendKey", HeaderText = "Send Key", MinimumWidth = 8, Width = 95, AllowEditing = false, Visible=false });
+            dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_AngleCount", HeaderText = "Angle/Count", MinimumWidth = 8, Width = 95, AllowEditing = false, Format = "0.#####" });
             dgv_MoveSequenceSteps.Columns.Add(new GridTextColumn() { MappingName = "Step_Display", HeaderText = "Step Display", MinimumWidth = 8, Width = 95, AllowEditing = false });
 
             dgv_MoveSequenceSteps.AllowEditing = false;

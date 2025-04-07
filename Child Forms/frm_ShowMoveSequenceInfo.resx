@@ -117,4 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="autoLabel17.Text" xml:space="preserve">
+    <value>Note: At the time each Move Step was created, the value used for a walking and sliding step (WF, WR, SR, SL, SU or SD) was the 'Sliding/Walking Step Count' value of the top panel of this application. If a Looking or rolling step (LR, LL, LU, LD, RC or RCC) the value used was the 'Looking/Rolling Step Angle' value of the top panel of this application.</value>
+  </data>
 </root>

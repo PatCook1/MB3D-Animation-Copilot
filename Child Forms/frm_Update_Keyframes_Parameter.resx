@@ -117,46 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>409, 27</value>
-  </metadata>
-  <metadata name="toolTip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>409, 27</value>
-  </metadata>
-  <data name="autoLabel27.Text" xml:space="preserve">
-    <value>The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.</value>
-  </data>
-  <data name="autoLabel26.Text" xml:space="preserve">
-    <value>The Mandelbulb3D Animation Copilot facilitates creating Mandelbulb3D animations by mapping a game controller or keyboard keys to the Mandelbulb3D Navigator movement keys and recording those keyframe movements to a local database.</value>
-  </data>
-  <data name="autoLabel17.Text" xml:space="preserve">
-    <value>Note: Walking and sliding Move Steps use the 'Sliding+Walking step' setting of the Mandlebulb3D Navigator. Looking and rolling Move Steps use the 'Looking+Rolling angle' setting of the Mandlebulb3D Navigator.</value>
-  </data>
-  <data name="autoLabel21.Text" xml:space="preserve">
-    <value>Capture and store Mandelbulb3D project information into a local database, including the MP3 parameter set, project file locations, keyframe data and screenshots of the Mandelbulb graphics. The goal is to have a local source of information that describes each Mandelbulb3D project that is in the works or that has been completed and published.</value>
-  </data>
-  <metadata name="openFileDialog_BackupFindFile.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="folderBrowserDialog_DBBackupFolder.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>21, 68</value>
-  </metadata>
-  <metadata name="contextMenuStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>403, 70</value>
-  </metadata>
-  <metadata name="contextMenuStripEx1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>631, 67</value>
-  </metadata>
-  <metadata name="openFileDialog_M3PIFileLoc.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>605, 19</value>
-  </metadata>
-  <metadata name="openFileDialog_M3AFileLoc.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>911, 24</value>
-  </metadata>
-  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>857, 67</value>
-  </metadata>
-  <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>49</value>
-  </metadata>
 </root>

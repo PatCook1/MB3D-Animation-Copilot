@@ -1,4 +1,14 @@
-﻿using Syncfusion.Windows.Forms;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Child_Forms.frm_Update_Keyframes_FarPlane
+Description: A child form of parent MainForm to perform the functions relating to updating
+             of keyframes at the Mandelbulb application so as to modify the far plane
+             value of each keyframe of the Mandelbulb Animation window.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using Syncfusion.Windows.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -245,10 +255,10 @@ namespace MB3D_Animation_Copilot.Child_Forms
             sb.Append("2. Be sure the starting keyframe is selected.");
             sb.Append(NL);
             sb.Append(NL);
-            sb.Append("3. Be sure that the Navigator window is open and it panel is expanded that contains theFar Plane entryfield and has the desired value.");
+            sb.Append("3. Be sure that the Navigator window is open and it panel is expanded that contains the Far Plane entryfield and has the desired value.");
             sb.Append(NL);
             sb.Append(NL);
-            sb.Append("4. Be sure that the Animation and Navigator windows are covered.");
+            sb.Append("4. Be sure that the Animation and Navigator windows are not covered.");
             sb.Append(NL);
             sb.Append(NL);
             sb.Append("5. Do not use the mouse until this process completes.");

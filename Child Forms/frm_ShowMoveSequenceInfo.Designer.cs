@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(frm_ShowMoveSequenceInfo));
             autoLabel1 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             autoLabel2 = new Syncfusion.Windows.Forms.Tools.AutoLabel();
             lbl_MoveSequenceName = new Syncfusion.Windows.Forms.Tools.AutoLabel();
@@ -109,7 +110,7 @@
             dgv_MoveSequenceSteps.Margin = new System.Windows.Forms.Padding(4);
             dgv_MoveSequenceSteps.Name = "dgv_MoveSequenceSteps";
             dgv_MoveSequenceSteps.Padding = new System.Windows.Forms.Padding(4);
-            dgv_MoveSequenceSteps.Size = new System.Drawing.Size(432, 261);
+            dgv_MoveSequenceSteps.Size = new System.Drawing.Size(432, 252);
             dgv_MoveSequenceSteps.Style.BorderColor = System.Drawing.Color.FromArgb(100, 100, 100);
             dgv_MoveSequenceSteps.Style.CheckBoxStyle.CheckedBackColor = System.Drawing.Color.FromArgb(0, 120, 215);
             dgv_MoveSequenceSteps.Style.CheckBoxStyle.CheckedBorderColor = System.Drawing.Color.FromArgb(0, 120, 215);
@@ -122,7 +123,7 @@
             // 
             btn_Close.Font = new System.Drawing.Font("Segoe UI Semibold", 9F);
             btn_Close.ForeColor = System.Drawing.Color.Red;
-            btn_Close.Location = new System.Drawing.Point(385, 21);
+            btn_Close.Location = new System.Drawing.Point(388, 59);
             btn_Close.Name = "btn_Close";
             btn_Close.Size = new System.Drawing.Size(58, 28);
             btn_Close.Style.ForeColor = System.Drawing.Color.Red;
@@ -144,19 +145,19 @@
             panel_bottom.Controls.Add(autoLabel17);
             panel_bottom.Controls.Add(btn_Close);
             panel_bottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            panel_bottom.Location = new System.Drawing.Point(0, 365);
+            panel_bottom.Location = new System.Drawing.Point(0, 356);
             panel_bottom.Name = "panel_bottom";
-            panel_bottom.Size = new System.Drawing.Size(457, 60);
+            panel_bottom.Size = new System.Drawing.Size(457, 99);
             panel_bottom.TabIndex = 12;
             // 
             // autoLabel17
             // 
             autoLabel17.AutoSize = false;
-            autoLabel17.Location = new System.Drawing.Point(11, 5);
+            autoLabel17.Location = new System.Drawing.Point(11, 4);
             autoLabel17.Name = "autoLabel17";
-            autoLabel17.Size = new System.Drawing.Size(328, 52);
+            autoLabel17.Size = new System.Drawing.Size(338, 95);
             autoLabel17.TabIndex = 37;
-            autoLabel17.Text = "Walking and sliding steps use the 'Sliding+Walking step' setting of the Mandlebulb3D Navigator while looking and rolling steps use the 'Looking+Rolling angle' setting.";
+            autoLabel17.Text = resources.GetString("autoLabel17.Text");
             // 
             // panel_DataGrid
             // 
@@ -166,7 +167,7 @@
             panel_DataGrid.Dock = System.Windows.Forms.DockStyle.Fill;
             panel_DataGrid.Location = new System.Drawing.Point(0, 104);
             panel_DataGrid.Name = "panel_DataGrid";
-            panel_DataGrid.Size = new System.Drawing.Size(457, 261);
+            panel_DataGrid.Size = new System.Drawing.Size(457, 252);
             panel_DataGrid.TabIndex = 13;
             // 
             // panel2
@@ -174,7 +175,7 @@
             panel2.Dock = System.Windows.Forms.DockStyle.Right;
             panel2.Location = new System.Drawing.Point(446, 0);
             panel2.Name = "panel2";
-            panel2.Size = new System.Drawing.Size(11, 261);
+            panel2.Size = new System.Drawing.Size(11, 252);
             panel2.TabIndex = 11;
             // 
             // panel1
@@ -182,7 +183,7 @@
             panel1.Dock = System.Windows.Forms.DockStyle.Left;
             panel1.Location = new System.Drawing.Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new System.Drawing.Size(14, 261);
+            panel1.Size = new System.Drawing.Size(14, 252);
             panel1.TabIndex = 10;
             // 
             // panel_Top
@@ -204,7 +205,7 @@
             AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             BackColor = System.Drawing.Color.Black;
-            ClientSize = new System.Drawing.Size(457, 425);
+            ClientSize = new System.Drawing.Size(457, 455);
             Controls.Add(panel_DataGrid);
             Controls.Add(panel_bottom);
             Controls.Add(panel_Top);

@@ -20,7 +20,7 @@
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
     <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
+    <UseWPF>False</UseWPF>
     <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
     <ApplicationHighDpiMode>SystemAware</ApplicationHighDpiMode>
     <ForceDesignerDpiUnaware>true</ForceDesignerDpiUnaware>
@@ -39,7 +39,7 @@
   <PropertyGroup>
     <SignManifests>true</SignManifests>
     <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
-    <ApplicationIcon>Images\Code_Component.ico</ApplicationIcon>
+    <ApplicationIcon>Images\MB3D Copilot 16x16.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
     <OutputPath>bin\x64\Debug\</OutputPath>
@@ -48,19 +48,60 @@
     <OutputPath>bin\x64\Release\</OutputPath>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Images\Aeeow_RotateCCW.png" />
+    <None Remove="Images\Aeeow_RotateCW.png" />
+    <None Remove="Images\Arrow_LookDown.png" />
+    <None Remove="Images\Arrow_LookLeft.png" />
+    <None Remove="Images\Arrow_LookRight.png" />
+    <None Remove="Images\Arrow_LookUp.png" />
+    <None Remove="Images\Arrow_RepeatLast.png" />
+    <None Remove="Images\Arrow_RotateCCW.png" />
+    <None Remove="Images\Arrow_RotateCW.png" />
+    <None Remove="Images\Arrow_SlideDown.png" />
+    <None Remove="Images\Arrow_SlideLeft.png" />
+    <None Remove="Images\Arrow_SlideRight.png" />
+    <None Remove="Images\Arrow_SlideUp.png" />
+    <None Remove="Images\Arrow_ToggleCapture.png" />
+    <None Remove="Images\Arrow_WalkFwd.png" />
+    <None Remove="Images\Arrow_WalkRev.png" />
+    <None Remove="Images\Logo .png" />
+    <None Remove="Images\MakeNewKeyframe.png" />
+    <None Remove="Images\MB3D Copilot 32x32.ico" />
+    <None Remove="Images\MB3D Copilot 48x48.ico" />
+    <None Remove="Images\Mb3D Copilot Banner.jpg" />
     <None Remove="MB3DAnimationCopilot.sqbpro" />
     <None Remove="MB3DKeyframeStore.db" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\Code_Component.ico" />
-    <Content Include="Images\For App 084798861-desktop-keyboard.png">
+    <EmbeddedResource Include="Images\Arrow_LookDown.png" />
+    <EmbeddedResource Include="Images\Arrow_LookLeft.png" />
+    <EmbeddedResource Include="Images\Arrow_LookRight.png" />
+    <EmbeddedResource Include="Images\Arrow_LookUp.png" />
+    <EmbeddedResource Include="Images\Arrow_RepeatLast.png" />
+    <EmbeddedResource Include="Images\Arrow_RotateCCW.png" />
+    <EmbeddedResource Include="Images\Arrow_RotateCW.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideDown.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideLeft.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideRight.png" />
+    <EmbeddedResource Include="Images\Arrow_SlideUp.png" />
+    <EmbeddedResource Include="Images\Arrow_ToggleCapture.png" />
+    <EmbeddedResource Include="Images\Arrow_WalkFwd.png" />
+    <EmbeddedResource Include="Images\Arrow_WalkRev.png" />
+    <EmbeddedResource Include="Images\MB3D Copilot 16x16.ico" />
+    <EmbeddedResource Include="Images\For App 084798861-desktop-keyboard.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Images\For App 167929795-xbox controller.png">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <Content Include="Libraries\SQLite.Interop.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\For App 167929795-xbox controller.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="SQLite.Interop.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    <Content Include="MB3D_JoyToKey.cfg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
   <ItemGroup>
@@ -76,20 +117,28 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.1.35" />
+    <EmbeddedResource Include="Images\Logo .png" />
+    <EmbeddedResource Include="Images\MakeNewKeyframe.png" />
+    <EmbeddedResource Include="Images\MB3D Copilot 32x32.ico" />
+    <EmbeddedResource Include="Images\MB3D Copilot 48x48.ico" />
+    <EmbeddedResource Include="Images\Mb3D Copilot Banner.jpg" />
+    <EmbeddedResource Include="Properties\Resources.Designer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
-    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.3" />
     <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.1.135" />
     <PackageReference Include="Stub.System.Data.SQLite.Core.NetStandard" Version="1.0.119" />
-    <PackageReference Include="Syncfusion.Core.WinForms" Version="28.1.41" />
-    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="28.1.41" />
-    <PackageReference Include="Syncfusion.Shared.Base" Version="28.1.41" />
-    <PackageReference Include="Syncfusion.Tools.Windows" Version="28.1.41" />
+    <PackageReference Include="Syncfusion.Core.WinForms" Version="29.1.35" />
+    <PackageReference Include="Syncfusion.SfDataGrid.WinForms" Version="29.1.35" />
+    <PackageReference Include="Syncfusion.Shared.Base" Version="29.1.35" />
+    <PackageReference Include="Syncfusion.Tools.Windows" Version="29.1.35" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
-    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.1" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.3" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
     <PackageReference Include="System.Data.SQLite.Core" Version="1.0.119" />
-    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.0" />
+    <PackageReference Include="System.Runtime.CompilerServices.Unsafe" Version="6.1.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="HighContrastTheme">
@@ -97,6 +146,14 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Child Forms\frm_Update_Keyframes_Parameter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Properties\Resource_Legend.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resource_Legend.resx</DependentUpon>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
@@ -104,12 +161,27 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Update="MB3DAnimationCopilot.db">
+    <EmbeddedResource Update="Properties\Resource_Legend.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource_Legend.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Update="LICENSE Install.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="LICENSE.txt">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
     </None>
     <None Update="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Update="README Install.rtf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 </Project>

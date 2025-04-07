@@ -1,4 +1,13 @@
-﻿using MB3D_Animation_Copilot.Classes;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Child_Forms.frm_MakeMoveSequences
+Description: A child form of parent MainForm to provide functions for editing and creating
+             move sequences.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using MB3D_Animation_Copilot.Classes;
 using MB3D_Animation_Copilot.Models;
 using Syncfusion.WinForms.DataGrid;
 using System;
@@ -84,7 +93,7 @@ namespace MB3D_Animation_Copilot.Child_Forms
                 return;
             }
 
-            //>>>>>>>>>>>>> Check if move seq name already exists
+            //TODO >>>>>>>>>>>>> Check if move seq name already exists
 
             var dialogResult = MessageBoxAdv.Show(this, string.Concat("This will create a new Move Sequence named '", tbx_MoveSequenceName.Text, "'."), "Proceed?", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
             if (dialogResult == DialogResult.Yes)
@@ -108,8 +117,8 @@ namespace MB3D_Animation_Copilot.Child_Forms
                 }
                 catch (Exception ex)
                 {
-                    //var message = ex;
-                    MessageBoxAdv.Show(this, string.Concat("There was a problem saving the new Move Sequence '", tbx_MoveSequenceName.Text, "' which was not saved. You may close this window."), "Failure?", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    Program._MainForm.LogException("btn_SaveMoveSequence_Click", ex); //Log this error
+                    MessageBoxAdv.Show(this, string.Concat("There was a problem saving the new Move Sequence '", tbx_MoveSequenceName.Text, "' which was not saved. The error was logged. You may close this window."), "Failure?", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
 
                 return;

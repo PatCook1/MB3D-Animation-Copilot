@@ -1,4 +1,12 @@
-﻿using Syncfusion.WinForms.DataGrid;
+﻿/*========================================================================================
+File: MB3D_Animation_Copilot.Classes.DataGridHelper
+Description: This class provides assistance to fetch cells values from datagrids.
+Original Author: Patrick C. Cook
+Copyright: Patrick C. Cook 2025
+License: GNU GENERAL PUBLIC LICENSE Version 3
+========================================================================================*/
+
+using Syncfusion.WinForms.DataGrid;
 using System;
 using System.Collections.Generic;
 using System.Linq;

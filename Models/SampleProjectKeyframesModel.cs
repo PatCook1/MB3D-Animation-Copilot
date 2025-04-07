@@ -1,6 +1,6 @@
 ﻿/*========================================================================================
-File: MB3D_Animation_Copilot.Models.KeyframeModel
-Description: This class provides the data structure for a keyframe.
+File: MB3D_Animation_Copilot.Models.SampleProjectKeyframesModel.cs
+Description: This class provides the data structure for a inserting sample keyframe and actions.
 Original Author: Patrick C. Cook
 Copyright: Patrick C. Cook 2025
 License: GNU GENERAL PUBLIC LICENSE Version 3
@@ -8,16 +8,15 @@ License: GNU GENERAL PUBLIC LICENSE Version 3
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MB3D_Animation_Copilot.Models
 {
-    internal class KeyframeModel
+    internal class SampleProjectKeyframesModel
     {
-        public int ID { get; set; }
+        public int SampleKeyframeID { get; set; }
         public string KeyframeType { get; set; }
         public int KeyframeNum { get; set; }
         public string KeyframeDisplay { get; set; }
