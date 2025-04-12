@@ -66,6 +66,8 @@ using Microsoft.VisualBasic.ApplicationServices;
 using Microsoft.DotNet.DesignTools.Protocol.Values;
 using System.Windows.Input;
 using Syncfusion.Windows.Forms.Tools.MultiColumnTreeView;
+using System.Net.Mail;
+using System.Web;
 
 #endregion
 
@@ -407,6 +409,12 @@ namespace MB3D_Animation_Copilot
             ll_PCGithubURL_About.Links.Add(39, 18, ConfigurationManager.AppSettings["PatCook1GithubURL"]);
             ll_JoyToKey_Utilities.Links.Clear();
             ll_JoyToKey_Utilities.Links.Add(0, 8, ConfigurationManager.AppSettings["JoyToKeyURL"]);
+            ll_EmailAuthor_Feedback.Links.Clear();
+            ll_EmailAuthor_Feedback.Links.Add(0, 29, ConfigurationManager.AppSettings["AuthorEmail_Feedback"]);
+            ll_EmailAuthor_Support.Links.Clear();
+            ll_EmailAuthor_Support.Links.Add(0, 36, ConfigurationManager.AppSettings["AuthorEmail_Support"]);
+            ll_EmailAuthor_Error.Links.Clear();
+            ll_EmailAuthor_Error.Links.Add(0, 46, ConfigurationManager.AppSettings["AuthorEmail_Error"]);
         }
 
         private void PopulateManageKeyframeCommandList()
@@ -3908,7 +3916,7 @@ namespace MB3D_Animation_Copilot
             //Send this key char out to the Kegend child form, if that form is open
             if (System.Windows.Forms.Application.OpenForms.OfType<frm_Key_Legend_Child_Window>().Count() > 0)
             {
-               frmKeyLegend.ReceiveMovementChar(strKey);
+                frmKeyLegend.ReceiveMovementChar(strKey);
             }
 
             //===========================
@@ -5188,6 +5196,78 @@ namespace MB3D_Animation_Copilot
             }
         }
 
+        private void ll_EmailAuthor_Feedback_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                // Change the color of the link text by setting LinkVisited to true.
+                ll_EmailAuthor_Feedback.LinkVisited = true;
+
+                //Call the Process.Start method to open the default mailing agent with the email address and subject:
+                Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString()) { UseShellExecute = true });
+
+            }
+            catch
+            {
+                MessageBoxAdv.Show(string.Concat("Your e-mail client could not be opened. Please manually e-mail to the Copilot Author at ", e.Link.LinkData.ToString()), "Problem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void ll_EmailAuthor_Support_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+                // Change the color of the link text by setting LinkVisited to true.
+                ll_EmailAuthor_Support.LinkVisited = true;
+
+                //Call the Process.Start method to open the default mailing agent with the email address and subject:
+                Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString()) { UseShellExecute = true });
+
+            }
+            catch
+            {
+                MessageBoxAdv.Show(string.Concat("Your e-mail client could not be opened. Please manually e-mail to the Copilot Author at ", e.Link.LinkData.ToString()), "Problem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
+        private void ll_EmailAuthor_Error_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            try
+            {
+
+                //Fetch the error log file content
+                string ErrorLogContent = GetErrorFileContent();
+
+                //If we have text in the error log textbox
+                if (ErrorLogContent.Length > 0)
+                {
+
+                    // Change the color of the link text by setting LinkVisited to true.
+                    ll_EmailAuthor_Error.LinkVisited = true;
+
+                    //Call the Process.Start method to open the default mailing agent with the email address and subject with body appended that is palin text only
+                    Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString() + "&body=" + HttpUtility.UrlEncode(ErrorLogContent), "&IsBodyHtml=false") { UseShellExecute = true });
+                }
+                else
+                {
+                    //Else, no error text
+                    DialogResult result = MessageBoxAdv.Show("There are no errors logged. Do you still want to submit an e-mail concerning Copilot errors?", "Confirm", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
+                    if (result == DialogResult.Yes)
+                    {
+                        // Change the color of the link text by setting LinkVisited to true.
+                        ll_EmailAuthor_Error.LinkVisited = true;
+
+                        //Call the Process.Start method to open the default mailing agent with the email address and subject, but body text that is empty string
+                        Process.Start(new ProcessStartInfo(e.Link.LinkData.ToString() + "&body=" + HttpUtility.UrlEncode(ErrorLogContent), "&IsBodyHtml=false") { UseShellExecute = true });
+                    }
+                }
+            }
+            catch
+            {
+                MessageBoxAdv.Show(string.Concat("Your e-mail client could not be opened. Please manually e-mail to the Copilot Author at ", e.Link.LinkData.ToString()), "Problem", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private void rtbx_ReadMeRTF_LinkClicked(object sender, LinkClickedEventArgs e)
         {
             //Call the Process.Start method to open the default browser with a URL:
@@ -5199,6 +5279,7 @@ namespace MB3D_Animation_Copilot
             //Call the Process.Start method to open the default browser with a URL:
             Process.Start(new ProcessStartInfo(e.LinkText) { UseShellExecute = true });
         }
+
 
         #endregion
 
@@ -5404,16 +5485,16 @@ namespace MB3D_Animation_Copilot
 
                 using (StreamWriter writer = new StreamWriter(ErrorFilePathName, false))
                 {
-                    writer.WriteLine("Date/Time : " + DateTime.Now.ToString());
-                    writer.WriteLine("AppVersion : " + ConfigurationManager.AppSettings["AppVersionDate"]);
-                    writer.WriteLine("AssemblyVer : " + typeof(String).Assembly.GetName().Version);
-                    writer.WriteLine("Error @ " + argProcedureName);
+                    writer.WriteLine("Date/Time:" + DateTime.Now.ToString());
+                    writer.WriteLine("AppVersion:" + ConfigurationManager.AppSettings["AppVersionDate"]);
+                    writer.WriteLine("AssemblyVer:" + typeof(String).Assembly.GetName().Version);
+                    writer.WriteLine("Error@" + argProcedureName);
                     writer.WriteLine();
                     while (ex != null)
                     {
                         writer.WriteLine(ex.GetType().FullName);
-                        writer.WriteLine("Message : " + ex.Message);
-                        writer.WriteLine("StackTrace : " + ex.StackTrace);
+                        writer.WriteLine("Message:" + ex.Message);
+                        writer.WriteLine("StackTrace:" + ex.StackTrace);
 
                         ex = ex.InnerException;
                     }
@@ -5449,6 +5530,21 @@ namespace MB3D_Animation_Copilot
             {
                 tbx_ErrorLogContent.Text = "No Log File Found";
             }
+        }
+
+        public string GetErrorFileContent()
+        {
+            string ErrorFilePathName = GetErrorLogPathName();
+            string ErrorFileContent = string.Empty;
+
+            if (File.Exists(ErrorFilePathName))
+            {
+                using (StreamReader reader = new StreamReader(ErrorFilePathName))
+                {
+                    ErrorFileContent = reader.ReadToEnd();
+                }
+            }
+            return ErrorFileContent;
         }
 
         private void btn_CopyLog_Click(object sender, EventArgs e)
@@ -5522,5 +5618,7 @@ namespace MB3D_Animation_Copilot
         {
             //No code here
         }
+
+
     }
 }
